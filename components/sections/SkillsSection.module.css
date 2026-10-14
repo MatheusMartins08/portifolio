@@ -1,0 +1,8 @@
+/* .mf-folder-grid: rows align to the bottom, so an opening folder pushes its row down together. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 40px var(--space-8);
+  align-items: end;
+  margin-top: var(--space-12);
+}
