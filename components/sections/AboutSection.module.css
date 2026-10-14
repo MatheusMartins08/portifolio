@@ -1,0 +1,32 @@
+/* Terminal (7) + bento of info cards (5). */
+.grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--space-6);
+  align-items: start;
+  margin-top: var(--space-12);
+}
+
+/* The stage's 8px padding is room for the 3D tilt; pull it out so the card lines up with the column. */
+.terminal { margin: calc(-1 * var(--space-2)); }
+
+.cards { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-3); }
+.status { grid-column: 1 / -1; }
+.location { grid-row: span 2; }
+.fill { height: 100%; }
+
+/* Desktop: the cards follow the scroll beside the terminal (until its end), instead of leaving a gap below. */
+@media (min-width: 961px) {
+  .cards { position: sticky; top: var(--header-offset); }
+}
+
+/* Tablet: terminal full width, cards in two columns below. */
+@media (max-width: 960px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Phone: one column. */
+@media (max-width: 720px) {
+  .cards { grid-template-columns: 1fr; }
+  .location { grid-row: auto; }
+}

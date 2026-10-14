@@ -29,6 +29,7 @@ Todo o texto do portfólio nos três idiomas. A fonte para o código é `content
 | Onde | PT | EN | ES |
 | --- | --- | --- | --- |
 | Frase de impacto | Boas soluções começam antes da primeira linha de código. | Good solutions start before the first line of code. | Las buenas soluciones empiezan antes de la primera línea de código. |
+| Rótulos dos cards (mono) | Status · Resume · Location · Available for | Status · Resume · Location · Available for | Estado · Currículum · Ubicación · Disponible para |
 | Status | Aberto a novos projetos | Open to new projects | Disponible para nuevos proyectos |
 | Resume | Minha trajetória profissional e acadêmica. | My professional and academic background. | Mi trayectoria profesional y académica. |
 | Localização | Minas Gerais, Brasil | Minas Gerais, Brazil | Minas Gerais, Brasil |
@@ -41,45 +42,39 @@ Todo o texto do portfólio nos três idiomas. A fonte para o código é `content
 
 **01**
 
-- **PT** — Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos, unindo desenvolvimento, arquitetura, experiência do usuário e entrega em produção.
-- **EN** — My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products, bringing together development, architecture, user experience and delivery to production.
-- **ES** — Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos, uniendo desarrollo, arquitectura, experiencia de usuario y puesta en producción.
+- **PT** — Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos, participando de todo o ciclo de desenvolvimento — da compreensão do problema e definição da arquitetura ao frontend, backend, banco de dados, integrações, infraestrutura e deploy.
+- **EN** — My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products, taking part in the entire development cycle — from understanding the problem and defining the architecture to frontend, backend, databases, integrations, infrastructure and deployment.
+- **ES** — Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos, participando en todo el ciclo de desarrollo — desde la comprensión del problema y la definición de la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue.
 
 **02**
 
-- **PT** — Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática constantemente. Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, formação que complementa uma rotina já bastante voltada à construção de soluções reais.
-- **EN** — My path in tech began in 2024, and since then I've been steadily turning study into practice. I'm currently studying Web and Mobile Development at COTEMIG, a program that complements a routine already centered on building real solutions.
-- **ES** — Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica de forma constante. Actualmente curso Desarrollo Web y Mobile en COTEMIG, una formación que complementa una rutina ya muy orientada a construir soluciones reales.
+- **PT** — Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática. Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, enquanto desenvolvo soluções e projetos voltados a problemas reais.
+- **EN** — My path in tech began in 2024, and since then I've been turning study into practice. I'm currently studying Web and Mobile Development at COTEMIG, while building solutions and projects aimed at real problems.
+- **ES** — Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica. Actualmente curso Desarrollo Web y Mobile en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales.
 
 **03**
 
-- **PT** — Gosto de participar de todo o ciclo de desenvolvimento de um produto. Isso significa entender o problema, estruturar a solução, definir tecnologias, desenvolver frontend e backend, trabalhar com bancos de dados, integrações e APIs, preparar a infraestrutura e acompanhar o sistema até o deploy e sua utilização em ambiente real.
-- **EN** — I like being part of a product's entire development cycle. That means understanding the problem, structuring the solution, choosing the technologies, building the frontend and backend, working with databases, integrations and APIs, setting up the infrastructure and following the system all the way to deployment and real-world use.
-- **ES** — Me gusta participar en todo el ciclo de desarrollo de un producto. Eso significa entender el problema, estructurar la solución, definir las tecnologías, desarrollar el frontend y el backend, trabajar con bases de datos, integraciones y APIs, preparar la infraestructura y acompañar el sistema hasta el despliegue y su uso en un entorno real.
+- **PT** — Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por entender o que existe por trás de uma interface: como cada parte de um sistema se conecta e como uma ideia pode se transformar em um produto funcional.
+- **EN** — Even before working in the field, I was always curious about what lies behind an interface: how each part of a system connects and how an idea can become a working product.
+- **ES** — Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional.
 
 **04**
 
-- **PT** — Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por tecnologia e pelo funcionamento das coisas por trás de uma interface. Nunca me interessou apenas saber usar um software; sempre quis entender o que acontecia por trás da tela, como cada parte se conectava e como uma ideia poderia se transformar em algo funcional.
-- **EN** — Even before working in the field, I was always curious about technology and about how things work behind an interface. Knowing how to use software was never enough for me; I always wanted to understand what was happening behind the screen, how each part connected and how an idea could become something that actually works.
-- **ES** — Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por la tecnología y por cómo funcionan las cosas detrás de una interfaz. Nunca me bastó con saber usar un software; siempre quise entender qué pasaba detrás de la pantalla, cómo se conectaba cada parte y cómo una idea podía convertirse en algo que realmente funciona.
+- **PT** — Por isso, procuro entender o problema antes de escolher a tecnologia. Para mim, uma boa solução não precisa ser desnecessariamente complexa — precisa ser clara, confiável, bem construída e preparada para evoluir.
+- **EN** — That's why I try to understand the problem before choosing the technology. To me, a good solution doesn't need to be needlessly complex — it needs to be clear, reliable, well built and ready to evolve.
+- **ES** — Por eso, busco entender el problema antes de elegir la tecnología. Para mí, una buena solución no tiene por qué ser innecesariamente compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar.
 
 **05**
 
-- **PT** — Essa curiosidade continua sendo uma das principais forças do meu trabalho. Procuro entender o problema antes de escolher a tecnologia e acredito que uma boa solução não precisa ser desnecessariamente complexa. Ela precisa ser clara, bem construída, escalável quando necessário e confiável quando colocada nas mãos de usuários reais.
-- **EN** — That curiosity is still one of the main strengths of my work. I try to understand the problem before choosing the technology, and I believe a good solution doesn't need to be needlessly complex. It needs to be clear, well built, scalable when necessary and reliable once it's in the hands of real users.
-- **ES** — Esa curiosidad sigue siendo una de las principales fortalezas de mi trabajo. Busco entender el problema antes de elegir la tecnología y creo que una buena solución no tiene por qué ser innecesariamente compleja. Tiene que ser clara, estar bien construida, ser escalable cuando haga falta y confiable cuando llega a manos de usuarios reales.
+- **PT** — Tecnologia, para mim, é meio. O objetivo é transformar necessidades em produtos sólidos, simples de manter e, principalmente, úteis no mundo real.
+- **EN** — To me, technology is a means. The goal is to turn needs into solid products that are simple to maintain and, above all, useful in the real world.
+- **ES** — Para mí, la tecnología es un medio. El objetivo es transformar necesidades en productos sólidos, fáciles de mantener y, sobre todo, útiles en el mundo real.
 
-**06**
+Destaques em terracota (trechos exatos, no máximo seis):
 
-- **PT** — Por isso, meu foco não está em acumular linguagens, frameworks ou ferramentas. Tecnologia, para mim, é meio. O objetivo é construir produtos que façam sentido, resolvam problemas concretos e estejam preparados para funcionar além do ambiente de desenvolvimento.
-- **EN** — That's why my focus isn't on collecting languages, frameworks or tools. To me, technology is a means. The goal is to build products that make sense, solve concrete problems and are ready to work beyond the development environment.
-- **ES** — Por eso, mi enfoque no está en acumular lenguajes, frameworks o herramientas. Para mí, la tecnología es un medio. El objetivo es construir productos que tengan sentido, resuelvan problemas concretos y estén preparados para funcionar más allá del entorno de desarrollo.
-
-**07**
-
-- **PT** — No final, é isso que busco em cada projeto: transformar uma necessidade em um produto sólido, simples de manter, pronto para evoluir e, principalmente, útil no mundo real.
-- **EN** — In the end, that's what I look for in every project: turning a need into a solid product that's simple to maintain, ready to evolve and, above all, useful in the real world.
-- **ES** — Al final, eso es lo que busco en cada proyecto: transformar una necesidad en un producto sólido, fácil de mantener, listo para evolucionar y, sobre todo, útil en el mundo real.
+- **PT** — *Matheus Freitas Martins* · *2024* · *COTEMIG* · *entender o problema antes de escolher a tecnologia* · *Tecnologia, para mim, é meio.* · *úteis no mundo real*
+- **EN** — *Matheus Freitas Martins* · *2024* · *COTEMIG* · *understand the problem before choosing the technology* · *To me, technology is a means.* · *useful in the real world*
+- **ES** — *Matheus Freitas Martins* · *2024* · *COTEMIG* · *entender el problema antes de elegir la tecnología* · *Para mí, la tecnología es un medio.* · *útiles en el mundo real*
 
 ## Serviços
 

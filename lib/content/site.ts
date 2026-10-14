@@ -73,6 +73,8 @@ export interface Site {
   };
   cv: { href: string; status: string };
   location: { lat: number; lon: number };
+  /** ProfileTerminal identifiers (file name, path, prompt): the same in every language. */
+  terminal: { title: string; path: string; prompt: string };
   status: "open" | "busy" | "away";
   sections: SiteSection[];
   services: Service[];

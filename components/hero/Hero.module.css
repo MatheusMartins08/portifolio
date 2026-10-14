@@ -32,7 +32,9 @@
 
 .portrait { max-width: 380px; width: 100%; }
 
-.text { padding-bottom: 40px; }
+/* The text block sits in the vertical middle of the fold (the photo stays anchored to the bottom).
+   The bottom padding offsets the photo caption, so the text centres on the image itself. */
+.text { align-self: center; padding-bottom: 40px; }
 
 /* Greeting + name on the left, the icon links stacked on the right, top-aligned. */
 .head {
