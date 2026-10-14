@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/header/SiteHeader";
+import { Footer } from "@/components/layout/Footer";
 import { CaseHero } from "@/components/projects/CaseHero";
 import { CaseSection } from "@/components/projects/CaseSection";
 import { ArrowLink } from "@/components/ui/ArrowLink";
@@ -188,6 +189,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/pro
           ))}
         </div>
       </main>
+      <Footer />
     </>
   );
 }

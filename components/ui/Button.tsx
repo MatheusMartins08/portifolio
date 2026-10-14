@@ -41,9 +41,24 @@ export function Button({ variant = "primary", size = "md", icon, loading = false
     );
   }
 
-  const { type = "button", disabled, ...buttonProps } = rest as ButtonHTMLAttributes<HTMLButtonElement>;
+  // While loading the button stays focusable (aria-disabled, clicks ignored), so keyboard focus is not
+  // dropped to <body> — inside a dialog that would let Tab escape the focus trap.
+  const { type = "button", onClick, ...buttonProps } = rest as ButtonHTMLAttributes<HTMLButtonElement>;
   return (
-    <button {...buttonProps} type={type} disabled={disabled || loading} aria-busy={loading || undefined} className={classes}>
+    <button
+      {...buttonProps}
+      type={type}
+      aria-busy={loading || undefined}
+      aria-disabled={loading || undefined}
+      onClick={(event) => {
+        if (loading) {
+          event.preventDefault();
+          return;
+        }
+        onClick?.(event);
+      }}
+      className={classes}
+    >
       {content}
     </button>
   );

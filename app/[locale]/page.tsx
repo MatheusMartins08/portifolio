@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/header/SiteHeader";
+import { Footer } from "@/components/layout/Footer";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -20,6 +21,7 @@ export default function HomePage() {
         <ProjectsSection />
         <ContactSection />
       </main>
+      <Footer />
     </>
   );
 }

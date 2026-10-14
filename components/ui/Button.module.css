@@ -38,7 +38,7 @@
 
 .text { background: transparent; color: var(--ink); padding: 0 var(--space-1); height: auto; }
 
-.btn[disabled], .loading { cursor: default; }
+.btn[disabled], .btn[aria-disabled="true"], .loading { cursor: default; }
 .loading { opacity: .9; }
 
 .spinner {
