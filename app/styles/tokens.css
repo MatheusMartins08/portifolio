@@ -1,0 +1,66 @@
+/* Matheus Freitas — copy of design-system/tokens.css (generated from tokens.json).
+   The @font-face rules are dropped: fonts come from the `geist` package (see app/[locale]/layout.tsx)
+   and --font-sans / --font-mono are re-pointed in app/globals.css. Keep in sync with the kit. */
+:root, [data-theme="bege"] {
+  --sand: #f3ebdd;
+  --sand-2: #eae0d2;
+  --sand-3: #ded1c1;
+  --paper: #f8f3eb;
+  --hairline: rgba(28, 25, 21, 0.1);
+  --hairline-strong: rgba(28, 25, 21, 0.18);
+  --line-strong: #857664;
+  --ink: #1c1915;
+  --ink-2: #4a4239;
+  --ink-muted: #675c50;
+  --ink-faint: #8a7b69;
+  --on-ink: #f3ebdd;
+  --terracota: #d97757;
+  --on-terracota: var(--ink);
+  --terracota-strong: #bc5a36;
+  --terracota-ink: #934428;
+  --terracota-soft: #f2dccb;
+  --focus: var(--terracota-strong);
+  --danger: #9b2c2c;
+  --success: #3f6b5c;
+  --shadow-rest: 0 1px 0 rgba(60, 40, 20, 0.04), 0 1px 2px rgba(60, 40, 20, 0.06);
+  --shadow-float: 0 1px 1px rgba(60, 40, 20, 0.05), 0 10px 28px -10px rgba(60, 40, 20, 0.22);
+  --shadow-depth: 0 2px 4px rgba(60, 40, 20, 0.05), 0 28px 56px -20px rgba(60, 40, 20, 0.28);
+  --focus-ring: 0 0 0 2px #f3ebdd, 0 0 0 4px #bc5a36;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-xs: 2px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+  --container-max: 1180px;
+  --container-narrow: 760px;
+  --gutter: 40px;
+  --header-offset: 96px;
+  --bp-tablet: 960px;
+  --bp-mobile: 720px;
+  --font-sans: Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+.t-name { font-family: var(--font-sans); font-size: 64px; line-height: 60px; font-weight: 600; letter-spacing: -0.04em; }
+.t-statement { font-family: var(--font-sans); font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em; }
+.t-title { font-family: var(--font-sans); font-size: 28px; line-height: 34px; font-weight: 500; letter-spacing: -0.02em; }
+.t-lead { font-family: var(--font-sans); font-size: 24px; line-height: 32px; font-weight: 400; letter-spacing: -0.015em; }
+.t-subtitle { font-family: var(--font-sans); font-size: 18px; line-height: 26px; font-weight: 500; letter-spacing: -0.01em; }
+.t-body { font-family: var(--font-sans); font-size: 16px; line-height: 26px; font-weight: 400; }
+.t-body-sm { font-family: var(--font-sans); font-size: 14px; line-height: 22px; font-weight: 400; }
+.t-ui { font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 500; }
+.t-label { font-family: var(--font-mono); font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; }
+.t-meta { font-family: var(--font-mono); font-size: 12px; line-height: 18px; font-weight: 400; letter-spacing: 0.02em; }
+.t-code { font-family: var(--font-mono); font-size: 13px; line-height: 22px; font-weight: 400; }
+.t-numeral { font-family: var(--font-mono); font-size: 40px; line-height: 40px; font-weight: 300; letter-spacing: -0.04em; }

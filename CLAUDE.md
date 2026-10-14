@@ -2,6 +2,8 @@
 
 Portfólio pessoal de Matheus Freitas Martins, desenvolvedor Full Stack. Site de uma página (com páginas de case preparadas), em PT, EN e ES.
 
+@AGENTS.md
+
 ## Fonte da verdade — leia antes de qualquer mudança visual ou de texto
 
 | O quê | Onde |

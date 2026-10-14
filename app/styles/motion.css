@@ -1,0 +1,10 @@
+/* Motion tokens — from the :root block of design-system/components/bundle.css. */
+:root {
+  --mf-ease-out: cubic-bezier(.22, 1, .36, 1);
+  --mf-ease-inout: cubic-bezier(.65, 0, .35, 1);
+  --mf-ease-spring: cubic-bezier(.3, 1.28, .5, 1);
+  --mf-dur-1: 160ms;
+  --mf-dur-2: 280ms;
+  --mf-dur-3: 520ms;
+  --mf-dur-4: 820ms;
+}
