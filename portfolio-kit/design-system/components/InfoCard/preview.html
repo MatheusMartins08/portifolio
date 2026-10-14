@@ -1,0 +1,29 @@
+<!-- @dsCard group="About" height=420 -->
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>InfoCard — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+  .bento { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; gap: 12px; max-width: 640px; }
+  .b-status { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .b-status .mf-info__head { order: 2; }
+  .b-status .mf-info__body { flex: none; }
+  .b-loc { grid-row: span 2; }
+  @media (max-width: 520px) { .bento { grid-template-columns: 1fr; } .b-loc { grid-row: auto; } }
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'bento' },
+    h(M.InfoCard, { label: 'Status', className: 'b-status', aside: 'atualizado · out 2026' }, h(M.StatusDot, { tone: 'open' }, 'Aberto a novos projetos')),
+    h(M.InfoCard, { label: 'Resume', tone: 'sand', className: 'b-cv', footer: h(M.Button, { variant: 'ghost', size: 'sm', icon: 'arrow-down', href: '#cv' }, 'Download CV') }, h('p', null, 'Minha trajetória profissional e acadêmica.')),
+    h(M.InfoCard, { label: 'Location', className: 'b-loc', footer: h(M.Coordinates) }, h('span', { className: 'mf-info__big' }, 'Belo Horizonte'), h('span', { className: 'mf-info__muted' }, 'Minas Gerais, Brasil')),
+    h(M.InfoCard, { label: 'Available for', tone: 'deep', className: 'b-av' }, h('span', { className: 'mf-info__big' }, 'Local + Remote'), h('span', { className: 'mf-info__muted', style: { color: 'var(--ink-2)' } }, 'worldwide'))));
+</script>
+</body>
+</html>

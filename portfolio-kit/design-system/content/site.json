@@ -1,0 +1,100 @@
+{
+  "_note": "Dados que não são tradução: links, contatos, imagens, ordem dos itens, skills. Textos traduzíveis ficam em i18n.json — as chaves (ex.: projects.items.blackCrown) apontam para lá.",
+  "person": {
+    "name": "Matheus Freitas",
+    "fullName": "Matheus Freitas Martins",
+    "since": "2024",
+    "photo": "assets/Photos/matheus-portrait.webp",
+    "photoCaption": "Fig. 01"
+  },
+  "social": {
+    "github": "https://github.com/MatheusMartins08",
+    "githubHandle": "@MatheusMartins08",
+    "linkedin": "https://www.linkedin.com/in/matheus-freitas-martins",
+    "linkedinHandle": "/in/matheus-freitas-martins",
+    "email": "matheus08.dev@gmail.com",
+    "whatsapp": "https://wa.me/5531991192484",
+    "whatsappDisplay": "+55 (31) 99119-2484"
+  },
+  "cv": {
+    "href": "/cv.pdf",
+    "status": "Arquivo ainda não existe — o botão fica no layout e o PDF entra depois."
+  },
+  "location": { "lat": -19.9167, "lon": -43.9345 },
+  "status": "open",
+  "sections": [
+    { "id": "sobre", "i18n": "nav.sobre", "index": "01" },
+    { "id": "servicos", "i18n": "nav.servicos", "index": "02" },
+    { "id": "experiencia", "i18n": "nav.experiencia", "index": "03" },
+    { "id": "skills", "i18n": "nav.skills", "index": "04" },
+    { "id": "projetos", "i18n": "nav.projetos", "index": "05" },
+    { "id": "contato", "i18n": "contact.label", "index": "06", "inNav": false }
+  ],
+  "services": [
+    { "key": "web", "index": "01", "motif": "web", "size": "lg" },
+    { "key": "ai", "index": "02", "motif": "ai", "size": "md" }
+  ],
+  "experience": {
+    "pro": [
+      { "key": "asp", "current": true },
+      { "key": "freelance", "current": true }
+    ],
+    "acad": [
+      { "key": "cotemig", "current": true, "currentLabel": "studying" },
+      { "key": "university", "future": true }
+    ],
+    "cert": [
+      { "key": "origamid", "current": true, "currentLabel": "studying" }
+    ]
+  },
+  "skills": [
+    { "key": "systems", "index": "01", "items": [
+      { "name": "Linux", "ext": ".sh", "category": "os", "glyph": "Li" },
+      { "name": "Windows", "ext": ".exe", "category": "os", "glyph": "Wi" },
+      { "name": "macOS", "ext": ".app", "category": "os", "glyph": "ma" },
+      { "name": "VPS", "ext": ".ssh", "category": "server", "glyph": "VP" }
+    ]},
+    { "key": "programming", "index": "02", "items": [
+      { "name": "Python", "ext": ".py", "category": "language", "glyph": "Py" },
+      { "name": "TypeScript", "ext": ".ts", "category": "language", "glyph": "TS" },
+      { "name": "MySQL", "ext": ".sql", "category": "database", "glyph": "My" }
+    ]},
+    { "key": "webMobile", "index": "03", "items": [
+      { "name": "HTML", "ext": ".html", "category": "web", "glyph": "<>" },
+      { "name": "CSS", "ext": ".css", "category": "web", "glyph": "{}" },
+      { "name": "React", "ext": ".tsx", "category": "web", "glyph": "Re" },
+      { "name": "Flutter", "ext": ".dart", "category": "mobile", "glyph": "Fl" },
+      { "name": "Kotlin", "ext": ".kt", "category": "android", "glyph": "Kt" },
+      { "name": "Swift", "ext": ".swift", "category": "ios", "glyph": "Sw" }
+    ]},
+    { "key": "tools", "index": "04", "items": [
+      { "name": "Claude / Claude Code", "ext": ".ai", "category": "ai", "glyph": "Cl" },
+      { "name": "Figma", "ext": ".fig", "category": "design", "glyph": "Fg" }
+    ]}
+  ],
+  "projects": [
+    {
+      "slug": "black-crown-barber",
+      "key": "blackCrown",
+      "index": "01",
+      "size": "feature",
+      "live": "https://black-crown-barber-five.vercel.app/",
+      "github": null,
+      "caseStudy": false,
+      "tech": ["TypeScript", "Next.js", "React", "SQL"],
+      "images": ["assets/Projects/black-crown-home.webp", "assets/Projects/black-crown-agendamento.webp"]
+    },
+    {
+      "slug": "metrica",
+      "key": "metrica",
+      "index": "02",
+      "size": "half",
+      "offset": true,
+      "live": "https://metrica-odontologia.vercel.app/",
+      "github": null,
+      "caseStudy": false,
+      "tech": ["JavaScript", "Next.js", "React"],
+      "images": ["assets/Projects/metrica-home.webp", "assets/Projects/metrica-diferenciais.webp"]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<!-- @dsCard group="Contact" height=1500 subtitle="CTA final, modal e os estados do formulário" -->
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>ContactModal — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+  .cta { display: grid; gap: 28px; justify-items: start; padding: 24px 0 8px; }
+  .states { display: grid; gap: 20px; }
+  .states .mf-modal__aside { display: none; }
+  .states .mf-modal__panel { grid-template-columns: 1fr; max-width: 560px; }
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  function Demo() {
+    var o = React.useState(false);
+    return h('div', { className: 'stack', style: { gap: '36px' } },
+      h('div', { className: 'cta' },
+        h(M.Statement, { label: 'Contato', index: '06', highlight: ['conversar'] }, 'Tem algo interessante para construir? Vamos conversar.'),
+        h(M.Button, { variant: 'primary', size: 'lg', icon: 'arrow-up-right', onClick: function () { o[1](true); } }, "Let's talk")),
+      h('p', { className: 'cap' }, 'normal'),
+      h(M.ContactModal, { inline: true }),
+      h('p', { className: 'cap' }, 'loading · error · success'),
+      h('div', { className: 'states' },
+        h(M.ContactModal, { inline: true, status: 'loading', defaults: { name: 'Ana', email: 'ana@empresa.com', message: 'Quero um site novo.' } }),
+        h(M.ContactModal, { inline: true, status: 'error', defaults: { name: 'Ana', email: 'ana@empresa.com', message: 'Quero um site novo.' } }),
+        h(M.ContactModal, { inline: true, status: 'success' })),
+      h(M.ContactModal, { open: o[0], onClose: function () { o[1](false); } }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

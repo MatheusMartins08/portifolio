@@ -1,0 +1,28 @@
+<!-- @dsCard group="Skills" height=560 subtitle="Clique numa pasta para abrir" -->
+<!doctype html>
+<html lang="pt-BR" data-theme="bege">
+<head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="lib/react.production.min.js"></script><script src="lib/react-dom.production.min.js"></script><script src="../components/bundle.js"></script><meta charset="utf-8"><title>SkillFolder — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+  .pv { padding: 32px 28px; }
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  var folders = [
+    { index: '01', title: 'Sistemas & Ambientes', open: true, items: [{ name: 'Linux', ext: '.sh', category: 'SO' }, { name: 'Windows', ext: '.exe', category: 'SO' }, { name: 'macOS', ext: '.app', category: 'SO' }, { name: 'VPS', ext: '.ssh', category: 'Servidor' }] },
+    { index: '02', title: 'Programação', items: [{ name: 'Python', ext: '.py', category: 'Linguagem', glyph: 'Py' }, { name: 'TypeScript', ext: '.ts', category: 'Linguagem', glyph: 'TS' }, { name: 'MySQL', ext: '.sql', category: 'Banco', glyph: 'My' }] },
+    { index: '03', title: 'Web & Mobile', items: [{ name: 'HTML', ext: '.html', category: 'Web', glyph: '<>' }, { name: 'CSS', ext: '.css', category: 'Web', glyph: '{}' }, { name: 'React', ext: '.tsx', category: 'Web', glyph: 'Re' }, { name: 'Flutter', ext: '.dart', category: 'Mobile', glyph: 'Fl' }, { name: 'Kotlin', ext: '.kt', category: 'Android', glyph: 'Kt' }, { name: 'Swift', ext: '.swift', category: 'iOS', glyph: 'Sw' }] },
+    { index: '04', title: 'Tools', items: [{ name: 'Claude / Claude Code', ext: '.ai', category: 'IA', glyph: 'Cl' }, { name: 'Figma', ext: '.fig', category: 'Design', glyph: 'Fg' }] }
+  ];
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'mf-folder-grid' }, folders.map(function (f) {
+    return h(M.SkillFolder, { key: f.index, index: f.index, title: f.title, items: f.items, defaultOpen: f.open });
+  })));
+</script>
+</body>
+</html>

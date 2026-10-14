@@ -1,0 +1,24 @@
+<!-- @dsCard group="Experience" height=110 -->
+<!doctype html>
+<html lang="pt-BR" data-theme="bege">
+<head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="lib/react.production.min.js"></script><script src="lib/react-dom.production.min.js"></script><script src="../components/bundle.js"></script><meta charset="utf-8"><title>FilterTabs — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  function Demo() {
+    var s = React.useState('pro');
+    return h(M.FilterTabs, { label: 'Tipo de experiência', value: s[0], onChange: s[1], options: [{ id: 'pro', label: 'Profissional', count: 2 }, { id: 'acad', label: 'Acadêmica', count: 2 }, { id: 'cert', label: 'Cursos & Certificações', count: 0 }] });
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

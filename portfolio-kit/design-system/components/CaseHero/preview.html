@@ -1,0 +1,26 @@
+<!-- @dsCard group="Projects" height=760 subtitle="/projects/project-name — topo" -->
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>CaseHero — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(M.CaseHero, {
+    index: '01', category: 'SaaS · 2026', title: 'Nome do projeto em uma linha',
+    summary: 'Uma frase que diz o que o produto faz e para quem — o resto do case conta como.',
+    back: { label: 'Projetos', href: '#projetos' },
+    meta: [{ label: 'My role', value: 'Fullstack — produto ao deploy' }, { label: 'Timeline', value: '8 semanas' }, { label: 'Tech stack', value: 'Next.js · Supabase · Vercel' }, { label: 'Status', value: 'Em produção' }],
+    links: [{ label: 'Live project', href: 'https://example.com/', primary: true }, { label: 'GitHub', href: 'https://github.com/MatheusMartins08' }]
+  }));
+</script>
+</body>
+</html>

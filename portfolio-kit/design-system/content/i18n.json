@@ -1,0 +1,1002 @@
+{
+  "meta": {
+    "langs": [
+      "pt",
+      "en",
+      "es"
+    ],
+    "note": "Conteúdo do portfólio em PT (original), EN e ES. Cada folha é {pt, en, es}. Nomes próprios, marcas, tecnologias e chaves de código não são traduzidos."
+  },
+  "nav": {
+    "sobre": {
+      "pt": "Sobre",
+      "en": "About",
+      "es": "Sobre mí"
+    },
+    "servicos": {
+      "pt": "Serviços",
+      "en": "Services",
+      "es": "Servicios"
+    },
+    "experiencia": {
+      "pt": "Experiência",
+      "en": "Experience",
+      "es": "Experiencia"
+    },
+    "skills": {
+      "pt": "Skills",
+      "en": "Skills",
+      "es": "Habilidades"
+    },
+    "projetos": {
+      "pt": "Projetos",
+      "en": "Projects",
+      "es": "Proyectos"
+    },
+    "menu": {
+      "pt": "Menu",
+      "en": "Menu",
+      "es": "Menú"
+    },
+    "close": {
+      "pt": "Fechar",
+      "en": "Close",
+      "es": "Cerrar"
+    },
+    "language": {
+      "pt": "Idioma",
+      "en": "Language",
+      "es": "Idioma"
+    },
+    "cv": {
+      "pt": "Download CV",
+      "en": "Download CV",
+      "es": "Descargar CV"
+    }
+  },
+  "hero": {
+    "metaLeft": {
+      "pt": "Matheus Freitas — 2026",
+      "en": "Matheus Freitas — 2026",
+      "es": "Matheus Freitas — 2026"
+    },
+    "metaMid": {
+      "pt": "Software · Produto · IA",
+      "en": "Software · Product · AI",
+      "es": "Software · Producto · IA"
+    },
+    "metaRight": {
+      "pt": "Belo Horizonte",
+      "en": "Belo Horizonte",
+      "es": "Belo Horizonte"
+    },
+    "greeting": {
+      "pt": "Olá, eu sou",
+      "en": "Hi, I'm",
+      "es": "Hola, soy"
+    },
+    "phrases": {
+      "pt": [
+        "Fullstack Developer",
+        "Produtos Digitais",
+        "Automações & IA"
+      ],
+      "en": [
+        "Fullstack Developer",
+        "Digital Products",
+        "Automation & AI"
+      ],
+      "es": [
+        "Desarrollador Fullstack",
+        "Productos Digitales",
+        "Automatización & IA"
+      ]
+    },
+    "photoAlt": {
+      "pt": "Matheus Freitas sentado em frente à pirâmide do Louvre, em Paris",
+      "en": "Matheus Freitas sitting in front of the Louvre pyramid in Paris",
+      "es": "Matheus Freitas sentado frente a la pirámide del Louvre, en París"
+    },
+    "photoMeta": {
+      "pt": "Paris — Louvre",
+      "en": "Paris — Louvre",
+      "es": "París — Louvre"
+    },
+    "scrollLabel": {
+      "pt": "Scroll",
+      "en": "Scroll",
+      "es": "Scroll"
+    },
+    "scrollAria": {
+      "pt": "Ir para Sobre mim",
+      "en": "Go to About",
+      "es": "Ir a Sobre mí"
+    }
+  },
+  "about": {
+    "label": {
+      "pt": "Sobre",
+      "en": "About",
+      "es": "Sobre mí"
+    },
+    "statement": {
+      "pt": "Boas soluções começam antes da primeira linha de código.",
+      "en": "Good solutions start before the first line of code.",
+      "es": "Las buenas soluciones empiezan antes de la primera línea de código."
+    },
+    "statementHighlight": {
+      "pt": [
+        "antes"
+      ],
+      "en": [
+        "before"
+      ],
+      "es": [
+        "antes"
+      ]
+    },
+    "terminal": {
+      "command": {
+        "pt": "cat sobre.md",
+        "en": "cat about.md",
+        "es": "cat sobre-mi.md"
+      },
+      "role": {
+        "pt": "Fullstack Developer",
+        "en": "Fullstack Developer",
+        "es": "Desarrollador Fullstack"
+      },
+      "study": {
+        "pt": "Desenvolvimento Web & Mobile — COTEMIG",
+        "en": "Web & Mobile Development — COTEMIG",
+        "es": "Desarrollo Web & Mobile — COTEMIG"
+      },
+      "status": {
+        "pt": "7 parágrafos · UTF-8 · pt-BR",
+        "en": "7 paragraphs · UTF-8 · en",
+        "es": "7 párrafos · UTF-8 · es"
+      },
+      "paragraphs": {
+        "pt": [
+          "Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos, unindo desenvolvimento, arquitetura, experiência do usuário e entrega em produção.",
+          "Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática constantemente. Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, formação que complementa uma rotina já bastante voltada à construção de soluções reais.",
+          "Gosto de participar de todo o ciclo de desenvolvimento de um produto. Isso significa entender o problema, estruturar a solução, definir tecnologias, desenvolver frontend e backend, trabalhar com bancos de dados, integrações e APIs, preparar a infraestrutura e acompanhar o sistema até o deploy e sua utilização em ambiente real.",
+          "Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por tecnologia e pelo funcionamento das coisas por trás de uma interface. Nunca me interessou apenas saber usar um software; sempre quis entender o que acontecia por trás da tela, como cada parte se conectava e como uma ideia poderia se transformar em algo funcional.",
+          "Essa curiosidade continua sendo uma das principais forças do meu trabalho. Procuro entender o problema antes de escolher a tecnologia e acredito que uma boa solução não precisa ser desnecessariamente complexa. Ela precisa ser clara, bem construída, escalável quando necessário e confiável quando colocada nas mãos de usuários reais.",
+          "Por isso, meu foco não está em acumular linguagens, frameworks ou ferramentas. Tecnologia, para mim, é meio. O objetivo é construir produtos que façam sentido, resolvam problemas concretos e estejam preparados para funcionar além do ambiente de desenvolvimento.",
+          "No final, é isso que busco em cada projeto: transformar uma necessidade em um produto sólido, simples de manter, pronto para evoluir e, principalmente, útil no mundo real."
+        ],
+        "en": [
+          "My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products, bringing together development, architecture, user experience and delivery to production.",
+          "My path in tech began in 2024, and since then I've been steadily turning study into practice. I'm currently studying Web and Mobile Development at COTEMIG, a program that complements a routine already centered on building real solutions.",
+          "I like being part of a product's entire development cycle. That means understanding the problem, structuring the solution, choosing the technologies, building the frontend and backend, working with databases, integrations and APIs, setting up the infrastructure and following the system all the way to deployment and real-world use.",
+          "Even before working in the field, I was always curious about technology and about how things work behind an interface. Knowing how to use software was never enough for me; I always wanted to understand what was happening behind the screen, how each part connected and how an idea could become something that actually works.",
+          "That curiosity is still one of the main strengths of my work. I try to understand the problem before choosing the technology, and I believe a good solution doesn't need to be needlessly complex. It needs to be clear, well built, scalable when necessary and reliable once it's in the hands of real users.",
+          "That's why my focus isn't on collecting languages, frameworks or tools. To me, technology is a means. The goal is to build products that make sense, solve concrete problems and are ready to work beyond the development environment.",
+          "In the end, that's what I look for in every project: turning a need into a solid product that's simple to maintain, ready to evolve and, above all, useful in the real world."
+        ],
+        "es": [
+          "Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos, uniendo desarrollo, arquitectura, experiencia de usuario y puesta en producción.",
+          "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica de forma constante. Actualmente curso Desarrollo Web y Mobile en COTEMIG, una formación que complementa una rutina ya muy orientada a construir soluciones reales.",
+          "Me gusta participar en todo el ciclo de desarrollo de un producto. Eso significa entender el problema, estructurar la solución, definir las tecnologías, desarrollar el frontend y el backend, trabajar con bases de datos, integraciones y APIs, preparar la infraestructura y acompañar el sistema hasta el despliegue y su uso en un entorno real.",
+          "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por la tecnología y por cómo funcionan las cosas detrás de una interfaz. Nunca me bastó con saber usar un software; siempre quise entender qué pasaba detrás de la pantalla, cómo se conectaba cada parte y cómo una idea podía convertirse en algo que realmente funciona.",
+          "Esa curiosidad sigue siendo una de las principales fortalezas de mi trabajo. Busco entender el problema antes de elegir la tecnología y creo que una buena solución no tiene por qué ser innecesariamente compleja. Tiene que ser clara, estar bien construida, ser escalable cuando haga falta y confiable cuando llega a manos de usuarios reales.",
+          "Por eso, mi enfoque no está en acumular lenguajes, frameworks o herramientas. Para mí, la tecnología es un medio. El objetivo es construir productos que tengan sentido, resuelvan problemas concretos y estén preparados para funcionar más allá del entorno de desarrollo.",
+          "Al final, eso es lo que busco en cada proyecto: transformar una necesidad en un producto sólido, fácil de mantener, listo para evolucionar y, sobre todo, útil en el mundo real."
+        ]
+      },
+      "highlight": {
+        "pt": [
+          "2024",
+          "COTEMIG",
+          "todo o ciclo de desenvolvimento",
+          "Tecnologia, para mim, é meio.",
+          "útil no mundo real"
+        ],
+        "en": [
+          "2024",
+          "COTEMIG",
+          "entire development cycle",
+          "To me, technology is a means.",
+          "useful in the real world"
+        ],
+        "es": [
+          "2024",
+          "COTEMIG",
+          "todo el ciclo de desarrollo",
+          "Para mí, la tecnología es un medio.",
+          "útil en el mundo real"
+        ]
+      }
+    },
+    "cards": {
+      "status": {
+        "pt": "Aberto a novos projetos",
+        "en": "Open to new projects",
+        "es": "Disponible para nuevos proyectos"
+      },
+      "statusAside": {
+        "pt": "atualizado · out 2026",
+        "en": "updated · Oct 2026",
+        "es": "actualizado · oct 2026"
+      },
+      "resume": {
+        "pt": "Minha trajetória profissional e acadêmica.",
+        "en": "My professional and academic background.",
+        "es": "Mi trayectoria profesional y académica."
+      },
+      "locationCity": {
+        "pt": "Belo Horizonte",
+        "en": "Belo Horizonte",
+        "es": "Belo Horizonte"
+      },
+      "locationRegion": {
+        "pt": "Minas Gerais, Brasil",
+        "en": "Minas Gerais, Brazil",
+        "es": "Minas Gerais, Brasil"
+      },
+      "availableFor": {
+        "pt": "Local + Remote",
+        "en": "Local + Remote",
+        "es": "Local + Remoto"
+      },
+      "availableWhere": {
+        "pt": "worldwide",
+        "en": "worldwide",
+        "es": "en todo el mundo"
+      }
+    }
+  },
+  "services": {
+    "label": {
+      "pt": "O que eu faço",
+      "en": "What I do",
+      "es": "Lo que hago"
+    },
+    "statement": {
+      "pt": "Desenvolvimento, automação e IA aplicados a problemas reais.",
+      "en": "Development, automation and AI applied to real problems.",
+      "es": "Desarrollo, automatización e IA aplicados a problemas reales."
+    },
+    "statementHighlight": {
+      "pt": [
+        "reais"
+      ],
+      "en": [
+        "real"
+      ],
+      "es": [
+        "reales"
+      ]
+    },
+    "web": {
+      "label": {
+        "pt": "WEB",
+        "en": "WEB",
+        "es": "WEB"
+      },
+      "title": {
+        "pt": "Desenvolvimento Web",
+        "en": "Web Development",
+        "es": "Desarrollo Web"
+      },
+      "description": {
+        "pt": "Criação de landing pages, sites institucionais e interfaces modernas, rápidas e responsivas, desenvolvidas para proporcionar uma experiência fluida, valorizar a presença digital e atender aos objetivos de cada projeto.",
+        "en": "Landing pages, company websites and modern interfaces — fast and responsive, designed to deliver a smooth experience, strengthen your online presence and meet the goals of each project.",
+        "es": "Creación de landing pages, sitios institucionales e interfaces modernas, rápidas y responsivas, pensadas para ofrecer una experiencia fluida, fortalecer la presencia digital y cumplir los objetivos de cada proyecto."
+      },
+      "highlights": {
+        "pt": [
+          "Páginas de Conversão",
+          "Websites Corporativos",
+          "Modernização de Interfaces"
+        ],
+        "en": [
+          "Conversion-Focused Pages",
+          "Corporate Websites",
+          "Interface Modernization"
+        ],
+        "es": [
+          "Páginas de Conversión",
+          "Sitios Corporativos",
+          "Modernización de Interfaces"
+        ]
+      }
+    },
+    "ai": {
+      "label": {
+        "pt": "IA",
+        "en": "AI",
+        "es": "IA"
+      },
+      "title": {
+        "pt": "Automação & IA",
+        "en": "Automation & AI",
+        "es": "Automatización & IA"
+      },
+      "description": {
+        "pt": "Aplicação de inteligência artificial e sistemas automatizados para eliminar etapas repetitivas, conectar ferramentas e transformar rotinas operacionais em processos mais ágeis e inteligentes.",
+        "en": "Applying artificial intelligence and automated systems to cut out repetitive steps, connect tools and turn day-to-day operations into faster, smarter processes.",
+        "es": "Aplicación de inteligencia artificial y sistemas automatizados para eliminar pasos repetitivos, conectar herramientas y convertir las rutinas operativas en procesos más ágiles e inteligentes."
+      },
+      "highlights": {
+        "pt": [
+          "Fluxos Automatizados",
+          "Assistentes Virtuais e Agentes de IA",
+          "Conexão entre Sistemas e Serviços"
+        ],
+        "en": [
+          "Automated Workflows",
+          "Virtual Assistants & AI Agents",
+          "Connecting Systems & Services"
+        ],
+        "es": [
+          "Flujos Automatizados",
+          "Asistentes Virtuales y Agentes de IA",
+          "Conexión entre Sistemas y Servicios"
+        ]
+      }
+    }
+  },
+  "experience": {
+    "label": {
+      "pt": "Experiência",
+      "en": "Experience",
+      "es": "Experiencia"
+    },
+    "tabs": {
+      "pro": {
+        "pt": "Profissional",
+        "en": "Professional",
+        "es": "Profesional"
+      },
+      "acad": {
+        "pt": "Acadêmica",
+        "en": "Academic",
+        "es": "Académica"
+      },
+      "cert": {
+        "pt": "Cursos & Certificações",
+        "en": "Courses & Certifications",
+        "es": "Cursos & Certificaciones"
+      }
+    },
+    "ui": {
+      "current": {
+        "pt": "Atual",
+        "en": "Current",
+        "es": "Actual"
+      },
+      "studying": {
+        "pt": "Cursando",
+        "en": "In progress",
+        "es": "En curso"
+      },
+      "more": {
+        "pt": "Ver atividades",
+        "en": "View activities",
+        "es": "Ver actividades"
+      },
+      "less": {
+        "pt": "Menos detalhes",
+        "en": "Show less",
+        "es": "Ver menos"
+      },
+      "nextChapter": {
+        "pt": "Next chapter",
+        "en": "Next chapter",
+        "es": "Próximo capítulo"
+      }
+    },
+    "items": {
+      "asp": {
+        "title": {
+          "pt": "Infraestrutura de Tecnologia da Informação",
+          "en": "IT Infrastructure",
+          "es": "Infraestructura de TI"
+        },
+        "org": {
+          "pt": "ASPPrev",
+          "en": "ASPPrev",
+          "es": "ASPPrev"
+        },
+        "kind": {
+          "pt": "Estágio",
+          "en": "Internship",
+          "es": "Prácticas profesionales"
+        },
+        "period": {
+          "pt": "Out. 2025 — Atualmente",
+          "en": "Oct 2025 — Present",
+          "es": "Oct. 2025 — Actualidad"
+        },
+        "place": {
+          "pt": "Belo Horizonte, MG · Remoto",
+          "en": "Belo Horizonte, Brazil · Remote",
+          "es": "Belo Horizonte, Brasil · Remoto"
+        },
+        "summary": {
+          "pt": "Atuação em infraestrutura e suporte de TI: organização de processos, manutenção de ambientes, documentação técnica e apoio às equipes internas.",
+          "en": "IT infrastructure and support work: organizing processes, maintaining environments, writing technical documentation and supporting internal teams.",
+          "es": "Trabajo en infraestructura y soporte de TI: organización de procesos, mantenimiento de entornos, documentación técnica y apoyo a los equipos internos."
+        },
+        "tags": {
+          "pt": [
+            "Infraestrutura",
+            "SQL",
+            "Homologação",
+            "Documentação"
+          ],
+          "en": [
+            "Infrastructure",
+            "SQL",
+            "Staging",
+            "Documentation"
+          ],
+          "es": [
+            "Infraestructura",
+            "SQL",
+            "Homologación",
+            "Documentación"
+          ]
+        },
+        "details": {
+          "pt": [
+            "Ambientes de homologação, testes e produção",
+            "Consultas e manutenção em SQL",
+            "Versionamento e documentação técnica",
+            "Suporte técnico às equipes internas",
+            "Automações e organização operacional"
+          ],
+          "en": [
+            "Staging, testing and production environments",
+            "SQL queries and maintenance",
+            "Version control and technical documentation",
+            "Technical support for internal teams",
+            "Automation and operational organization"
+          ],
+          "es": [
+            "Entornos de homologación, pruebas y producción",
+            "Consultas y mantenimiento en SQL",
+            "Control de versiones y documentación técnica",
+            "Soporte técnico a los equipos internos",
+            "Automatizaciones y organización operativa"
+          ]
+        }
+      },
+      "freelance": {
+        "title": {
+          "pt": "Desenvolvimento Full Stack Freelancer",
+          "en": "Freelance Full Stack Development",
+          "es": "Desarrollo Full Stack Freelance"
+        },
+        "org": {
+          "pt": "Projetos Independentes",
+          "en": "Independent Projects",
+          "es": "Proyectos Independientes"
+        },
+        "kind": {
+          "pt": "Freelancer",
+          "en": "Freelance",
+          "es": "Freelance"
+        },
+        "period": {
+          "pt": "2026 — Atualmente",
+          "en": "2026 — Present",
+          "es": "2026 — Actualidad"
+        },
+        "place": {
+          "pt": "Belo Horizonte, MG",
+          "en": "Belo Horizonte, Brazil",
+          "es": "Belo Horizonte, Brasil"
+        },
+        "summary": {
+          "pt": "Da concepção ao deploy: arquitetura, desenvolvimento, integrações e manutenção de landing pages, sites, agendamentos, dashboards e automações com IA.",
+          "en": "From concept to deployment: architecture, development, integrations and maintenance for landing pages, websites, booking systems, dashboards and AI-powered automations.",
+          "es": "De la concepción al despliegue: arquitectura, desarrollo, integraciones y mantenimiento de landing pages, sitios web, sistemas de reservas, dashboards y automatizaciones con IA."
+        },
+        "tags": {
+          "pt": [
+            "Next.js",
+            "TypeScript",
+            "Supabase",
+            "SQL",
+            "Vercel",
+            "IA"
+          ],
+          "en": [
+            "Next.js",
+            "TypeScript",
+            "Supabase",
+            "SQL",
+            "Vercel",
+            "AI"
+          ],
+          "es": [
+            "Next.js",
+            "TypeScript",
+            "Supabase",
+            "SQL",
+            "Vercel",
+            "IA"
+          ]
+        },
+        "details": {
+          "pt": [
+            "Concepção → Arquitetura → Desenvolvimento → Integrações → Deploy → Manutenção",
+            "Bancos de dados, autenticação e APIs",
+            "Agendamentos e dashboards",
+            "Automações e IA"
+          ],
+          "en": [
+            "Concept → Architecture → Development → Integrations → Deployment → Maintenance",
+            "Databases, authentication and APIs",
+            "Booking systems and dashboards",
+            "Automation and AI"
+          ],
+          "es": [
+            "Concepción → Arquitectura → Desarrollo → Integraciones → Despliegue → Mantenimiento",
+            "Bases de datos, autenticación y APIs",
+            "Sistemas de reservas y dashboards",
+            "Automatizaciones e IA"
+          ]
+        }
+      },
+      "cotemig": {
+        "title": {
+          "pt": "Desenvolvimento Web & Mobile",
+          "en": "Web & Mobile Development",
+          "es": "Desarrollo Web & Mobile"
+        },
+        "org": {
+          "pt": "COTEMIG",
+          "en": "COTEMIG",
+          "es": "COTEMIG"
+        },
+        "period": {
+          "pt": "Fev. 2024 — Dez. 2026",
+          "en": "Feb 2024 — Dec 2026",
+          "es": "Feb. 2024 — Dic. 2026"
+        },
+        "place": {
+          "pt": "Belo Horizonte, MG",
+          "en": "Belo Horizonte, Brazil",
+          "es": "Belo Horizonte, Brasil"
+        },
+        "summary": {
+          "pt": "Aplicações mobile, sistemas web, backend, APIs, automações, arquitetura, lógica e manutenção de software.",
+          "en": "Mobile apps, web systems, backend, APIs, automation, architecture, programming logic and software maintenance.",
+          "es": "Aplicaciones móviles, sistemas web, backend, APIs, automatizaciones, arquitectura, lógica de programación y mantenimiento de software."
+        },
+        "tags": {
+          "pt": [
+            "Flutter",
+            "Swift",
+            "Kotlin",
+            "Python",
+            "REST APIs",
+            "Backend"
+          ],
+          "en": [
+            "Flutter",
+            "Swift",
+            "Kotlin",
+            "Python",
+            "REST APIs",
+            "Backend"
+          ],
+          "es": [
+            "Flutter",
+            "Swift",
+            "Kotlin",
+            "Python",
+            "REST APIs",
+            "Backend"
+          ]
+        }
+      },
+      "university": {
+        "title": {
+          "pt": "Faculdade",
+          "en": "University",
+          "es": "Universidad"
+        },
+        "summary": {
+          "pt": "Em breve.",
+          "en": "Coming soon.",
+          "es": "Próximamente."
+        }
+      },
+      "origamid": {
+        "title": {
+          "pt": "Formação em Desenvolvimento Web",
+          "en": "Web Development Program",
+          "es": "Formación en Desarrollo Web"
+        },
+        "org": {
+          "pt": "Origamid",
+          "en": "Origamid",
+          "es": "Origamid"
+        },
+        "period": {
+          "pt": "Em andamento",
+          "en": "In progress",
+          "es": "En curso"
+        },
+        "summary": {
+          "pt": "Formação prática e progressiva em desenvolvimento web, abrangendo fundamentos e tecnologias modernas de Front-End e Back-End, como HTML, CSS, JavaScript, TypeScript, React, Next.js e Node.js, além de UI Design e banco de dados. O aprendizado é desenvolvido por meio de projetos práticos, aplicando conceitos de interface, responsividade, arquitetura e construção de aplicações web completas.",
+          "en": "A hands-on, progressive web development program covering the fundamentals and modern Front-End and Back-End technologies such as HTML, CSS, JavaScript, TypeScript, React, Next.js and Node.js, as well as UI Design and databases. Learning happens through practical projects that apply interface design, responsiveness, architecture and the building of complete web applications.",
+          "es": "Formación práctica y progresiva en desarrollo web que abarca los fundamentos y tecnologías modernas de Front-End y Back-End, como HTML, CSS, JavaScript, TypeScript, React, Next.js y Node.js, además de UI Design y bases de datos. El aprendizaje se desarrolla a través de proyectos prácticos, aplicando conceptos de interfaz, responsividad, arquitectura y construcción de aplicaciones web completas."
+        },
+        "tags": {
+          "pt": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "Node.js",
+            "UI Design",
+            "Banco de dados"
+          ],
+          "en": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "Node.js",
+            "UI Design",
+            "Databases"
+          ],
+          "es": [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "Node.js",
+            "UI Design",
+            "Bases de datos"
+          ]
+        }
+      }
+    }
+  },
+  "skills": {
+    "label": {
+      "pt": "Skills",
+      "en": "Skills",
+      "es": "Habilidades"
+    },
+    "unit": {
+      "pt": "itens",
+      "en": "items",
+      "es": "elementos"
+    },
+    "open": {
+      "pt": "abrir pasta",
+      "en": "open folder",
+      "es": "abrir carpeta"
+    },
+    "close": {
+      "pt": "fechar pasta",
+      "en": "close folder",
+      "es": "cerrar carpeta"
+    },
+    "folders": {
+      "systems": {
+        "pt": "Sistemas & Ambientes",
+        "en": "Systems & Environments",
+        "es": "Sistemas & Entornos"
+      },
+      "programming": {
+        "pt": "Programação",
+        "en": "Programming",
+        "es": "Programación"
+      },
+      "webMobile": {
+        "pt": "Web & Mobile",
+        "en": "Web & Mobile",
+        "es": "Web & Mobile"
+      },
+      "tools": {
+        "pt": "Tools",
+        "en": "Tools",
+        "es": "Herramientas"
+      }
+    },
+    "categories": {
+      "os": {
+        "pt": "SO",
+        "en": "OS",
+        "es": "SO"
+      },
+      "server": {
+        "pt": "Servidor",
+        "en": "Server",
+        "es": "Servidor"
+      },
+      "language": {
+        "pt": "Linguagem",
+        "en": "Language",
+        "es": "Lenguaje"
+      },
+      "database": {
+        "pt": "Banco",
+        "en": "Database",
+        "es": "Base de datos"
+      },
+      "web": {
+        "pt": "Web",
+        "en": "Web",
+        "es": "Web"
+      },
+      "mobile": {
+        "pt": "Mobile",
+        "en": "Mobile",
+        "es": "Mobile"
+      },
+      "android": {
+        "pt": "Android",
+        "en": "Android",
+        "es": "Android"
+      },
+      "ios": {
+        "pt": "iOS",
+        "en": "iOS",
+        "es": "iOS"
+      },
+      "ai": {
+        "pt": "IA",
+        "en": "AI",
+        "es": "IA"
+      },
+      "design": {
+        "pt": "Design",
+        "en": "Design",
+        "es": "Diseño"
+      }
+    }
+  },
+  "projects": {
+    "label": {
+      "pt": "Projetos",
+      "en": "Projects",
+      "es": "Proyectos"
+    },
+    "statement": {
+      "pt": "Ideias que se tornaram produtos.",
+      "en": "Ideas that became products.",
+      "es": "Ideas que se convirtieron en productos."
+    },
+    "statementHighlight": {
+      "pt": [
+        "produtos"
+      ],
+      "en": [
+        "products"
+      ],
+      "es": [
+        "productos"
+      ]
+    },
+    "viewSite": {
+      "pt": "Ver site",
+      "en": "View site",
+      "es": "Ver sitio"
+    },
+    "caseStudy": {
+      "pt": "Case study",
+      "en": "Case study",
+      "es": "Caso de estudio"
+    },
+    "cursor": {
+      "pt": "View",
+      "en": "View",
+      "es": "Ver"
+    },
+    "moreWork": {
+      "pt": "More work",
+      "en": "More work",
+      "es": "Más trabajos"
+    },
+    "viewGithub": {
+      "pt": "View my GitHub",
+      "en": "View my GitHub",
+      "es": "Ver mi GitHub"
+    },
+    "items": {
+      "blackCrown": {
+        "title": {
+          "pt": "Black Crown Barber",
+          "en": "Black Crown Barber",
+          "es": "Black Crown Barber"
+        },
+        "category": {
+          "pt": "Plataforma web",
+          "en": "Web platform",
+          "es": "Plataforma web"
+        },
+        "description": {
+          "pt": "Plataforma web completa para barbearias, com agendamento online, gestão de serviços e profissionais, sistema de assinaturas e painel administrativo. Desenvolvida com foco em experiência do usuário, responsividade e automação da gestão do estabelecimento.",
+          "en": "A complete web platform for barbershops, with online booking, service and staff management, a subscription system and an admin dashboard. Built with a focus on user experience, responsiveness and automating the day-to-day management of the shop.",
+          "es": "Plataforma web completa para barberías, con reservas en línea, gestión de servicios y profesionales, sistema de suscripciones y panel administrativo. Desarrollada con foco en la experiencia de usuario, la responsividad y la automatización de la gestión del local."
+        }
+      },
+      "metrica": {
+        "title": {
+          "pt": "Métrica — Odontologia Moderna",
+          "en": "Métrica — Modern Dentistry",
+          "es": "Métrica — Odontología Moderna"
+        },
+        "category": {
+          "pt": "Landing page",
+          "en": "Landing page",
+          "es": "Landing page"
+        },
+        "description": {
+          "pt": "Landing page premium para uma clínica odontológica contemporânea, com foco em identidade visual, experiência do usuário e conversão. O projeto conta com animações, tratamentos interativos, comparador antes e depois, avaliações em carrossel e design totalmente responsivo.",
+          "en": "A premium landing page for a contemporary dental clinic, focused on visual identity, user experience and conversion. It features animations, interactive treatment sections, a before-and-after comparison, a review carousel and a fully responsive design.",
+          "es": "Landing page premium para una clínica odontológica contemporánea, con foco en identidad visual, experiencia de usuario y conversión. Incluye animaciones, tratamientos interactivos, comparador de antes y después, reseñas en carrusel y un diseño totalmente responsivo."
+        }
+      }
+    }
+  },
+  "contact": {
+    "label": {
+      "pt": "Contato",
+      "en": "Contact",
+      "es": "Contacto"
+    },
+    "statement": {
+      "pt": "Tem algo interessante para construir? Vamos conversar.",
+      "en": "Got something interesting to build? Let's talk.",
+      "es": "¿Tienes algo interesante para construir? Hablemos."
+    },
+    "statementHighlight": {
+      "pt": [
+        "conversar"
+      ],
+      "en": [
+        "talk"
+      ],
+      "es": [
+        "hablemos"
+      ]
+    },
+    "cta": {
+      "pt": "Let's talk",
+      "en": "Let's talk",
+      "es": "Hablemos"
+    },
+    "modal": {
+      "title": {
+        "pt": "Qual é o próximo projeto?",
+        "en": "What's the next project?",
+        "es": "¿Cuál es el próximo proyecto?"
+      },
+      "intro": {
+        "pt": "Projeto, oportunidade ou uma boa ideia, escolha o canal que preferir.",
+        "en": "A project, an opportunity or just a good idea — pick the channel you prefer.",
+        "es": "Un proyecto, una oportunidad o una buena idea: elige el canal que prefieras."
+      },
+      "close": {
+        "pt": "Fechar",
+        "en": "Close",
+        "es": "Cerrar"
+      }
+    },
+    "form": {
+      "name": {
+        "pt": "Nome",
+        "en": "Name",
+        "es": "Nombre"
+      },
+      "email": {
+        "pt": "E-mail",
+        "en": "Email",
+        "es": "Correo electrónico"
+      },
+      "message": {
+        "pt": "Mensagem",
+        "en": "Message",
+        "es": "Mensaje"
+      },
+      "send": {
+        "pt": "Enviar",
+        "en": "Send",
+        "es": "Enviar"
+      },
+      "sending": {
+        "pt": "Enviando…",
+        "en": "Sending…",
+        "es": "Enviando…"
+      },
+      "okTitle": {
+        "pt": "Mensagem enviada.",
+        "en": "Message sent.",
+        "es": "Mensaje enviado."
+      },
+      "okBody": {
+        "pt": "Obrigado pelo contato — retorno pelo e-mail informado.",
+        "en": "Thanks for reaching out — I'll reply to the email you provided.",
+        "es": "Gracias por escribir: te responderé al correo que indicaste."
+      },
+      "again": {
+        "pt": "Enviar outra",
+        "en": "Send another",
+        "es": "Enviar otro"
+      },
+      "errBody": {
+        "pt": "Não foi possível enviar agora. Tente de novo ou escreva direto para o e-mail ao lado.",
+        "en": "Your message couldn't be sent right now. Try again or write directly to the email address alongside.",
+        "es": "No se pudo enviar en este momento. Inténtalo de nuevo o escribe directamente al correo de al lado."
+      },
+      "reqName": {
+        "pt": "Diga como posso te chamar.",
+        "en": "Tell me what to call you.",
+        "es": "Dime cómo te llamas."
+      },
+      "reqEmail": {
+        "pt": "Informe um e-mail válido.",
+        "en": "Enter a valid email address.",
+        "es": "Ingresa un correo válido."
+      },
+      "reqMsg": {
+        "pt": "Conte um pouco sobre o projeto.",
+        "en": "Tell me a little about the project.",
+        "es": "Cuéntame un poco sobre el proyecto."
+      }
+    },
+    "channels": {
+      "email": {
+        "pt": "Email",
+        "en": "Email",
+        "es": "Correo"
+      },
+      "whatsapp": {
+        "pt": "WhatsApp",
+        "en": "WhatsApp",
+        "es": "WhatsApp"
+      },
+      "linkedin": {
+        "pt": "LinkedIn",
+        "en": "LinkedIn",
+        "es": "LinkedIn"
+      },
+      "github": {
+        "pt": "GitHub",
+        "en": "GitHub",
+        "es": "GitHub"
+      }
+    }
+  },
+  "footer": {
+    "role": {
+      "pt": "Fullstack Developer",
+      "en": "Fullstack Developer",
+      "es": "Desarrollador Fullstack"
+    },
+    "email": {
+      "pt": "Email",
+      "en": "Email",
+      "es": "Correo"
+    }
+  },
+  "a11y": {
+    "newTab": {
+      "pt": "(abre em nova aba)",
+      "en": "(opens in a new tab)",
+      "es": "(se abre en una pestaña nueva)"
+    },
+    "nav": {
+      "pt": "Principal",
+      "en": "Main",
+      "es": "Principal"
+    }
+  }
+}

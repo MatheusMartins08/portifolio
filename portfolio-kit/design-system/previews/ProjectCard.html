@@ -1,0 +1,29 @@
+<!-- @dsCard group="Projects" height=760 subtitle="Passe o mouse na imagem para ver o segundo print" -->
+<!doctype html>
+<html lang="pt-BR" data-theme="bege">
+<head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="lib/react.production.min.js"></script><script src="lib/react-dom.production.min.js"></script><script src="../components/bundle.js"></script><meta charset="utf-8"><title>ProjectCard — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'stack', style: { gap: '40px' } },
+    h(M.Statement, { label: 'Projetos', index: '05', highlight: ['produtos'] }, 'Ideias que se tornaram produtos.'),
+    h('div', { className: 'mf-pgrid' },
+      h(M.ProjectCard, { size: 'feature', index: '01', category: 'Plataforma web', title: 'Black Crown Barber',
+        description: 'Plataforma web completa para barbearias, com agendamento online, gestão de serviços e profissionais, sistema de assinaturas e painel administrativo. Desenvolvida com foco em experiência do usuário, responsividade e automação da gestão do estabelecimento.',
+        tech: ['TypeScript', 'Next.js', 'React', 'SQL'], live: 'https://black-crown-barber-five.vercel.app/', images: ['../assets/Projects/black-crown-home.webp', '../assets/Projects/black-crown-agendamento.webp'] }),
+      h(M.ProjectCard, { size: 'half', className: 'mf-proj--offset', index: '02', category: 'Landing page', title: 'Métrica — Odontologia Moderna',
+        description: 'Landing page premium para uma clínica odontológica contemporânea, com foco em identidade visual, experiência do usuário e conversão. O projeto conta com animações, tratamentos interativos, comparador antes e depois, avaliações em carrossel e design totalmente responsivo.',
+        tech: ['JavaScript', 'Next.js', 'React'], live: 'https://metrica-odontologia.vercel.app/', images: ['../assets/Projects/metrica-home.webp', '../assets/Projects/metrica-diferenciais.webp'] })),
+    h('div', null, h('p', { className: 'cap' }, 'More work'), h(M.ArrowLink, { href: 'https://github.com/MatheusMartins08', size: 'lg' }, 'View my GitHub'))));
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!-- @dsCard group="Contact" height=330 -->
+<!doctype html>
+<html lang="pt-BR" data-theme="bege">
+<head><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="lib/react.production.min.js"></script><script src="lib/react-dom.production.min.js"></script><script src="../components/bundle.js"></script><meta charset="utf-8"><title>Field — preview</title>
+<style>
+  .pv { padding: 28px; box-sizing: border-box; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .stack { display: grid; gap: 20px; }
+  .cap { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); margin: 0 0 10px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 28px; max-width: 640px; }
+  .wide { grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var M = window.MF, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'grid2' },
+    h(M.Field, { label: 'Nome', placeholder: 'Como posso te chamar?' }),
+    h(M.Field, { label: 'E-mail', defaultValue: 'nome@empresa', error: 'Informe um e-mail válido.' }),
+    h(M.Field, { label: 'Empresa', optional: true, hint: 'Se for um projeto para uma empresa.' }),
+    h(M.Field, { label: 'Indisponível', disabled: true, defaultValue: 'Campo desabilitado' }),
+    h(M.Field, { label: 'Mensagem', multiline: true, rows: 3, className: 'wide' })));
+  setTimeout(function () { var i = document.querySelector('.mf-field input'); if (i) i.focus(); }, 300);
+</script>
+</body>
+</html>
