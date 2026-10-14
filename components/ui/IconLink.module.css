@@ -1,0 +1,16 @@
+.link {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    border-color var(--mf-dur-2) var(--mf-ease-out),
+    background-color var(--mf-dur-2) var(--mf-ease-out),
+    color var(--mf-dur-2) var(--mf-ease-out);
+}
+.link:hover { border-color: var(--ink); background: var(--paper); color: var(--terracota-ink); }
+.link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }

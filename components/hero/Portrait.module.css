@@ -1,0 +1,46 @@
+.portrait { position: relative; margin: 0; }
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-xs);
+  clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
+  background: var(--sand-3);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.92) sepia(.06) contrast(1.02);
+  transition: transform 1.2s var(--mf-ease-out);
+}
+.portrait:hover .img { transform: scale(1.025); }
+
+.mark {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--terracota-strong);
+  border-style: solid;
+  border-width: 0;
+}
+.tl { top: -10px; left: -10px; border-top-width: 1px; border-left-width: 1px; }
+.br { bottom: 26px; right: -10px; border-bottom-width: 1px; border-right-width: 1px; }
+
+.cap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--hairline);
+  font: 400 11px/16px var(--font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.cap span { white-space: nowrap; }

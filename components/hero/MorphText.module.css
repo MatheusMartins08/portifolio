@@ -1,0 +1,23 @@
+.morph { margin: 0; font: 400 24px/32px var(--font-sans); letter-spacing: -0.015em; color: var(--ink-2); }
+
+.stage { position: relative; display: inline-block; min-height: 1lh; }
+.line { white-space: nowrap; }
+.ch, .sp { display: inline-block; }
+
+.overlay { position: absolute; inset: 0; pointer-events: none; }
+.overlay .ch { position: absolute; will-change: transform, opacity; }
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: .95em;
+  margin-left: var(--space-1);
+  vertical-align: -0.12em;
+  background: var(--terracota-strong);
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}

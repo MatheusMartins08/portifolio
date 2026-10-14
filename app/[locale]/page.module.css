@@ -1,5 +1,0 @@
-/* Placeholder for the first fold until the Hero lands (stage 3): same height rule as .mf-hero. */
-.hero {
-  min-height: min(100svh, 880px);
-  background: var(--sand);
-}
