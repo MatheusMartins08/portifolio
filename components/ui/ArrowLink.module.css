@@ -1,0 +1,35 @@
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--space-1) 0;
+  transition: color var(--mf-dur-2) var(--mf-ease-out);
+}
+.link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+
+.sm { font-size: 13px; line-height: 18px; }
+.md { font-size: 15px; line-height: 22px; }
+.lg { font-size: 24px; line-height: 30px; letter-spacing: -0.02em; gap: 10px; }
+
+.text { position: relative; transition: transform var(--mf-dur-2) var(--mf-ease-out); }
+.text::before,
+.text::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; }
+.text::before { background: var(--hairline-strong); }
+.text::after {
+  background: var(--terracota-strong);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--mf-dur-3) var(--mf-ease-out);
+}
+.lg .text::before,
+.lg .text::after { bottom: -4px; }
+
+.link:hover { color: var(--terracota-ink); }
+.link:hover .text { transform: translateX(2px); }
+.link:hover .text::after { transform: scaleX(1); transform-origin: left; }
+
+.icon { color: var(--terracota-strong); }

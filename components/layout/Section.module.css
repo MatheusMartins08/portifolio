@@ -20,7 +20,3 @@
 @media (min-width: 1440px) {
   .section { padding-block: var(--space-32); }
 }
-
-@media (max-width: 720px) {
-  .inner { padding-inline: var(--space-4); }
-}

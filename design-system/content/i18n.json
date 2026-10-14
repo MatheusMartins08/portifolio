@@ -52,6 +52,11 @@
       "pt": "Download CV",
       "en": "Download CV",
       "es": "Descargar CV"
+    },
+    "cvShort": {
+      "pt": "CV",
+      "en": "CV",
+      "es": "CV"
     }
   },
   "hero": {

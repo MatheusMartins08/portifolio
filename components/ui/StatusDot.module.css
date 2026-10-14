@@ -1,0 +1,22 @@
+.status { display: inline-flex; align-items: center; gap: 10px; font: 500 14px/20px var(--font-sans); color: var(--ink); }
+
+.dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--terracota-strong); flex: none; }
+.dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--terracota);
+  opacity: 0;
+  animation: pulse 2.4s var(--mf-ease-out) infinite;
+}
+
+.busy .dot { background: var(--ink-faint); }
+.busy .dot::after,
+.away .dot::after { display: none; }
+.away .dot { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink-muted); }
+
+@keyframes pulse {
+  0% { transform: scale(.6); opacity: .55; }
+  70%, 100% { transform: scale(1.9); opacity: 0; }
+}

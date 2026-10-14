@@ -84,4 +84,13 @@ export interface Site {
 export const site = siteJson as Site;
 
 /** Sections shown in the header navigation, in page order. */
-export const navSections = site.sections.filter((section) => section.inNav !== false);
+export const navSections = site.sections.filter(
+  (section): section is SiteSection & { id: Exclude<SectionId, "contato"> } => section.inNav !== false,
+);
+
+/** Label index of a section: "01"… */
+export function sectionIndex(id: SectionId): string {
+  const section = site.sections.find((s) => s.id === id);
+  if (!section) throw new Error(`Section "${id}" is missing from site.json`);
+  return section.index;
+}

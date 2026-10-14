@@ -1,0 +1,17 @@
+.reveal {
+  transition:
+    opacity var(--mf-dur-4) var(--mf-ease-out) var(--d),
+    transform var(--mf-dur-4) var(--mf-ease-out) var(--d),
+    clip-path 1s var(--mf-ease-inout) var(--d),
+    filter var(--mf-dur-4) var(--mf-ease-out) var(--d);
+}
+.up:not(.in) { opacity: 0; transform: translateY(18px); }
+.fade:not(.in) { opacity: 0; }
+.blur:not(.in) { opacity: 0; filter: blur(8px); }
+.clip:not(.in) { clip-path: inset(0 0 100% 0); }
+.clip.in { clip-path: inset(0 0 0 0); }
+.line:not(.in) { transform: scaleX(0); transform-origin: left; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
+}

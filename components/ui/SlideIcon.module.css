@@ -1,0 +1,12 @@
+.slide { position: relative; display: inline-flex; overflow: hidden; flex: none; }
+.a, .b { transition: transform var(--mf-dur-2) var(--mf-ease-out); }
+.b { position: absolute; inset: 0; transform: translate(calc(var(--dx, 0) * -120%), calc(var(--dy, 0) * -120%)); }
+
+:is(a, button):hover > .slide > .a,
+:is(a, button):focus-visible > .slide > .a {
+  transform: translate(calc(var(--dx, 0) * 120%), calc(var(--dy, 0) * 120%));
+}
+:is(a, button):hover > .slide > .b,
+:is(a, button):focus-visible > .slide > .b {
+  transform: none;
+}

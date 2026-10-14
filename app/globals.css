@@ -7,6 +7,11 @@
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 }
 
+/* Gutter: --gutter on desktop, --space-4 on phones (tokens.json > layout). */
+@media (max-width: 720px) {
+  :root { --gutter: var(--space-4); }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
@@ -28,8 +33,9 @@ img, svg, video { display: block; max-width: 100%; }
 
 button, input, textarea, select { font: inherit; color: inherit; }
 
-/* Keyboard focus: 2px of background + 2px terracota-strong, on every control. */
-:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+/* Keyboard focus: 2px of background + 2px terracota-strong, on every control.
+   Zero specificity so components can restate it next to their own box-shadows. */
+:where(:focus-visible) { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
 .sr-only {
   position: absolute !important;

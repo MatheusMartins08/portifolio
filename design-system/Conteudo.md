@@ -18,6 +18,7 @@ Todo o texto do portfólio nos três idiomas. A fonte para o código é `content
 | Menu: Skills | Skills | Skills | Habilidades |
 | Menu: Projetos | Projetos | Projects | Proyectos |
 | Botão CV | Download CV | Download CV | Descargar CV |
+| Botão CV (abaixo de 720px) | CV | CV | CV |
 | Linha superior (centro) | Software · Produto · IA | Software · Product · AI | Software · Producto · IA |
 | Saudação | Olá, eu sou | Hi, I'm | Hola, soy |
 | Frases animadas | Fullstack Developer · Produtos Digitais · Automações & IA | Fullstack Developer · Digital Products · Automation & AI | Desarrollador Fullstack · Productos Digitales · Automatización & IA |

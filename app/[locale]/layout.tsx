@@ -24,7 +24,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={htmlLang[locale]} className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html
+      lang={htmlLang[locale]}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body>{children}</body>
     </html>
   );
