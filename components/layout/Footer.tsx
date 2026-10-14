@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { site } from "@/lib/content/site";
 import { getDictionary } from "@/lib/i18n/dictionary";
@@ -6,6 +7,7 @@ import styles from "./Footer.module.css";
 /** Copyright year. Cached, because Cache Components prerenders the page and forbids a bare `new Date()`. */
 async function currentYear(): Promise<number> {
   "use cache";
+  cacheLife("days");
   return new Date().getFullYear();
 }
 

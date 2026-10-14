@@ -1124,6 +1124,28 @@
       "es": "Correo"
     }
   },
+  "notFound": {
+    "label": {
+      "pt": "Não encontrada",
+      "en": "Not found",
+      "es": "No encontrada"
+    },
+    "title": {
+      "pt": "Página não encontrada.",
+      "en": "Page not found.",
+      "es": "Página no encontrada."
+    },
+    "body": {
+      "pt": "O endereço pode ter mudado ou não existe mais.",
+      "en": "The address may have changed or no longer exists.",
+      "es": "La dirección puede haber cambiado o ya no existe."
+    },
+    "back": {
+      "pt": "Voltar ao início",
+      "en": "Back to home",
+      "es": "Volver al inicio"
+    }
+  },
   "a11y": {
     "newTab": {
       "pt": "(abre em nova aba)",

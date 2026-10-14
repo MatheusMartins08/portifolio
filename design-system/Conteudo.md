@@ -156,3 +156,11 @@ Destaques em terracota (trechos exatos, no máximo seis):
 | Validação: e-mail | Informe um e-mail válido. | Enter a valid email address. | Ingresa un correo válido. |
 | Validação: mensagem | Conte um pouco sobre o projeto. | Tell me a little about the project. | Cuéntame un poco sobre el proyecto. |
 
+## Página 404
+
+| Onde | PT | EN | ES |
+| --- | --- | --- | --- |
+| Rótulo | Não encontrada | Not found | No encontrada |
+| Título | Página não encontrada. | Page not found. | Página no encontrada. |
+| Texto | O endereço pode ter mudado ou não existe mais. | The address may have changed or no longer exists. | La dirección puede haber cambiado o ya no existe. |
+| Link | Voltar ao início | Back to home | Volver al inicio |

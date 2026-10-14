@@ -9,5 +9,6 @@
   color: var(--ink-muted);
 }
 .index { color: var(--terracota-ink); }
-.sep { color: var(--ink-faint); }
+/* ink-faint is for 24px+ only (README); small marks use ink-muted. */
+.sep { color: var(--ink-muted); }
 .rule::after { content: ""; flex: 1; height: 1px; background: var(--hairline); margin-left: var(--space-2); }

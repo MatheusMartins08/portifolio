@@ -13,13 +13,13 @@ interface PortraitProps {
   meta?: string;
   /** next/image `sizes` for the rendered width. */
   sizes: string;
-  /** Preload when it is the above-the-fold LCP image. */
-  preload?: boolean;
+  /** The above-the-fold LCP image: loads eagerly with high fetch priority. */
+  priority?: boolean;
   className?: string;
 }
 
 /** Editorial photo: chamfered top-right corner, terracota crop marks, mono caption, slight warm tone. */
-export function Portrait({ image, alt, caption, meta, sizes, preload = false, className }: PortraitProps) {
+export function Portrait({ image, alt, caption, meta, sizes, priority = false, className }: PortraitProps) {
   return (
     <figure className={cx(styles.portrait, className)}>
       <div className={styles.frame}>
@@ -29,7 +29,8 @@ export function Portrait({ image, alt, caption, meta, sizes, preload = false, cl
           height={image.height}
           alt={alt}
           sizes={sizes}
-          preload={preload}
+          loading={priority ? "eager" : undefined}
+          fetchPriority={priority ? "high" : undefined}
           className={styles.img}
         />
       </div>

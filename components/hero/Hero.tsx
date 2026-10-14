@@ -37,7 +37,7 @@ export function Hero({ id, meta, greeting, name, links, newTabLabel, phrases, ph
           caption={photo.caption}
           meta={photo.meta}
           sizes="(max-width: 552px) 200px, (max-width: 900px) 260px, 380px"
-          preload
+          priority
           className={styles.portrait}
         />
         <div className={styles.text}>

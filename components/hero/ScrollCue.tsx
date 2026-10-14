@@ -22,10 +22,10 @@ export function ScrollCue({ target, label, ariaLabel, className }: ScrollCueProp
   }
 
   return (
-    <button type="button" className={cx(styles.cue, className)} onClick={go} aria-label={ariaLabel}>
-      <span className={styles.label} aria-hidden="true">
-        {label}
-      </span>
+    // Accessible name starts with the visible label (WCAG 2.5.3): "Scroll — Ir para Sobre mim".
+    <button type="button" className={cx(styles.cue, className)} onClick={go}>
+      <span className={styles.label}>{label}</span>
+      <span className="sr-only"> — {ariaLabel}</span>
       <span className={styles.track} aria-hidden="true">
         <span className={styles.drop} />
       </span>

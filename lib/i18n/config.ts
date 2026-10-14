@@ -15,9 +15,16 @@ export const localeNames: Record<Locale, string> = {
   es: "Español",
 };
 
-/** Value for <html lang> and Open Graph locale per route locale. */
+/** Value for <html lang> and hreflang per route locale. */
 export const htmlLang: Record<Locale, string> = {
   pt: "pt-BR",
   en: "en",
   es: "es",
+};
+
+/** Open Graph locale (language_TERRITORY). */
+export const ogLocale: Record<Locale, string> = {
+  pt: "pt_BR",
+  en: "en_US",
+  es: "es_ES",
 };

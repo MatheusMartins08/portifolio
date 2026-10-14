@@ -12,6 +12,7 @@ import { asset } from "@/lib/content/assets";
 import { site, type Project } from "@/lib/content/site";
 import { pad2 } from "@/lib/cx";
 import { getDictionary, getLocale, type Dictionary } from "@/lib/i18n/dictionary";
+import { localeAlternates } from "@/lib/seo";
 import styles from "./page.module.css";
 
 type CaseSectionKey = keyof Dictionary["projects"]["case"]["sections"];
@@ -73,9 +74,20 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/projects
   const { slug } = await params;
   const project = findProject(slug);
   if (!project || !isPublished(project)) return {};
-  const t = await getDictionary();
+  const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   const copy = t.projects.items[project.key];
-  return { title: `${copy.title} — ${site.person.name}`, description: copy.description };
+  // The layout's title template appends " — Matheus Freitas".
+  return {
+    title: copy.title,
+    description: copy.description,
+    alternates: localeAlternates(locale, `/projects/${project.slug}`),
+    openGraph: {
+      type: "article",
+      title: `${copy.title} — ${site.person.name}`,
+      description: copy.description,
+      url: `/${locale}/projects/${project.slug}`,
+    },
+  };
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/[locale]/projects/[slug]">) {

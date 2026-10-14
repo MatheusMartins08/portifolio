@@ -21,8 +21,8 @@
 .body p { margin: 0; }
 .big { display: block; font: 500 22px/28px var(--font-sans); letter-spacing: -0.02em; }
 .muted { color: var(--ink-muted); font-size: 14px; }
-/* ink-muted is only 4.3:1 on sand-3: small text there uses ink-2. */
-.deep .muted { color: var(--ink-2); }
+/* ink-muted is only 4.3:1 on sand-3: small text there (label, aside, note) uses ink-2. */
+.deep .muted, .deep .label, .deep .aside { color: var(--ink-2); }
 
 .foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
 
