@@ -1,0 +1,14 @@
+/* .mf-svc-grid: asymmetric 7/5, the second card offset down. */
+.grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 20px;
+  align-items: start;
+  margin-top: var(--space-12);
+}
+.grid > :nth-child(2) { margin-top: 72px; }
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr; }
+  .grid > :nth-child(2) { margin-top: 0; }
+}
