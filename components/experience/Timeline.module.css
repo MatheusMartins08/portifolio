@@ -1,0 +1,153 @@
+.wrap { container-type: inline-size; }
+
+.tl { position: relative; padding: var(--space-3) 0; }
+.list { margin: 0; padding: 0; list-style: none; }
+
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  margin-left: -0.5px;
+  background: var(--hairline-strong);
+}
+.fill { position: absolute; inset: 0; background: var(--terracota); transform-origin: top; transform: scaleY(0); }
+
+/* ---------- items ---------- */
+/* Items overlap by 36px to interlock left/right; only the card takes the pointer, so an item's empty
+   half never sits on top of the previous card's "Ver atividades" button. */
+.item { position: relative; display: grid; grid-template-columns: 1fr 72px 1fr; align-items: start; pointer-events: none; }
+.item + .item { margin-top: -36px; }
+.card { pointer-events: auto; }
+.left .card { grid-column: 1; }
+.right .card { grid-column: 3; }
+
+.node {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: var(--sand);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  z-index: 1;
+  transition:
+    background-color var(--mf-dur-3) var(--mf-ease-out),
+    box-shadow var(--mf-dur-3) var(--mf-ease-out),
+    transform var(--mf-dur-3) var(--mf-ease-spring);
+}
+.item[data-active] .node {
+  background: var(--terracota-strong);
+  box-shadow: 0 0 0 4px var(--sand), 0 0 0 5px rgba(188, 90, 54, .35);
+  transform: scale(1.1);
+}
+
+.arm {
+  position: absolute;
+  top: 35px;
+  height: 1px;
+  width: 30px;
+  background: var(--hairline-strong);
+  transform: scaleX(0);
+  transition: transform var(--mf-dur-3) var(--mf-ease-out) 120ms, background-color var(--mf-dur-3);
+}
+.left .arm { right: 50%; margin-right: 6px; transform-origin: right; }
+.right .arm { left: 50%; margin-left: 6px; transform-origin: left; }
+.item[data-in] .arm { transform: scaleX(1); }
+.item[data-active] .arm { background: var(--terracota-strong); }
+
+/* ---------- card: enters, then its content in four beats ---------- */
+.card {
+  grid-row: 1;
+  padding: 22px var(--space-6);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-rest);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--mf-dur-3) var(--mf-ease-out), transform var(--mf-dur-3) var(--mf-ease-out);
+}
+.item[data-in] .card { opacity: 1; transform: none; }
+
+.card > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--mf-dur-3) var(--mf-ease-out), transform var(--mf-dur-3) var(--mf-ease-out);
+}
+.item[data-in] .card > * { opacity: 1; transform: none; }
+.item[data-in] .s1 { transition-delay: 120ms; }
+.item[data-in] .s2 { transition-delay: 200ms; }
+.item[data-in] .s3 { transition-delay: 280ms; }
+.item[data-in] .s4 { transition-delay: 360ms; }
+
+.period {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 10px;
+  font: 400 12px/18px var(--font-mono);
+  letter-spacing: .02em;
+  color: var(--ink-muted);
+}
+.period .status { font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--terracota-ink); gap: var(--space-2); }
+
+.title { margin: 0 0 var(--space-1); font: 500 18px/26px var(--font-sans); letter-spacing: -0.01em; }
+.org { margin: 0 0 6px; font: 400 14px/20px var(--font-sans); color: var(--ink-2); }
+.org strong { font-weight: 500; color: var(--ink); }
+.place { display: flex; align-items: center; gap: 6px; margin: 0 0 14px; font: 400 12px/18px var(--font-mono); color: var(--ink-muted); }
+.summary { margin: 0 0 var(--space-4); font: 400 14px/22px var(--font-sans); color: var(--ink-2); }
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-1) 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 500 13px/18px var(--font-sans);
+  color: var(--ink);
+  border-radius: var(--radius-xs);
+}
+.more:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+.moreIcon { color: var(--terracota-strong); transition: transform var(--mf-dur-3) var(--mf-ease-out); }
+.more[aria-expanded="true"] .moreIcon { transform: rotate(45deg); }
+.more:hover { color: var(--terracota-ink); }
+
+.details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--mf-dur-3) var(--mf-ease-out); }
+.detailsOpen { grid-template-rows: 1fr; }
+.details > div { overflow: hidden; }
+.details ul { margin: var(--space-3) 0 0; padding: var(--space-3) 0 0; list-style: none; border-top: 1px dashed var(--hairline-strong); display: grid; gap: 6px; }
+.details li { position: relative; padding-left: var(--space-4); font: 400 14px/22px var(--font-sans); color: var(--ink-2); }
+.details li::before { content: ""; position: absolute; left: 0; top: 11px; width: var(--space-2); height: 1px; background: var(--terracota-strong); }
+
+/* ---------- future chapter ---------- */
+.future .card { background: transparent; border-style: dashed; border-color: var(--line-strong); box-shadow: none; }
+.future .card > * { color: var(--ink-muted); }
+.future .title { color: var(--ink-2); }
+.future .period { font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+/* Same weight as the active rule and declared after it: a future chapter's node never lights up. */
+.item.future .node { background: var(--sand); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.future .node::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px dashed var(--line-strong); }
+
+/* ---------- single column ---------- */
+@container (max-width: 720px) {
+  .rail { left: 6px; }
+  .item { grid-template-columns: 36px 1fr; }
+  .item + .item { margin-top: 20px; }
+  .left .card, .right .card { grid-column: 2; }
+  .node { left: 6px; top: 26px; }
+  .left .arm, .right .arm { left: 12px; right: auto; margin: 0; width: 22px; top: 31px; transform-origin: left; }
+  .card { padding: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .card > * { opacity: 1 !important; transform: none !important; }
+}

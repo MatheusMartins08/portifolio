@@ -1,0 +1,12 @@
+.stack { display: grid; gap: 28px; margin-top: 28px; }
+
+.panel { border-radius: var(--radius-md); }
+.panel:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+
+/* .mf-swap: the new tab's content rises in. */
+.swap { animation: swap var(--mf-dur-3) var(--mf-ease-out); }
+
+@keyframes swap {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}

@@ -11,6 +11,8 @@
   animation: pulse 2.4s var(--mf-ease-out) infinite;
 }
 
+.sm .dot { width: 6px; height: 6px; }
+
 .busy .dot { background: var(--ink-faint); }
 .busy .dot::after,
 .away .dot::after { display: none; }
