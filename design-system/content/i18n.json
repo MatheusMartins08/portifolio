@@ -833,6 +833,119 @@
       "en": "View my GitHub",
       "es": "Ver mi GitHub"
     },
+    "case": {
+      "meta": {
+        "role": {
+          "pt": "My role",
+          "en": "My role",
+          "es": "Mi rol"
+        },
+        "timeline": {
+          "pt": "Timeline",
+          "en": "Timeline",
+          "es": "Período"
+        },
+        "stack": {
+          "pt": "Tech stack",
+          "en": "Tech stack",
+          "es": "Stack tecnológico"
+        },
+        "status": {
+          "pt": "Status",
+          "en": "Status",
+          "es": "Estado"
+        }
+      },
+      "links": {
+        "live": {
+          "pt": "Live project",
+          "en": "Live project",
+          "es": "Proyecto en vivo"
+        },
+        "github": {
+          "pt": "GitHub",
+          "en": "GitHub",
+          "es": "GitHub"
+        }
+      },
+      "sections": {
+        "overview": {
+          "pt": "Overview",
+          "en": "Overview",
+          "es": "Resumen"
+        },
+        "problem": {
+          "pt": "Problem",
+          "en": "Problem",
+          "es": "Problema"
+        },
+        "solution": {
+          "pt": "Solution",
+          "en": "Solution",
+          "es": "Solución"
+        },
+        "role": {
+          "pt": "My role",
+          "en": "My role",
+          "es": "Mi rol"
+        },
+        "features": {
+          "pt": "Features",
+          "en": "Features",
+          "es": "Funcionalidades"
+        },
+        "architecture": {
+          "pt": "Architecture",
+          "en": "Architecture",
+          "es": "Arquitectura"
+        },
+        "stack": {
+          "pt": "Tech stack",
+          "en": "Tech stack",
+          "es": "Stack tecnológico"
+        },
+        "decisions": {
+          "pt": "Technical decisions",
+          "en": "Technical decisions",
+          "es": "Decisiones técnicas"
+        },
+        "challenges": {
+          "pt": "Challenges",
+          "en": "Challenges",
+          "es": "Desafíos"
+        },
+        "solutions": {
+          "pt": "Solutions",
+          "en": "Solutions",
+          "es": "Soluciones"
+        },
+        "results": {
+          "pt": "Results",
+          "en": "Results",
+          "es": "Resultados"
+        },
+        "learned": {
+          "pt": "What I learned",
+          "en": "What I learned",
+          "es": "Lo que aprendí"
+        },
+        "gallery": {
+          "pt": "Gallery",
+          "en": "Gallery",
+          "es": "Galería"
+        },
+        "live": {
+          "pt": "Live project",
+          "en": "Live project",
+          "es": "Proyecto en vivo"
+        },
+        "github": {
+          "pt": "GitHub",
+          "en": "GitHub",
+          "es": "GitHub"
+        }
+      }
+    },
     "items": {
       "blackCrown": {
         "title": {

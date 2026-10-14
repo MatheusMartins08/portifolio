@@ -1,4 +1,4 @@
-import { Header } from "@/components/header/Header";
+import { SiteHeader } from "@/components/header/SiteHeader";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -6,27 +6,11 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
-import { navSections, site } from "@/lib/content/site";
-import { getDictionary, getLocale } from "@/lib/i18n/dictionary";
 
-export default async function HomePage() {
-  const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
-
+export default function HomePage() {
   return (
     <>
-      <Header
-        items={navSections.map((section) => ({ id: section.id, label: t.nav[section.id] }))}
-        locale={locale}
-        labels={{
-          nav: t.a11y.nav,
-          menu: t.nav.menu,
-          close: t.nav.close,
-          language: t.nav.language,
-          cv: t.nav.cv,
-          cvShort: t.nav.cvShort,
-        }}
-        cvHref={site.cv.href}
-      />
+      <SiteHeader />
       <main>
         <HeroSection />
         <AboutSection />

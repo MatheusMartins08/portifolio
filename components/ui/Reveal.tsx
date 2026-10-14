@@ -27,7 +27,8 @@ export function Reveal({ variant = "up", delay = 0, threshold = 0.15, as: Tag = 
       className={cx(styles.reveal, styles[variant], inView && styles.in, className)}
       style={cssVars({ "--d": `${delay}ms` }, style)}
     >
-      {children}
+      {/* A fully clipped element counts as invisible to IntersectionObserver, so the clip lives one level down. */}
+      {variant === "clip" ? <div className={styles.clipInner}>{children}</div> : children}
     </Tag>
   );
 }

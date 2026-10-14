@@ -1,0 +1,18 @@
+/* .mf-pgrid: 12 columns, projects of different sizes, one offset for rhythm. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 56px 28px;
+  margin-top: var(--space-12);
+}
+.feature { grid-column: 1 / span 7; }
+.half, .tall { grid-column: span 5; }
+.offset { margin-top: 96px; }
+
+.more { display: grid; justify-items: start; gap: 10px; margin-top: var(--space-16); }
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr; gap: 40px; }
+  .feature, .half, .tall { grid-column: auto; }
+  .offset { margin-top: 0; }
+}

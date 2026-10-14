@@ -29,6 +29,8 @@ interface HeaderProps {
   locale: Locale;
   labels: HeaderLabels;
   cvHref: string;
+  /** Page the section anchors live on: "" on the home page, "/pt" on inner pages (case studies). */
+  homeHref?: string;
 }
 
 const languages = locales.map((code) => ({ code, label: localeNames[code] }));
@@ -38,7 +40,7 @@ const languages = locales.map((code) => ({ code, label: localeNames[code] }));
  * Active item follows the section in view; the pill gains a shadow on scroll; below 720px the pill
  * becomes a Menu button with a drop-down sheet.
  */
-export function Header({ items, locale, labels, cvHref }: HeaderProps) {
+export function Header({ items, locale, labels, cvHref, homeHref = "" }: HeaderProps) {
   const ids = useMemo(() => items.map((item) => item.id), [items]);
   const active = useScrollSpy(ids);
   const scrolled = useScrolled(16);
@@ -115,7 +117,7 @@ export function Header({ items, locale, labels, cvHref }: HeaderProps) {
                   <li key={item.id}>
                     <a
                       className={cx(styles.link, isActive && styles.active)}
-                      href={`#${item.id}`}
+                      href={`${homeHref}#${item.id}`}
                       aria-current={isActive ? "location" : undefined}
                       onPointerEnter={(event) => moveIndicator(event.currentTarget)}
                       onFocus={(event) => moveIndicator(event.currentTarget)}
@@ -157,7 +159,7 @@ export function Header({ items, locale, labels, cvHref }: HeaderProps) {
             {items.map((item, i) => (
               <li key={item.id}>
                 <a
-                  href={`#${item.id}`}
+                  href={`${homeHref}#${item.id}`}
                   className={cx(item.id === active && styles.sheetActive)}
                   aria-current={item.id === active ? "location" : undefined}
                   onClick={() => setMenu(false)}

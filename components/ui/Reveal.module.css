@@ -1,4 +1,5 @@
-.reveal {
+.reveal,
+.clipInner {
   transition:
     opacity var(--mf-dur-4) var(--mf-ease-out) var(--d),
     transform var(--mf-dur-4) var(--mf-ease-out) var(--d),
@@ -8,10 +9,11 @@
 .up:not(.in) { opacity: 0; transform: translateY(18px); }
 .fade:not(.in) { opacity: 0; }
 .blur:not(.in) { opacity: 0; filter: blur(8px); }
-.clip:not(.in) { clip-path: inset(0 0 100% 0); }
-.clip.in { clip-path: inset(0 0 0 0); }
+.clip:not(.in) > .clipInner { clip-path: inset(0 0 100% 0); }
+/* Slight outset once revealed, so focus rings and hover shadows at the edges are not cut off. */
+.clip.in > .clipInner { clip-path: inset(-12px -12px -12px -12px); }
 .line:not(.in) { transform: scaleX(0); transform-origin: left; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
+  .reveal, .clipInner { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
 }
