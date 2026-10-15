@@ -1,10 +1,12 @@
 @import "./styles/tokens.css";
 @import "./styles/motion.css";
 
-/* Fonts come from next/font (geist package); the class on <html> defines these variables. */
+/* Fonts come from next/font (geist package + next/font/google for the Hero); the classes on <html> define these variables. */
 :root {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
 }
 
 /* Gutter: --gutter on desktop, --space-4 on phones (tokens.json > layout). */

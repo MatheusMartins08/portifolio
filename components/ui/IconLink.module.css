@@ -14,3 +14,17 @@
 }
 .link:hover { border-color: var(--ink); background: var(--paper); color: var(--terracota-ink); }
 .link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+
+/* Hero size: bigger box, and on hover it lifts off the page with a soft shadow. */
+.lg {
+  width: var(--space-12);
+  height: var(--space-12);
+  transition:
+    border-color var(--mf-dur-2) var(--mf-ease-out),
+    background-color var(--mf-dur-2) var(--mf-ease-out),
+    color var(--mf-dur-2) var(--mf-ease-out),
+    box-shadow var(--mf-dur-2) var(--mf-ease-out),
+    translate var(--mf-dur-2) var(--mf-ease-out);
+}
+.lg:hover { translate: 0 -2px; box-shadow: var(--shadow-float); }
+.lg:hover:focus-visible { box-shadow: var(--focus-ring), var(--shadow-float); }

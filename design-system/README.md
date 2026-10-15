@@ -16,14 +16,16 @@ Identidade do portfólio de Matheus Freitas: **tecnologia + engenharia + produto
   - `terracota` — preenchimento: CTA principal (com texto `on-terracota`, nunca branco), linha preenchida da timeline, halo do status.
   - `terracota-strong` — marcas com significado: ponto ativo do menu, ponto de status, nós da timeline, cursor, anel de foco, palavras destacadas em texto de 24px+.
   - `terracota-ink` — laranja como texto pequeno: índices `01`, extensões `.sh`, link em hover.
-- Regra de proporção: numa tela, terracota não passa de um CTA + pequenos detalhes. Se dois elementos grandes estiverem laranja, um deles está errado.
+- Regra de proporção: numa tela, terracota não passa de um CTA + pequenos detalhes. Se dois elementos grandes estiverem laranja, um deles está errado. Exceção única: o primeiro nome na Hero leva o gradiente `caramel` → `terracota-strong` → `terracota` — é a assinatura da primeira dobra, e por isso a Hero não tem outro elemento grande em laranja.
+- `caramel` (bege tostado, 3.1:1 em `sand`) só existe para abrir esse gradiente; não é cor de texto nem de superfície.
 - `danger` e `success` só no formulário e sempre com ícone + frase.
 
 ## Tipografia
 
-- Duas famílias: **Geist** (`--font-sans`) para tudo e **Geist Mono** (`--font-mono`) como tempero — labels, datas, tags, extensões, terminal, numerais. Nunca parágrafos em mono.
-- Escala calibrada para notebook 14" a 100%: `t-name` 64px só no nome da Hero; `t-statement` 44px nas frases de impacto; `t-title` 28px em serviço/projeto; `t-lead` 24px na frase animada; `t-body` 16px; `t-body-sm` 14px; `t-ui` 14px em navegação e botões.
-- Abaixo de 720px: nome 44px, statement 32px. Nunca mais de uma tipografia display por tela.
+- Duas famílias de sistema: **Geist** (`--font-sans`) para tudo e **Geist Mono** (`--font-mono`) como tempero — labels, datas, tags, extensões, terminal, numerais. Nunca parágrafos em mono.
+- Duas famílias só da Hero: **Bricolage Grotesque** 800 (`--font-display`) no nome e **Instrument Serif Italic** (`--font-serif`) na frase animada. Não usar em nenhum outro lugar.
+- Escala calibrada para notebook 14" a 100%: `t-name` até 120px só no nome da Hero (em duas linhas); `t-tagline` 32px na frase animada; `t-statement` 44px nas frases de impacto; `t-title` 28px em serviço/projeto; `t-lead` 24px em subtítulos de abertura; `t-body` 16px; `t-body-sm` 14px; `t-ui` 14px em navegação e botões.
+- O nome é fluido (acompanha a largura da coluna, ≈86px num celular de 390px). Abaixo de 720px: statement 32px, tagline 26px. Fora da Hero, nunca mais de uma tipografia display por tela.
 - Títulos com tracking negativo (-0.02 a -0.04em); mono em caixa alta com +0.12em.
 
 ## Espaço, layout e superfícies
@@ -49,8 +51,8 @@ Identidade do portfólio de Matheus Freitas: **tecnologia + engenharia + produto
 
 ## Fotografia
 
-- A foto da Hero é `assets/Photos/matheus-portrait.webp` (4:5, já recortada). Entra pelo `Portrait`, que aplica o chanfro, as marcas de corte terracota e um leve tom quente — não aplique outros filtros.
-- A legenda diz onde a foto foi feita (`Fig. 01 · Paris — Louvre`), não onde você mora.
+- A foto da Hero é `assets/Photos/matheus-portrait.webp`, mostrada numa moldura entre quase quadrada e 4:5, conforme a altura da tela (o recorte vem do `focus` de cada foto em `lib/content/assets.ts`); no hover ela dá lugar a `assets/Photos/matheus-coding.webp` (crossfade, sem zoom). Entram pelo `Portrait`, que aplica o chanfro, as marcas de corte terracota e um leve tom quente — não aplique outros filtros.
+- A legenda identifica a foto e a pessoa: `Fig. 01 · Eu — MF` (`Fig. 02` no hover; "Eu/Me/Yo" segue o idioma).
 - Screenshots de projetos: proporção 16:10, sem moldura de navegador nem filtros; o card cuida do raio e do zoom.
 
 ## Iconografia
@@ -61,6 +63,6 @@ Identidade do portfólio de Matheus Freitas: **tecnologia + engenharia + produto
 
 ## Componentes por seção
 
-Header (pill flutuante + `LanguageSwitch` + CV) · Hero (`Portrait`, nome, `ArrowLink` LinkedIn/GitHub, `MorphText`, `ScrollCue`) · Sobre (`Statement`, `ProfileTerminal` com tilt 3D, `InfoCard` + `StatusDot` + `Coordinates`) · Serviços (`ServiceCard` ×2) · Experiência (`FilterTabs` + `Timeline`) · Skills (`SkillFolder` ×4) · Projetos (`ProjectCard` em `.mf-pgrid`, `ArrowLink lg` "View my GitHub") · Case (`CaseHero`, `CaseSection`) · Contato (`Statement` + `Button primary` → `ContactModal` com `Field`) · `Footer`.
+Header (pill flutuante + `LanguageSwitch` + CV) · Hero (`Portrait`, nome em duas linhas, `IconLink lg` LinkedIn/GitHub, `MorphText`, `ScrollCue`) · Sobre (`Statement`, `ProfileTerminal` com tilt 3D, `InfoCard` + `StatusDot` + `Coordinates`) · Serviços (`ServiceCard` ×2) · Experiência (`FilterTabs` + `Timeline`) · Skills (`SkillFolder` ×4) · Projetos (`ProjectCard` em `.mf-pgrid`, `ArrowLink lg` "View my GitHub") · Case (`CaseHero`, `CaseSection`) · Contato (`Statement` + `Button primary` → `ContactModal` com `Field`) · `Footer`.
 
 Os componentes vivem em `components/bundle.js` como `window.MF` (React 18) com estilos em `components/bundle.css`; leem os tokens via custom properties (`var(--sand)`, `var(--space-6)`).

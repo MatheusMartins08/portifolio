@@ -1,6 +1,6 @@
 .morph { margin: 0; font: 400 24px/32px var(--font-sans); letter-spacing: -0.015em; color: var(--ink-2); }
 
-.stage { position: relative; display: inline-block; min-height: 1lh; }
+.stage { position: relative; display: block; min-height: 1lh; }
 .line { white-space: nowrap; }
 .ch, .sp { display: inline-block; }
 

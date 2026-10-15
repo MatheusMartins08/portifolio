@@ -103,9 +103,14 @@
       "es": "Matheus Freitas sentado frente a la pirámide del Louvre, en París"
     },
     "photoMeta": {
-      "pt": "Paris — Louvre",
-      "en": "Paris — Louvre",
-      "es": "París — Louvre"
+      "pt": "Eu — MF",
+      "en": "Me — MF",
+      "es": "Yo — MF"
+    },
+    "photoHoverAlt": {
+      "pt": "Matheus Freitas programando no notebook em uma sala de aula",
+      "en": "Matheus Freitas coding on his laptop in a classroom",
+      "es": "Matheus Freitas programando en su portátil en un aula"
     },
     "scrollLabel": {
       "pt": "Scroll",

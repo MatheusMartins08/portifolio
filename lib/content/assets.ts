@@ -7,10 +7,13 @@ export interface ImageAsset {
   src: string;
   width: number;
   height: number;
+  /** object-position when a frame crops the photo (the Hero's square portrait): keeps the subject in. */
+  focus?: string;
 }
 
-const sizes: Record<string, { width: number; height: number }> = {
-  "/images/photos/matheus-portrait.webp": { width: 900, height: 1125 },
+const sizes: Record<string, { width: number; height: number; focus?: string }> = {
+  "/images/photos/matheus-portrait.webp": { width: 1018, height: 1386, focus: "50% 80%" },
+  "/images/photos/matheus-coding.webp": { width: 928, height: 1600, focus: "50% 55%" },
   "/images/projects/black-crown-home.webp": { width: 1600, height: 900 },
   "/images/projects/black-crown-agendamento.webp": { width: 1390, height: 1054 },
   "/images/projects/metrica-home.webp": { width: 1600, height: 901 },

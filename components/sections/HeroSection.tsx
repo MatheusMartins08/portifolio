@@ -22,6 +22,11 @@ export async function HeroSection() {
         alt: t.hero.photoAlt,
         caption: site.person.photoCaption,
         meta: t.hero.photoMeta,
+        hover: {
+          image: asset(site.person.photoHover),
+          alt: t.hero.photoHoverAlt,
+          caption: site.person.photoHoverCaption,
+        },
       }}
       scroll={{ target: "#sobre", label: t.hero.scrollLabel, ariaLabel: t.hero.scrollAria }}
     />

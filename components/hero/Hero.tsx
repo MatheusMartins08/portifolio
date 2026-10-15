@@ -1,6 +1,7 @@
 import type { IconName } from "@/components/ui/Icon";
 import { IconLink } from "@/components/ui/IconLink";
 import type { ImageAsset } from "@/lib/content/assets";
+import { cssVars } from "@/lib/cx";
 import { MorphText } from "./MorphText";
 import { Portrait } from "./Portrait";
 import { ScrollCue } from "./ScrollCue";
@@ -11,17 +12,29 @@ interface HeroProps {
   /** Mono ruler above the fold: left · middle · right. */
   meta: [string, string, string];
   greeting: string;
+  /** "Matheus Freitas": split at the first space into the two lines of the name. */
   name: string;
-  /** Icon links stacked beside the name (beside the photo when it stacks on top). */
+  /** Icon links beside the name, centred on it (beside the photo when it stacks on top). */
   links: Array<{ label: string; href: string; icon: IconName }>;
   newTabLabel: string;
   phrases: string[];
-  photo: { image: ImageAsset; alt: string; caption: string; meta: string };
+  /** `hover`: the second photo and caption that cross-fade in over the first. */
+  photo: {
+    image: ImageAsset;
+    alt: string;
+    caption: string;
+    meta: string;
+    hover?: { image: ImageAsset; alt: string; caption: string };
+  };
   scroll: { target: string; label: string; ariaLabel: string };
 }
 
-/** First fold: mono ruler, portrait left, greeting + name + icon links + morphing phrase right, scroll cue below. */
+/** First fold (fits a short laptop viewport down to the scroll cue): mono ruler, portrait left, greeting + two-line name + icon links + morphing phrase right, scroll cue below. */
 export function Hero({ id, meta, greeting, name, links, newTabLabel, phrases, photo, scroll }: HeroProps) {
+  const space = name.indexOf(" ");
+  const first = space < 0 ? name : name.slice(0, space);
+  const last = space < 0 ? "" : name.slice(space + 1);
+
   return (
     <section id={id} className={styles.hero}>
       <div className={styles.meta} aria-hidden="true">
@@ -36,20 +49,36 @@ export function Hero({ id, meta, greeting, name, links, newTabLabel, phrases, ph
           alt={photo.alt}
           caption={photo.caption}
           meta={photo.meta}
-          sizes="(max-width: 552px) 200px, (max-width: 900px) 260px, 380px"
+          hover={photo.hover}
+          sizes="(max-width: 552px) 200px, (max-width: 900px) 260px, 470px"
           priority
+          intro
           className={styles.portrait}
         />
         <div className={styles.text}>
+          <p className={styles.greet}>{greeting}</p>
           <div className={styles.head}>
-            <div className={styles.intro}>
-              <p className={styles.greet}>{greeting}</p>
-              <h1 className={styles.name}>{name}</h1>
-            </div>
+            <h1 className={styles.name}>
+              {/* Read once as a whole; the visual name is split into letters for the hover. */}
+              <span className="sr-only">{name}</span>
+              <span className={styles.nameArt} aria-hidden="true">
+                <span className={styles.first}>{first}</span>
+                {last ? (
+                  <span className={styles.last}>
+                    {Array.from(last).map((ch, i) => (
+                      // .letter is the still hover target; .glyph is what lifts, so the letter never slips from under the cursor.
+                      <span key={i} className={styles.letter} style={cssVars({ "--i": i })}>
+                        <span className={styles.glyph}>{ch}</span>
+                      </span>
+                    ))}
+                  </span>
+                ) : null}
+              </span>
+            </h1>
             <ul className={styles.links}>
-              {links.map((link) => (
-                <li key={link.href}>
-                  <IconLink href={link.href} icon={link.icon} label={link.label} newTabLabel={newTabLabel} />
+              {links.map((link, i) => (
+                <li key={link.href} style={cssVars({ "--i": i })}>
+                  <IconLink href={link.href} icon={link.icon} label={link.label} newTabLabel={newTabLabel} size="lg" />
                 </li>
               ))}
             </ul>

@@ -61,7 +61,16 @@ export interface Project {
 }
 
 export interface Site {
-  person: { name: string; fullName: string; since: string; photo: string; photoCaption: string };
+  person: {
+    name: string;
+    fullName: string;
+    since: string;
+    photo: string;
+    photoCaption: string;
+    /** Shown over the portrait on hover. */
+    photoHover: string;
+    photoHoverCaption: string;
+  };
   social: {
     github: string;
     githubHandle: string;
