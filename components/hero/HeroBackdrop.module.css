@@ -1,0 +1,71 @@
+/* Fills the Hero stage behind its content and never catches the pointer. Fades in once the lines are
+   drawn (they need the text measured), and fades out before the stage ends, so the next section
+   starts on plain sand. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--mf-dur-4) var(--mf-ease-out);
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent);
+}
+.backdrop[data-ready] { opacity: 1; }
+
+.layer { position: absolute; inset: 0; }
+
+.svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 6;
+}
+
+/* ---------- dimmed ---------- */
+.edgeThin, .edgeThick { stroke: var(--paper); stroke-opacity: .8; }
+.edgeThin { stroke-width: 1.6px; }
+.edgeThick { stroke-width: 3px; }
+.thin, .thick { stroke: var(--terracota-strong); }
+.thin { stroke-opacity: .42; stroke-width: 1px; }
+.thick { stroke-opacity: .72; stroke-width: 2.2px; }
+
+/* ---------- lit: halo, core, hot centre ---------- */
+.haloThin, .haloThick, .coreThin, .coreThick { stroke: var(--ember); }
+.haloThin { stroke-opacity: .5; stroke-width: 6px; }
+.haloThick { stroke-opacity: .7; stroke-width: 12px; }
+.coreThin { stroke-width: 1.6px; }
+.coreThick { stroke-width: 3.2px; }
+.hotThin, .hotThick { stroke: var(--ember-hot); }
+.hotThin { stroke-opacity: .7; stroke-width: .6px; }
+.hotThick { stroke-width: 1.3px; }
+
+/* The lit copy shows only through a small radial mask around the cursor: a fully lit core, then
+   alpha falling off on a bell-like curve, so there is no edge to spot. Its own compositing layer,
+   so moving the mask does not repaint the glow. Fades in quickly, out more slowly, where it is. */
+.lit {
+  --glow-r: clamp(140px, 12vw, 200px);
+  --glow: radial-gradient(
+    circle var(--glow-r) at var(--mx, 50%) var(--my, 50%),
+    #000 0%,
+    rgb(0 0 0 / .97) 18%,
+    rgb(0 0 0 / .86) 34%,
+    rgb(0 0 0 / .64) 50%,
+    rgb(0 0 0 / .38) 65%,
+    rgb(0 0 0 / .17) 79%,
+    rgb(0 0 0 / .05) 91%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--glow);
+  mask-image: var(--glow);
+  opacity: 0;
+  transition: opacity var(--mf-dur-3) var(--mf-ease-out);
+  will-change: transform;
+}
+.lit[data-on] {
+  opacity: 1;
+  transition-duration: var(--mf-dur-2);
+}

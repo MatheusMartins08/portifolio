@@ -1,3 +1,6 @@
+/* Full-width box around the section, for the backdrop (HeroBackdrop) that spans the viewport. */
+.stage { position: relative; }
+
 .hero {
   position: relative;
   display: flex;

@@ -28,7 +28,6 @@ export async function HeroSection() {
           caption: site.person.photoHoverCaption,
         },
       }}
-      scroll={{ target: "#sobre", label: t.hero.scrollLabel, ariaLabel: t.hero.scrollAria }}
-    />
+      scroll={{ target: "#sobre", label: t.hero.scrollLabel, ariaLabel: t.hero.scrollAria }}    />
   );
 }

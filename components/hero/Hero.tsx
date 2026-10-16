@@ -2,6 +2,7 @@ import type { IconName } from "@/components/ui/Icon";
 import { IconLink } from "@/components/ui/IconLink";
 import type { ImageAsset } from "@/lib/content/assets";
 import { cssVars } from "@/lib/cx";
+import { HeroBackdrop } from "./HeroBackdrop";
 import { MorphText } from "./MorphText";
 import { Portrait } from "./Portrait";
 import { ScrollCue } from "./ScrollCue";
@@ -36,61 +37,65 @@ export function Hero({ id, meta, greeting, name, links, newTabLabel, phrases, ph
   const last = space < 0 ? "" : name.slice(space + 1);
 
   return (
-    <section id={id} className={styles.hero}>
-      <div className={styles.meta} aria-hidden="true">
-        <span>{meta[0]}</span>
-        <span className={styles.metaMid}>{meta[1]}</span>
-        <span>{meta[2]}</span>
-      </div>
-
-      <div className={styles.grid}>
-        <Portrait
-          image={photo.image}
-          alt={photo.alt}
-          caption={photo.caption}
-          meta={photo.meta}
-          hover={photo.hover}
-          sizes="(max-width: 552px) 200px, (max-width: 900px) 260px, 470px"
-          priority
-          intro
-          className={styles.portrait}
-        />
-        <div className={styles.text}>
-          <p className={styles.greet}>{greeting}</p>
-          <div className={styles.head}>
-            <h1 className={styles.name}>
-              {/* Read once as a whole; the visual name is split into letters for the hover. */}
-              <span className="sr-only">{name}</span>
-              <span className={styles.nameArt} aria-hidden="true">
-                <span className={styles.first}>{first}</span>
-                {last ? (
-                  <span className={styles.last}>
-                    {Array.from(last).map((ch, i) => (
-                      // .letter is the still hover target; .glyph is what lifts, so the letter never slips from under the cursor.
-                      <span key={i} className={styles.letter} style={cssVars({ "--i": i })}>
-                        <span className={styles.glyph}>{ch}</span>
-                      </span>
-                    ))}
-                  </span>
-                ) : null}
-              </span>
-            </h1>
-            <ul className={styles.links}>
-              {links.map((link, i) => (
-                <li key={link.href} style={cssVars({ "--i": i })}>
-                  <IconLink href={link.href} icon={link.icon} label={link.label} newTabLabel={newTabLabel} size="lg" />
-                </li>
-              ))}
-            </ul>
-          </div>
-          <span className={styles.rule} aria-hidden="true" />
-          <MorphText phrases={phrases} className={styles.morph} />
+    // Full-width stage: the art spans the viewport while the section keeps its own width and layout.
+    <div className={styles.stage}>
+      <HeroBackdrop phrases={phrases} />
+      <section id={id} className={styles.hero}>
+        <div className={styles.meta} aria-hidden="true">
+          <span>{meta[0]}</span>
+          <span className={styles.metaMid}>{meta[1]}</span>
+          <span>{meta[2]}</span>
         </div>
-      </div>
 
-      <div className={styles.cue}>
-        <ScrollCue target={scroll.target} label={scroll.label} ariaLabel={scroll.ariaLabel} />
-      </div>
-    </section>
+        <div className={styles.grid}>
+          <Portrait
+            image={photo.image}
+            alt={photo.alt}
+            caption={photo.caption}
+            meta={photo.meta}
+            hover={photo.hover}
+            sizes="(max-width: 552px) 200px, (max-width: 900px) 260px, 470px"
+            priority
+            intro
+            className={styles.portrait}
+          />
+          <div className={styles.text}>
+            <p className={styles.greet} data-hole="text">{greeting}</p>
+            <div className={styles.head}>
+              <h1 className={styles.name}>
+                {/* Read once as a whole; the visual name is split into letters for the hover. */}
+                <span className="sr-only">{name}</span>
+                <span className={styles.nameArt} aria-hidden="true">
+                  <span className={styles.first} data-hole="name">{first}</span>
+                  {last ? (
+                    <span className={styles.last} data-hole="name">
+                      {Array.from(last).map((ch, i) => (
+                        // .letter is the still hover target; .glyph is what lifts, so the letter never slips from under the cursor.
+                        <span key={i} className={styles.letter} style={cssVars({ "--i": i })}>
+                          <span className={styles.glyph}>{ch}</span>
+                        </span>
+                      ))}
+                    </span>
+                  ) : null}
+                </span>
+              </h1>
+              <ul className={styles.links}>
+                {links.map((link, i) => (
+                  <li key={link.href} style={cssVars({ "--i": i })}>
+                    <IconLink href={link.href} icon={link.icon} label={link.label} newTabLabel={newTabLabel} size="lg" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <span className={styles.rule} aria-hidden="true" />
+            <MorphText phrases={phrases} className={styles.morph} data-hole="phrase" />
+          </div>
+        </div>
+
+        <div className={styles.cue}>
+          <ScrollCue target={scroll.target} label={scroll.label} ariaLabel={scroll.ariaLabel} />
+        </div>
+      </section>
+    </div>
   );
 }

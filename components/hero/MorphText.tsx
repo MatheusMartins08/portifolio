@@ -13,6 +13,8 @@ interface MorphTextProps {
   caret?: boolean;
   as?: "p" | "span" | "div";
   className?: string;
+  /** Marks the line for the Hero backdrop, which keeps its lines clear of it. */
+  "data-hole"?: string;
 }
 
 const SEPARATOR = "\u0001";
@@ -47,7 +49,14 @@ interface Glyph {
  * new ones blur in. Screen readers get every phrase at once, with no announcements.
  * Waits for fonts, pauses while the tab is hidden; plain cross-fade with reduced motion.
  */
-export function MorphText({ phrases, interval = 3400, caret = true, as: Tag = "p", className }: MorphTextProps) {
+export function MorphText({
+  phrases,
+  interval = 3400,
+  caret = true,
+  as: Tag = "p",
+  className,
+  "data-hole": hole,
+}: MorphTextProps) {
   const stageRef = useRef<HTMLSpanElement>(null);
   const lineRef = useRef<HTMLSpanElement>(null);
   const key = phrases.join(SEPARATOR);
@@ -226,7 +235,7 @@ export function MorphText({ phrases, interval = 3400, caret = true, as: Tag = "p
   }, [key, interval]);
 
   return (
-    <Tag className={cx(styles.morph, className)}>
+    <Tag className={cx(styles.morph, className)} data-hole={hole}>
       <span className="sr-only">{phrases.join(", ")}</span>
       <span className={styles.stage} ref={stageRef} aria-hidden="true">
         <span className={styles.line} ref={lineRef} dangerouslySetInnerHTML={initialHtml} />
