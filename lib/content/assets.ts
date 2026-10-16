@@ -1,6 +1,6 @@
 /**
- * site.json references kit paths ("assets/Photos/x.webp"); the files are copied to public/images/
- * with lowercase folders. Sizes are the real pixel dimensions, for next/image.
+ * site.json references images by their public path ("/images/photos/x.webp", files in public/images/).
+ * Sizes are the real pixel dimensions, for next/image.
  */
 
 export interface ImageAsset {
@@ -20,9 +20,8 @@ const sizes: Record<string, { width: number; height: number; focus?: string }> =
   "/images/projects/metrica-diferenciais.webp": { width: 1599, height: 1056 },
 };
 
-export function asset(kitPath: string): ImageAsset {
-  const src = "/images/" + kitPath.replace(/^assets\//, "").replace(/^[^/]+/, (dir) => dir.toLowerCase());
+export function asset(src: string): ImageAsset {
   const size = sizes[src];
-  if (!size) throw new Error(`Unknown image "${kitPath}": copy it to public${src} and add its size to lib/content/assets.ts`);
+  if (!size) throw new Error(`Unknown image "${src}": copy it to public${src} and add its size to lib/content/assets.ts`);
   return { src, ...size };
 }

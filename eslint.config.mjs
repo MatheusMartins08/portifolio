@@ -12,8 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Design system kit: reference prototype (bundle.js, previews), not app code.
-    "design-system/**",
   ]),
 ]);
 

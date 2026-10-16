@@ -1,4 +1,4 @@
-/* Motion tokens — from the :root block of design-system/components/bundle.css. */
+/* Motion tokens: easings and durations shared by every animation. */
 :root {
   --mf-ease-out: cubic-bezier(.22, 1, .36, 1);
   --mf-ease-inout: cubic-bezier(.65, 0, .35, 1);

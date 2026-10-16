@@ -1,8 +1,8 @@
-import siteJson from "@/design-system/content/site.json";
+import siteJson from "@/content/site.json";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 
 /**
- * Typed view of design-system/content/site.json (links, contacts, images, item order).
+ * Typed view of content/site.json (links, contacts, images, item order).
  * Keys such as `projects[].key` point to entries in i18n.json, so they are typed against the Dictionary.
  */
 

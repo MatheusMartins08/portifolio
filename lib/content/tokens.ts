@@ -1,4 +1,4 @@
-import tokens from "@/design-system/tokens.json";
+import tokens from "@/app/styles/tokens.json";
 
 type ColorName = (typeof tokens.color.tokens)[number]["name"];
 

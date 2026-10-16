@@ -1,6 +1,7 @@
-/* Matheus Freitas — copy of design-system/tokens.css (generated from tokens.json).
-   The @font-face rules are dropped: fonts come from the `geist` package (see app/[locale]/layout.tsx)
-   and --font-sans / --font-mono are re-pointed in app/globals.css. Keep in sync with the kit. */
+/* Matheus Freitas — design tokens as CSS custom properties, mirroring tokens.json next to this file
+   (lib/content/tokens.ts reads the JSON for generated images): change a value in both.
+   Fonts come from the `geist` package (see app/[locale]/layout.tsx) and --font-sans / --font-mono
+   are re-pointed in app/globals.css. */
 :root, [data-theme="bege"] {
   --sand: #f3ebdd;
   --sand-2: #eae0d2;

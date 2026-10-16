@@ -2,7 +2,7 @@
 
 Site pessoal de Matheus Freitas Martins, desenvolvedor Full Stack. Uma página por idioma (`/pt`, `/en`, `/es`) e um template de case study em `/[locale]/projects/[slug]`.
 
-Next.js 16 (App Router, Cache Components) · TypeScript · CSS Modules sobre os tokens do design system · fontes Geist. Sem Tailwind e sem lib de animação: CSS e Web Animations API.
+Next.js 16 (App Router, Cache Components) · TypeScript · CSS Modules sobre tokens CSS · fontes Geist. Sem Tailwind e sem lib de animação: CSS e Web Animations API.
 
 ## Rodar
 
@@ -18,11 +18,10 @@ npm run build && npm start
 
 | O quê | Onde |
 | --- | --- |
-| Todo o texto, em PT/EN/ES | `design-system/content/i18n.json` (cada texto é `{ pt, en, es }`) |
-| Links, contatos, ordem de itens, skills, projetos, imagens | `design-system/content/site.json` |
-| Cores, espaços, raios, sombras | `design-system/tokens.json` → `app/styles/tokens.css` |
-| Regras de identidade e de cada componente | `design-system/README.md` e `design-system/components/<Nome>/README.md` |
-| Revisão do texto lado a lado | `design-system/Conteudo.md` |
+| Todo o texto, em PT/EN/ES | `content/i18n.json` (cada texto é `{ pt, en, es }`) |
+| Links, contatos, ordem de itens, skills, projetos, imagens | `content/site.json` |
+| Cores, espaços, raios, sombras | `app/styles/tokens.css` (e `app/styles/tokens.json`, usado pelos ícones e pela imagem Open Graph; mude nos dois) |
+| Easings e durações das animações | `app/styles/motion.css` |
 
 Regras do projeto (para pessoas e agentes): `CLAUDE.md`.
 

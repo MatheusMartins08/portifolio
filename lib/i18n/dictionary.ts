@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import { locale } from "next/root-params";
-import i18n from "@/design-system/content/i18n.json";
+import i18n from "@/content/i18n.json";
 import { isLocale, locales, type Locale } from "./config";
 
 /** A leaf of i18n.json: the same text in every locale. */

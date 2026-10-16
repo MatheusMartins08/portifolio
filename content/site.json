@@ -4,9 +4,9 @@
     "name": "Matheus Freitas",
     "fullName": "Matheus Freitas Martins",
     "since": "2024",
-    "photo": "assets/Photos/matheus-portrait.webp",
+    "photo": "/images/photos/matheus-portrait.webp",
     "photoCaption": "Fig. 01",
-    "photoHover": "assets/Photos/matheus-coding.webp",
+    "photoHover": "/images/photos/matheus-coding.webp",
     "photoHoverCaption": "Fig. 02"
   },
   "social": {
@@ -90,7 +90,7 @@
       "github": null,
       "caseStudy": false,
       "tech": ["TypeScript", "Next.js", "React", "SQL"],
-      "images": ["assets/Projects/black-crown-home.webp", "assets/Projects/black-crown-agendamento.webp"]
+      "images": ["/images/projects/black-crown-home.webp", "/images/projects/black-crown-agendamento.webp"]
     },
     {
       "slug": "metrica",
@@ -102,7 +102,7 @@
       "github": null,
       "caseStudy": false,
       "tech": ["JavaScript", "Next.js", "React"],
-      "images": ["assets/Projects/metrica-home.webp", "assets/Projects/metrica-diferenciais.webp"]
+      "images": ["/images/projects/metrica-home.webp", "/images/projects/metrica-diferenciais.webp"]
     }
   ]
 }
