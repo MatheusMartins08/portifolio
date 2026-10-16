@@ -66,12 +66,12 @@ export function Hero({ id, meta, greeting, name, links, newTabLabel, phrases, ph
                 {/* Read once as a whole; the visual name is split into letters for the hover. */}
                 <span className="sr-only">{name}</span>
                 <span className={styles.nameArt} aria-hidden="true">
-                  <span className={styles.first} data-hole="name">{first}</span>
+                  <span className={styles.first} data-hole="name" data-energy="sweep">{first}</span>
                   {last ? (
                     <span className={styles.last} data-hole="name">
                       {Array.from(last).map((ch, i) => (
                         // .letter is the still hover target; .glyph is what lifts, so the letter never slips from under the cursor.
-                        <span key={i} className={styles.letter} style={cssVars({ "--i": i })}>
+                        <span key={i} className={styles.letter} style={cssVars({ "--i": i })} data-energy="wave">
                           <span className={styles.glyph}>{ch}</span>
                         </span>
                       ))}

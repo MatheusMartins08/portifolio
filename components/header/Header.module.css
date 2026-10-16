@@ -170,3 +170,14 @@
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: none; }
 }
+
+/* Entrance: language, menu and CV settle down into place, one after the other, as the Hero builds up. */
+@media (prefers-reduced-motion: no-preference) {
+  .start, .nav, .end { animation: header-in var(--mf-dur-3) var(--mf-ease-out) backwards; }
+  .nav { animation-delay: 60ms; }
+  .end { animation-delay: 120ms; }
+}
+
+@keyframes header-in {
+  from { opacity: 0; transform: translateY(calc(-1 * var(--space-2))); }
+}

@@ -29,10 +29,22 @@ export interface ContourInput {
   seed?: number;
 }
 
-/** One `d` for the thin lines and one for the thick ones (every third). */
-export interface ContourPaths {
-  thin: string;
-  thick: string;
+/**
+ * One stretch of line, oriented from where it enters (the stage edge, usually) towards the text.
+ * Every line is cut at its point closest to the text, so its two halves meet there: drawn from their
+ * starts, they enter from the edges and connect near the name. Closed loops stay whole.
+ */
+export interface ContourLine {
+  d: string;
+  /** Every third level is drawn thicker. */
+  thick: boolean;
+  length: number;
+  /** Where the stretch starts. */
+  start: [number, number];
+  /** Distance from its meeting point to the clear space: small for the lines that wrap the text. */
+  reach: number;
+  /** The two halves of one line share it. */
+  pair: number;
 }
 
 /** Stable pseudo-random value in [0, 1) for integer coordinates. */
@@ -97,8 +109,8 @@ function simplify(points: Array<[number, number]>, tolerance: number): Array<[nu
   return points.filter((_, i) => keep[i]);
 }
 
-export function drawContours({ width, height, boxes, unit, seed = 11 }: ContourInput): ContourPaths {
-  if (!boxes.length || width <= 0 || height <= 0) return { thin: "", thick: "" };
+export function drawContours({ width, height, boxes, unit, seed = 11 }: ContourInput): ContourLine[] {
+  if (!boxes.length || width <= 0 || height <= 0) return [];
 
   // ---- clear space: one chamfered octagon per line of text, a little irregular, plus a bridge over
   // each gap between consecutive lines (over their common width), so no line slips in between ----
@@ -185,8 +197,13 @@ export function drawContours({ width, height, boxes, unit, seed = 11 }: ContourI
     }
   }
 
-  const thin: string[] = [];
-  const thick: string[] = [];
+  const lines: ContourLine[] = [];
+  const stretch = (points: Array<[number, number]>, thick: boolean, pair: number, reach: number) => {
+    let length = 0;
+    for (let i = 1; i < points.length; i++) length += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
+    const d = "M" + points.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join("L");
+    lines.push({ d, thick, length, start: points[0], reach, pair });
+  };
   for (let k = Math.floor(lo); k <= Math.ceil(hi); k++) {
     const level = k + 0.5;
     const points = new Map<number, [number, number]>();
@@ -251,14 +268,33 @@ export function drawContours({ width, height, boxes, unit, seed = 11 }: ContourI
         previous = at;
         at = next;
       }
-      if (links.get(end)!.length === 2) chain.push(chain[0]);
+      const closed = links.get(end)!.length === 2;
+      if (closed) chain.push(chain[0]);
       const line = simplify(chain, 2.2);
       let length = 0;
       for (let i = 1; i < line.length; i++) length += Math.hypot(line[i][0] - line[i - 1][0], line[i][1] - line[i - 1][1]);
       if (length < unit * 0.6) continue;
-      const d = "M" + line.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join("L");
-      (((k % 3) + 3) % 3 === 0 ? thick : thin).push(d);
+
+      // Cut at the corner closest to the text; both halves run towards it.
+      const thick = ((k % 3) + 3) % 3 === 0;
+      const pair = lines.length;
+      let meet = 0;
+      let reach = Infinity;
+      line.forEach(([x, y], i) => {
+        const d = distance(x, y);
+        if (d < reach) {
+          reach = d;
+          meet = i;
+        }
+      });
+      reach = Math.max(0, reach);
+      if (closed || meet === 0 || meet === line.length - 1) {
+        stretch(meet === 0 && !closed ? [...line].reverse() : line, thick, pair, reach);
+      } else {
+        stretch(line.slice(0, meet + 1), thick, pair, reach);
+        stretch(line.slice(meet).reverse(), thick, pair, reach);
+      }
     }
   }
-  return { thin: thin.join(""), thick: thick.join("") };
+  return lines;
 }

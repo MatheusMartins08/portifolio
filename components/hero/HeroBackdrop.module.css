@@ -11,6 +11,8 @@
   mask-image: linear-gradient(to bottom, #000 80%, transparent);
 }
 .backdrop[data-ready] { opacity: 1; }
+/* With the entrance, the lines draw themselves in: no fade on top of that. */
+.backdrop[data-intro] { transition: none; }
 
 .layer { position: absolute; inset: 0; }
 
@@ -42,6 +44,40 @@
 .hotThin, .hotThick { stroke: var(--ember-hot); }
 .hotThin { stroke-opacity: .7; stroke-width: .6px; }
 .hotThick { stroke-width: 1.3px; }
+
+/* ---------- entrance ----------
+   Each line is drawn from where it enters towards the text (paths have pathLength 1, so one dash
+   covers any of them), with its own --delay and --draw; its two halves meet near the name. A brief,
+   brighter head rides with the drawing edge. The lit layer draws in step, so the hover can only light
+   what is already there. */
+.backdrop[data-intro] path {
+  stroke-dasharray: 1 2;
+  animation: draw var(--draw) var(--mf-ease-inout) var(--delay) backwards;
+}
+.backdrop[data-intro] .tip {
+  stroke: var(--ember);
+  stroke-dasharray: .035 2;
+  animation: travel var(--draw) var(--mf-ease-inout) var(--delay) both;
+}
+.tipThin { stroke-width: 1.5px; }
+.tipThick { stroke-width: 2.8px; }
+
+@keyframes draw {
+  from { stroke-dashoffset: 1; }
+}
+/* The head stays at the end of what is drawn: dash end = 1 − offset of the draw. */
+@keyframes travel {
+  from { stroke-dashoffset: .035; opacity: 0; }
+  15% { opacity: .55; }
+  80% { opacity: .55; }
+  to { stroke-dashoffset: -.965; opacity: 0; }
+}
+
+/* Circuit closed: the lines brighten for a beat and settle. */
+.backdrop[data-pulse] .off { animation: pulse 360ms var(--mf-ease-inout); }
+@keyframes pulse {
+  45% { filter: brightness(1.15) saturate(1.1); }
+}
 
 /* The lit copy shows only through a small radial mask around the cursor: a fully lit core, then
    alpha falling off on a bell-like curve, so there is no edge to spot. Its own compositing layer,

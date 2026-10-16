@@ -124,12 +124,14 @@
     color var(--mf-dur-3) var(--mf-ease-out);
 }
 
+/* Hover effects. [data-energized] is the same effect set off once by the Hero entrance (HeroBackdrop):
+   the sweep across "Matheus", then a wave over the "Freitas" letters. */
 @media (hover: hover) and (pointer: fine) {
-  .first:hover {
+  .first:is(:hover, [data-energized]) {
     background-position: 0 0, 0 0, 0 0;
     transition: background-position var(--mf-dur-4) var(--mf-ease-inout);
   }
-  .letter:hover .glyph {
+  .letter:is(:hover, [data-energized]) .glyph {
     color: var(--terracota-strong);
     transition:
       translate var(--mf-dur-2) var(--mf-ease-spring),
@@ -137,11 +139,12 @@
   }
 }
 
-/* The hovered letter lifts and its neighbours follow a little: a soft wave, not a lone jump. */
+/* The hovered letter lifts and its neighbours follow a little: a soft wave, not a lone jump.
+   (A letter that is lifting itself is never just a neighbour: in the entrance wave several are.) */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .letter:hover .glyph { translate: 0 -0.1em; }
-  .letter:hover + .letter .glyph,
-  .letter:has(+ .letter:hover) .glyph {
+  .letter:is(:hover, [data-energized]) .glyph { translate: 0 -0.1em; }
+  .letter:is(:hover, [data-energized]) + .letter:not(:hover, [data-energized]) .glyph,
+  .letter:not(:hover, [data-energized]):has(+ .letter:is(:hover, [data-energized])) .glyph {
     translate: 0 -0.035em;
     transition:
       translate var(--mf-dur-2) var(--mf-ease-spring),
