@@ -8,7 +8,6 @@ export async function HeroSection() {
   return (
     <Hero
       id="topo"
-      meta={[t.hero.metaLeft, t.hero.metaMid, t.hero.metaRight]}
       greeting={t.hero.greeting}
       name={site.person.name}
       links={[
@@ -20,14 +19,9 @@ export async function HeroSection() {
       photo={{
         image: asset(site.person.photo),
         alt: t.hero.photoAlt,
-        caption: site.person.photoCaption,
-        meta: t.hero.photoMeta,
-        hover: {
-          image: asset(site.person.photoHover),
-          alt: t.hero.photoHoverAlt,
-          caption: site.person.photoHoverCaption,
-        },
+        hover: { image: asset(site.person.photoHover), alt: t.hero.photoHoverAlt },
       }}
-      scroll={{ target: "#sobre", label: t.hero.scrollLabel, ariaLabel: t.hero.scrollAria }}    />
+      scroll={{ target: "#sobre", label: t.hero.scrollLabel, ariaLabel: t.hero.scrollAria }}
+    />
   );
 }

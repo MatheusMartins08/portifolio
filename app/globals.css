@@ -14,6 +14,15 @@
   :root { --gutter: var(--space-4); }
 }
 
+/* Large monitors: the content widens in steps instead of sitting in a narrow column in the middle
+   (laptops, up to ~1680px wide, keep 1180px). */
+@media (min-width: 1680px) {
+  :root { --container-max: 1360px; }
+}
+@media (min-width: 2100px) {
+  :root { --container-max: 1520px; }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html {

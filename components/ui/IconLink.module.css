@@ -15,10 +15,14 @@
 .link:hover { border-color: var(--ink); background: var(--paper); color: var(--terracota-ink); }
 .link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
-/* Hero size: bigger box, and on hover it lifts off the page with a soft shadow. */
+/* Hero size: bigger box on a light frosted glass (it sits over the backdrop lines), and on hover it
+   lifts off the page with a soft shadow. */
 .lg {
   width: var(--space-12);
   height: var(--space-12);
+  background: color-mix(in srgb, var(--paper) 62%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition:
     border-color var(--mf-dur-2) var(--mf-ease-out),
     background-color var(--mf-dur-2) var(--mf-ease-out),

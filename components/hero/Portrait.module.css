@@ -6,7 +6,9 @@
   height: var(--frame-h, 100cqi);
   overflow: hidden;
   border-radius: var(--radius-xs);
-  clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
+  /* Two diagonal cuts, unequal: a larger one top-right, a smaller one bottom-left (in cqi: the figure's
+     width, so they scale with the photo). They only take sky and pavement, never the subject. */
+  clip-path: polygon(0 0, calc(100% - 15cqi) 0, 100% 15cqi, 100% 100%, 9cqi 100%, 0 calc(100% - 9cqi));
   background: var(--sand-3);
 }
 
@@ -29,63 +31,20 @@
     filter 700ms var(--mf-ease-inout);
 }
 
-.mark {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: var(--terracota-strong);
-  border-style: solid;
-  border-width: 0;
-}
-.tl { top: -10px; left: -10px; border-top-width: 1px; border-left-width: 1px; transform-origin: top left; }
-.br { bottom: 26px; right: -10px; border-bottom-width: 1px; border-right-width: 1px; transform-origin: bottom right; }
-
-.cap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-  padding-top: var(--space-2);
-  border-top: 1px solid var(--hairline);
-  font: 400 11px/16px var(--font-mono);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-.cap span { white-space: nowrap; }
-
-/* "Fig. 01" over "Fig. 02" behind a one-line window. */
-.fig { display: inline-block; height: 1lh; overflow: hidden; }
-.figStack {
-  display: flex;
-  flex-direction: column;
-  transition: transform var(--mf-dur-3) var(--mf-ease-out);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .swap:hover .alt { opacity: 1; filter: saturate(.92) sepia(.06) contrast(1.02) blur(0); }
-  .swap:hover .figStack { transform: translateY(-50%); }
 }
 
-/* Entrance: the chamfered frame opens bottom-up while the photo settles, then marks and caption. */
+/* Entrance: the chamfered frame opens bottom-up while the photo settles. */
 @media (prefers-reduced-motion: no-preference) {
   .intro .frame { animation: curtain 1000ms var(--mf-ease-inout) 100ms backwards; }
   .intro .img { animation: settle 1400ms var(--mf-ease-out) 100ms backwards; }
-  .intro .mark { animation: mark-in var(--mf-dur-3) var(--mf-ease-out) 700ms backwards; }
-  .intro .cap { animation: fade-in var(--mf-dur-3) var(--mf-ease-out) 800ms backwards; }
 }
 
-/* Same five points as the chamfer, all starting on the bottom edge. */
+/* Same six points as the frame, all starting on the bottom edge. */
 @keyframes curtain {
-  from { clip-path: polygon(0 100%, calc(100% - 40px) 100%, 100% 100%, 100% 100%, 0 100%); }
+  from { clip-path: polygon(0 100%, calc(100% - 15cqi) 100%, 100% 100%, 100% 100%, 9cqi 100%, 0 100%); }
 }
 @keyframes settle {
   from { transform: scale(1.08); }
-}
-@keyframes mark-in {
-  from { opacity: 0; transform: scale(0); }
-}
-@keyframes fade-in {
-  from { opacity: 0; }
 }

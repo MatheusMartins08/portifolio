@@ -5,9 +5,7 @@
     "fullName": "Matheus Freitas Martins",
     "since": "2024",
     "photo": "/images/photos/matheus-portrait.webp",
-    "photoCaption": "Fig. 01",
-    "photoHover": "/images/photos/matheus-coding.webp",
-    "photoHoverCaption": "Fig. 02"
+    "photoHover": "/images/photos/matheus-coding.webp"
   },
   "social": {
     "github": "https://github.com/MatheusMartins08",

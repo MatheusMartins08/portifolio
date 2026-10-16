@@ -4,26 +4,22 @@ import { cx } from "@/lib/cx";
 import styles from "./Portrait.module.css";
 
 interface PortraitProps {
-  /** Shown in a square frame; `image.focus` decides what the crop keeps. */
+  /** Shown in a square frame by default (the page can set a taller one); `image.focus` decides what the crop keeps. */
   image: ImageAsset;
   alt: string;
-  /** "Fig. 01"; false removes the caption. */
-  caption: string | false;
-  /** Second caption field: "Eu — MF". */
-  meta?: string;
-  /** A second photo that cross-fades in on hover (fine pointers only); its caption rolls in over the first. */
-  hover?: { image: ImageAsset; alt: string; caption: string };
+  /** A second photo that cross-fades in on hover (fine pointers only). */
+  hover?: { image: ImageAsset; alt: string };
   /** next/image `sizes` for the rendered width. */
   sizes: string;
   /** The above-the-fold LCP image: loads eagerly with high fetch priority. */
   priority?: boolean;
-  /** Entrance: the frame opens like a curtain, then the crop marks and the caption arrive. */
+  /** Entrance: the frame opens like a curtain while the photo settles. */
   intro?: boolean;
   className?: string;
 }
 
-/** Editorial photo: chamfered top-right corner, terracota crop marks, mono caption, slight warm tone. */
-export function Portrait({ image, alt, caption, meta, hover, sizes, priority = false, intro = false, className }: PortraitProps) {
+/** Editorial photo: two unequal diagonal cuts (top-right, bottom-left), slight warm tone. */
+export function Portrait({ image, alt, hover, sizes, priority = false, intro = false, className }: PortraitProps) {
   return (
     <figure className={cx(styles.portrait, hover && styles.swap, intro && styles.intro, className)}>
       <div className={styles.frame}>
@@ -52,24 +48,6 @@ export function Portrait({ image, alt, caption, meta, hover, sizes, priority = f
           />
         ) : null}
       </div>
-      <span className={cx(styles.mark, styles.tl)} aria-hidden="true" />
-      <span className={cx(styles.mark, styles.br)} aria-hidden="true" />
-      {caption === false ? null : (
-        <figcaption className={styles.cap}>
-          {hover ? (
-            // A one-line window over both labels: on hover the stack rolls up, like a counter.
-            <span className={styles.fig}>
-              <span className={styles.figStack}>
-                <span>{caption}</span>
-                <span aria-hidden="true">{hover.caption}</span>
-              </span>
-            </span>
-          ) : (
-            <span>{caption}</span>
-          )}
-          {meta ? <span>{meta}</span> : null}
-        </figcaption>
-      )}
     </figure>
   );
 }

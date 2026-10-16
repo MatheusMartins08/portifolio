@@ -66,10 +66,8 @@ export interface Site {
     fullName: string;
     since: string;
     photo: string;
-    photoCaption: string;
     /** Shown over the portrait on hover. */
     photoHover: string;
-    photoHoverCaption: string;
   };
   social: {
     github: string;
