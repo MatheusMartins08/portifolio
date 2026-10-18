@@ -1,4 +1,7 @@
-.stack { display: grid; gap: 28px; margin-top: 28px; }
+.stack { display: grid; gap: 28px; margin-top: var(--space-12); }
+
+/* Centred under the section title; "safe" keeps the first tab reachable when the row scrolls on narrow screens. */
+.tabs { justify-content: safe center; }
 
 .panel { border-radius: var(--radius-md); }
 .panel:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }

@@ -368,6 +368,22 @@
       "en": "Experience",
       "es": "Experiencia"
     },
+    "statement": {
+      "pt": "Cada etapa somou uma camada ao que eu construo hoje.",
+      "en": "Every step added a layer to what I build today.",
+      "es": "Cada etapa sumó una capa a lo que construyo hoy."
+    },
+    "statementHighlight": {
+      "pt": [
+        "camada"
+      ],
+      "en": [
+        "layer"
+      ],
+      "es": [
+        "capa"
+      ]
+    },
     "tabs": {
       "pro": {
         "pt": "Profissional",
@@ -695,6 +711,22 @@
       "pt": "Skills",
       "en": "Skills",
       "es": "Habilidades"
+    },
+    "statement": {
+      "pt": "As ferramentas certas para cada parte do produto.",
+      "en": "The right tools for every part of the product.",
+      "es": "Las herramientas adecuadas para cada parte del producto."
+    },
+    "statementHighlight": {
+      "pt": [
+        "certas"
+      ],
+      "en": [
+        "right"
+      ],
+      "es": [
+        "adecuadas"
+      ]
     },
     "unit": {
       "pt": "itens",

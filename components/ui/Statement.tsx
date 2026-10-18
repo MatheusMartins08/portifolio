@@ -14,6 +14,8 @@ interface StatementProps {
   /** Draws the SectionLabel above: index + label. */
   label?: string;
   index?: string;
+  /** Id of the label, for widgets named by the short label rather than the whole sentence. */
+  labelId?: string;
   /** Id of the heading, for the section's aria-labelledby. */
   headingId?: string;
   as?: "h1" | "h2" | "p";
@@ -33,6 +35,7 @@ export function Statement({
   highlight = [],
   label,
   index,
+  labelId,
   headingId,
   as: Tag = "h2",
   placeholder = false,
@@ -47,7 +50,7 @@ export function Statement({
   return (
     <div ref={ref} className={cx(styles.stmt, inView && styles.in, placeholder && styles.placeholder, className)}>
       {label ? (
-        <SectionLabel index={index} className={styles.label}>
+        <SectionLabel index={index} id={labelId} className={styles.label}>
           {label}
         </SectionLabel>
       ) : null}

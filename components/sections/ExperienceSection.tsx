@@ -1,6 +1,6 @@
 import { ExperienceTabs, type ExperienceGroupData } from "@/components/experience/ExperienceTabs";
 import { Section } from "@/components/layout/Section";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Statement } from "@/components/ui/Statement";
 import { sectionIndex, site, type ExperienceGroup } from "@/lib/content/site";
 import { getDictionary } from "@/lib/i18n/dictionary";
 
@@ -38,10 +38,16 @@ export async function ExperienceSection() {
 
   return (
     <Section id="experiencia" labelledBy="experiencia-title">
-      <SectionLabel as="h2" id="experiencia-title" index={sectionIndex("experiencia")}>
-        {t.experience.label}
-      </SectionLabel>
-      <ExperienceTabs groups={groups} labelledBy="experiencia-title" moreLabel={ui.more} lessLabel={ui.less} />
+      <Statement
+        label={t.experience.label}
+        index={sectionIndex("experiencia")}
+        highlight={t.experience.statementHighlight}
+        labelId="experiencia-label"
+        headingId="experiencia-title"
+      >
+        {t.experience.statement}
+      </Statement>
+      <ExperienceTabs groups={groups} labelledBy="experiencia-label" moreLabel={ui.more} lessLabel={ui.less} />
     </Section>
   );
 }

@@ -1,5 +1,6 @@
-.stmt { max-width: 920px; }
-.stmt .label { margin-bottom: 28px; }
+/* Section titles sit centred on the page: label and sentence. */
+.stmt { max-width: 920px; margin-inline: auto; text-align: center; }
+.stmt .label { justify-content: center; margin-bottom: 28px; }
 
 .text {
   margin: 0;

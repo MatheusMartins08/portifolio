@@ -41,6 +41,7 @@ export function ExperienceTabs({ groups, labelledBy, moreLabel, lessLabel }: Exp
         labelledBy={labelledBy}
         panelId={PANEL_ID}
         idPrefix={TAB_PREFIX}
+        className={styles.tabs}
       />
       <div id={PANEL_ID} role="tabpanel" aria-labelledby={`${TAB_PREFIX}${value}`} tabIndex={0} className={styles.panel}>
         <div key={value} className={styles.swap}>
