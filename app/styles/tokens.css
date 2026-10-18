@@ -8,6 +8,10 @@
   --sand-3: #ded1c1;
   --caramel: #a47e5c;
   --paper: #f8f3eb;
+  --glass-sand: rgba(243, 235, 221, 0.8);
+  --glass-sand-2: rgba(234, 224, 210, 0.84);
+  --glass-sand-3: rgba(222, 209, 193, 0.84);
+  --glass-paper: rgba(248, 243, 235, 0.8);
   --hairline: rgba(28, 25, 21, 0.1);
   --hairline-strong: rgba(28, 25, 21, 0.18);
   --line-strong: #857664;

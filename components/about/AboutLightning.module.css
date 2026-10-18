@@ -1,0 +1,72 @@
+/* Behind the About stage's content (the stage isolates it, so -1 stays above the section's sand),
+   reaching up into the section's top padding. Fades in at the top, as if coming down from the Hero, and
+   out at the foot. Never catches the pointer. */
+.backdrop {
+  position: absolute;
+  top: calc(-1 * var(--space-16));
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--space-16), #000 calc(100% - var(--space-12)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--space-16), #000 calc(100% - var(--space-12)), transparent);
+}
+
+/* One soft glow for the whole bolt (a single filter pass, not one per stroke). */
+.svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 4;
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--terracota-strong) 40%, transparent));
+}
+
+/* Each stroke's progress from the scroll: 0 before t0, 1 after t1 (--t from the script). An undrawn
+   stroke would still leave its round cap as a dot: hidden until it starts. */
+.stroke {
+  --k: clamp(0, (var(--t, -1) - var(--t0)) / (var(--t1) - var(--t0)), 1);
+  opacity: clamp(0, var(--k) * 400, 1);
+}
+.stroke path {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: calc(1 - var(--k));
+}
+
+/* ---------- body: Hero colours, heavier, thinner at every level ---------- */
+.edge { stroke: var(--paper); stroke-opacity: .7; }
+.core { stroke: var(--terracota-strong); }
+.l0 .core { stroke-width: 3.4px; stroke-opacity: .85; }
+.l0 .edge { stroke-width: 4.6px; }
+.l1 .core { stroke-width: 2px; stroke-opacity: .72; }
+.l1 .edge { stroke-width: 2.8px; }
+.l2 .core { stroke-width: 1px; stroke-opacity: .6; }
+.l2 .edge { stroke-width: 1.6px; }
+
+/* ---------- lit head: a short dash at the drawing edge (dash end = 1 − offset), only while drawing ---------- */
+.l0 { --head: .03; }
+.l1 { --head: .07; }
+.l2 { --head: .12; }
+.stroke .glow,
+.stroke .hot {
+  stroke-dasharray: var(--head) 2;
+  stroke-dashoffset: calc(var(--head) - var(--k));
+  opacity: min(.7, var(--k) * 12, (1 - var(--k)) * 12);
+}
+.glow { stroke: var(--ember); stroke-opacity: .55; }
+.hot { stroke: var(--ember-hot); }
+.l0 .glow { stroke-width: 7px; }
+.l0 .hot { stroke-width: 2.4px; }
+.l1 .glow { stroke-width: 4.5px; }
+.l1 .hot { stroke-width: 1.5px; }
+.l2 .glow { stroke-width: 3px; }
+.l2 .hot { stroke-width: 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stroke { --k: 1; }
+  .glow, .hot { display: none; }
+}

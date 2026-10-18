@@ -4,7 +4,8 @@
   position: relative;
   transform-style: preserve-3d;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  background: var(--paper);
+  /* Translucent: the About lightning shows through, softly. No backdrop-filter: it would flatten the 3D tilt. */
+  background: var(--glass-paper);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-lg);
   box-shadow: 0 1px 2px rgba(60, 40, 20, .05), var(--sx, 0px) var(--sy, 28px) 56px -22px rgba(60, 40, 20, .28);
@@ -20,7 +21,7 @@
   height: 44px;
   padding: 0 var(--space-4) 0 10px;
   border-bottom: 1px solid var(--hairline);
-  background: var(--sand);
+  background: var(--glass-sand);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   transform: translateZ(14px);
 }

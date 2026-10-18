@@ -47,8 +47,8 @@ export interface ContourLine {
   pair: number;
 }
 
-/** Stable pseudo-random value in [0, 1) for integer coordinates. */
-function hash(seed: number, i: number, j = 0, k = 0): number {
+/** Stable pseudo-random value in [0, 1) for integer coordinates (also seeds the About bolt). */
+export function hash(seed: number, i: number, j = 0, k = 0): number {
   let h = Math.imul(seed ^ 0x9e3779b9, 0x85ebca6b);
   h = Math.imul(h ^ Math.imul(i, 0x27d4eb2d), 0xc2b2ae35);
   h = Math.imul(h ^ Math.imul(j, 0x165667b1), 0x27d4eb2f);

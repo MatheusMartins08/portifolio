@@ -7,9 +7,10 @@
   border: 1px solid var(--hairline);
   box-sizing: border-box;
 }
-.paper { background: var(--paper); }
-.sand { background: var(--sand-2); border-color: transparent; }
-.deep { background: var(--sand-3); border-color: transparent; }
+/* Translucent: the About lightning shows through, softly. */
+.paper { background: var(--glass-paper); }
+.sand { background: var(--glass-sand-2); border-color: transparent; }
+.deep { background: var(--glass-sand-3); border-color: transparent; }
 .ink { background: var(--ink); color: var(--on-ink); border-color: transparent; }
 .ink .label { color: #b8ab9b; }
 
