@@ -9,8 +9,12 @@
  * - d is the distance to the clear space (a union of chamfered octagons, one per line of text, so its
  *   offsets keep sharp corners) and s(d) goes from 0 on its edge to 1 far away, like flow around a body:
  *   no line can cross the text, and the ones passing by are pressed against it.
+ * Then each line is dressed as lightning: fine fractal breaks along its course (never into the clear
+ * space) and a twig or two breaking off it, in the direction it is drawn, some with a smaller twig.
  * Pure function: same input, same lines (seeded), so resizing redraws the same drawing.
  */
+
+import { hash, jag, lengths, pointAt, toPath, type Point } from "@/lib/geometry/lightning";
 
 export interface Box {
   x: number;
@@ -36,26 +40,22 @@ export interface ContourInput {
  */
 export interface ContourLine {
   d: string;
-  /** Every third level is drawn thicker. */
-  thick: boolean;
+  /** Every third level is drawn thicker; twigs are the thinnest. */
+  weight: "thick" | "thin" | "twig";
   length: number;
   /** Where the stretch starts. */
   start: [number, number];
   /** Distance from its meeting point to the clear space: small for the lines that wrap the text. */
   reach: number;
-  /** The two halves of one line share it. */
+  /** The two halves of one line share it (-1 on twigs). */
   pair: number;
+  /** Twigs: the line they break off (its index) and where, as a share of that line's length. */
+  branch?: { parent: number; at: number };
 }
 
-/** Stable pseudo-random value in [0, 1) for integer coordinates (also seeds the About bolt). */
-export function hash(seed: number, i: number, j = 0, k = 0): number {
-  let h = Math.imul(seed ^ 0x9e3779b9, 0x85ebca6b);
-  h = Math.imul(h ^ Math.imul(i, 0x27d4eb2d), 0xc2b2ae35);
-  h = Math.imul(h ^ Math.imul(j, 0x165667b1), 0x27d4eb2f);
-  h = Math.imul(h ^ Math.imul(k, 0x9e3779b1), 0x85ebca6b);
-  h ^= h >>> 15;
-  return (h >>> 0) / 4294967296;
-}
+/** Lightning dress, in units of the name's font size: the breaks along every line, and the twigs. */
+const BREAKS = 0.06;
+const TWIG = { minLine: 2.5, min: 0.35, max: 0.9 };
 
 /** Irregular lattice lines around an anchor: cell sizes vary between 0.6 and 1.4 of `size`. */
 function lattice(seed: number, anchor: number, from: number, to: number, size: number): number[] {
@@ -197,12 +197,67 @@ export function drawContours({ width, height, boxes, unit, seed = 11 }: ContourI
     }
   }
 
+  // ---- lightning dress: fine breaks along each stretch, twigs breaking off it ----
   const lines: ContourLine[] = [];
-  const stretch = (points: Array<[number, number]>, thick: boolean, pair: number, reach: number) => {
-    let length = 0;
-    for (let i = 1; i < points.length; i++) length += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
-    const d = "M" + points.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join("L");
-    lines.push({ d, thick, length, start: points[0], reach, pair });
+  const clear = ([x, y]: Point) => distance(x, y) > 2;
+  const onStage = ([x, y]: Point) => x >= 0 && x <= width && y >= 0 && y <= height;
+  /** Seeded values for the twigs, apart from the breaks' own. */
+  const twigHash = (salt: number, w: number, k: number) => hash(seed + 7919, salt, w, k);
+
+  /** A twig from `from`, heading `angle` (radians); halved once if it would touch the text or leave the stage. */
+  const grow = (from: Point, angle: number, length: number, salt: number): Point[] | null => {
+    for (const len of [length, length / 2]) {
+      const end: Point = [from[0] + Math.cos(angle) * len, from[1] + Math.sin(angle) * len];
+      const points = jag(from, end, { seed, salt, cap: len * 0.25, rough: 0.22, minSeg: 6 });
+      if (points.slice(1).every((p) => onStage(p) && distance(p[0], p[1]) > 3)) return points;
+    }
+    return null;
+  };
+  /** Adds a twig line drawn after `parent`, from `at` (share of the parent's length). */
+  const twig = (points: Point[], parent: number, at: number) => {
+    const run = lengths(points);
+    lines.push({ d: toPath(points), weight: "twig", length: run[run.length - 1], start: points[0], reach: 0, pair: -1, branch: { parent, at } });
+    return run;
+  };
+  /** One or two twigs off a stretch, in its drawing direction, opening to one side; some thick ones fork again. */
+  const branches = (parent: number, points: Point[], run: number[], weight: ContourLine["weight"]) => {
+    const total = run[run.length - 1];
+    if (total < unit * TWIG.minLine) return;
+    const count = weight === "thick" ? 2 : twigHash(parent, 0, 1) < 0.6 ? 1 : 0;
+    for (let w = 0; w < count; w++) {
+      const share = 0.25 + 0.5 * twigHash(parent, w, 2);
+      const i = pointAt(run, total * share);
+      // The line's heading around the fork, over a short span (the breaks would make it jitter).
+      const behind = points[pointAt(run, Math.max(0, total * share - unit * 0.4))];
+      const ahead = points[pointAt(run, Math.min(total, total * share + unit * 0.4))];
+      const heading = Math.atan2(ahead[1] - behind[1], ahead[0] - behind[0]);
+      const side = twigHash(parent, w, 3) < 0.5 ? -1 : 1;
+      const angle = heading + (side * (25 + 25 * twigHash(parent, w, 4)) * Math.PI) / 180;
+      const length = Math.min(unit * (TWIG.min + (TWIG.max - TWIG.min) * twigHash(parent, w, 5)), total * 0.3);
+      const shoot = grow(points[i], angle, length, parent * 13 + w + 1);
+      if (!shoot) continue;
+      const index = lines.length;
+      const shootRun = twig(shoot, parent, run[i] / total);
+      // A smaller twig off some of the thick lines' twigs, opening further out.
+      if (weight === "thick" && twigHash(parent, w, 6) < 0.35) {
+        const j = pointAt(shootRun, shootRun[shootRun.length - 1] * 0.5);
+        const sub = grow(shoot[j], angle + (side * (20 + 15 * twigHash(parent, w, 7)) * Math.PI) / 180, length * 0.5, parent * 13 + w + 7);
+        if (sub) twig(sub, index, shootRun[j] / shootRun[shootRun.length - 1]);
+      }
+    }
+  };
+  const stretch = (raw: Point[], thick: boolean, pair: number, reach: number) => {
+    // The ends stay put (the stage edge, the meeting point); breaks pushed into the clear space fall back.
+    const salt = lines.length + 1;
+    const points: Point[] = [raw[0]];
+    for (let i = 1; i < raw.length; i++) {
+      points.push(...jag(raw[i - 1], raw[i], { seed, salt: salt * 997 + i, cap: unit * BREAKS, rough: 0.18, minSeg: 6, accept: clear }).slice(1));
+    }
+    const run = lengths(points);
+    const weight = thick ? "thick" : "thin";
+    const index = lines.length;
+    lines.push({ d: toPath(points), weight, length: run[run.length - 1], start: points[0], reach, pair });
+    branches(index, points, run, weight);
   };
   for (let k = Math.floor(lo); k <= Math.ceil(hi); k++) {
     const level = k + 0.5;

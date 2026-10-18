@@ -27,21 +27,27 @@
   stroke-miterlimit: 6;
 }
 
-/* ---------- dimmed ---------- */
-.edgeThin, .edgeThick { stroke: var(--paper); stroke-opacity: .8; }
+/* ---------- dimmed: thick, thin and the twigs, thinner at every level, with the About bolt's soft glow ---------- */
+.off .svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--terracota-strong) 35%, transparent)); }
+.edgeThin, .edgeThick, .edgeTwig { stroke: var(--paper); stroke-opacity: .8; }
+.edgeTwig { stroke-width: 1.2px; }
 .edgeThin { stroke-width: 1.6px; }
 .edgeThick { stroke-width: 3px; }
-.thin, .thick { stroke: var(--terracota-strong); }
+.thin, .thick, .twig { stroke: var(--terracota-strong); }
+.twig { stroke-opacity: .34; stroke-width: .8px; }
 .thin { stroke-opacity: .42; stroke-width: 1px; }
 .thick { stroke-opacity: .72; stroke-width: 2.2px; }
 
 /* ---------- lit: halo, core, hot centre ---------- */
-.haloThin, .haloThick, .coreThin, .coreThick { stroke: var(--ember); }
+.haloThin, .haloThick, .haloTwig, .coreThin, .coreThick, .coreTwig { stroke: var(--ember); }
+.haloTwig { stroke-opacity: .35; stroke-width: 4px; }
 .haloThin { stroke-opacity: .5; stroke-width: 6px; }
 .haloThick { stroke-opacity: .7; stroke-width: 12px; }
+.coreTwig { stroke-width: 1px; }
 .coreThin { stroke-width: 1.6px; }
 .coreThick { stroke-width: 3.2px; }
-.hotThin, .hotThick { stroke: var(--ember-hot); }
+.hotThin, .hotThick, .hotTwig { stroke: var(--ember-hot); }
+.hotTwig { stroke-opacity: .6; stroke-width: .4px; }
 .hotThin { stroke-opacity: .7; stroke-width: .6px; }
 .hotThick { stroke-width: 1.3px; }
 
@@ -59,6 +65,7 @@
   stroke-dasharray: .035 2;
   animation: travel var(--draw) var(--mf-ease-inout) var(--delay) both;
 }
+.tipTwig { stroke-width: 1px; }
 .tipThin { stroke-width: 1.5px; }
 .tipThick { stroke-width: 2.8px; }
 

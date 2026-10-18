@@ -35,6 +35,8 @@ const INTRO = {
   jitter: 120,
   minDraw: 650,
   maxDraw: 1050,
+  /** Twigs draw at their line's pace, but never quicker than this. */
+  minTwig: 220,
   /** After the last connection. */
   pulseAfter: 150,
   pulse: 360,
@@ -65,11 +67,15 @@ interface Intro {
 /** Stable value in [0, 1) per line pair, for the stagger's irregularity. */
 const jitterOf = (pair: number) => (Math.imul(pair + 1, 0x9e3779b1) >>> 0) / 4294967296;
 
+/** Inverse of the draw's ease-in-out (taken as smoothstep): the share of the time at which a share of the line is drawn. */
+const easedAt = (share: number) => 0.5 - Math.sin(Math.asin(1 - 2 * share) / 3);
+
 function planIntro({ height, lines }: Drawing, offset: number): Intro {
-  const farthest = Math.max(1, ...lines.map((line) => line.reach));
+  const main = lines.filter((line) => !line.branch);
+  const farthest = Math.max(1, ...main.map((line) => line.reach));
   // Both halves of a line share a start and a duration, so they meet at the same instant.
   const pairs = new Map<number, { delay: number; draw: number }>();
-  for (const line of lines) {
+  for (const line of main) {
     const known = pairs.get(line.pair);
     const y = line.start[1];
     const lag = y <= 2 ? 0 : y >= height - 2 ? INTRO.bottomLag : INTRO.sideLag;
@@ -81,8 +87,22 @@ function planIntro({ height, lines }: Drawing, offset: number): Intro {
       draw: known ? Math.max(known.draw, draw) : draw,
     });
   }
-  const timing = lines.map((line) => pairs.get(line.pair)!);
-  return { timing, closed: Math.max(0, ...timing.map((t) => t.delay + t.draw)) };
+  // Twigs come after the line they break off: they start as its head passes the fork, at its pace.
+  const timing: Intro["timing"] = [];
+  lines.forEach((line, i) => {
+    if (!line.branch) {
+      timing[i] = pairs.get(line.pair)!;
+      return;
+    }
+    const parent = timing[line.branch.parent];
+    timing[i] = {
+      delay: parent.delay + parent.draw * easedAt(line.branch.at),
+      draw: Math.max(INTRO.minTwig, (parent.draw * line.length) / lines[line.branch.parent].length),
+    };
+  });
+  // The circuit closes with the main lines; twigs finishing a beat later do not hold the name back.
+  const closed = Math.max(0, ...main.map((line) => pairs.get(line.pair)!).map((t) => t.delay + t.draw));
+  return { timing, closed };
 }
 
 /** Width of the widest phrase in the element's font (the phrase changes on its own; its space must not). */
@@ -124,6 +144,9 @@ interface LinesProps {
   glowId: string;
 }
 
+/** Class suffix per stroke weight: thick, thin, and the twigs that break off them. */
+const WEIGHT_CLASS = { thick: "Thick", thin: "Thin", twig: "Twig" } as const;
+
 /** Every path has pathLength 1, so the entrance can draw it with the dash offset, whatever its length. */
 function Lines({ drawing, intro, lit, glowId }: LinesProps) {
   const { width, height, lines } = drawing;
@@ -138,7 +161,7 @@ function Lines({ drawing, intro, lit, glowId }: LinesProps) {
       ) : null}
       {lines.map((line, i) => {
         const timing = intro?.timing[i];
-        const size = line.thick ? "Thick" : "Thin";
+        const size = WEIGHT_CLASS[line.weight];
         return (
           <g key={i} style={timing ? cssVars({ "--delay": `${timing.delay}ms`, "--draw": `${timing.draw}ms` }) : undefined}>
             {lit ? (
@@ -154,9 +177,9 @@ function Lines({ drawing, intro, lit, glowId }: LinesProps) {
                   className={styles[`edge${size}`]}
                   d={line.d}
                   pathLength={1}
-                  transform={line.thick ? "translate(.8 1.3)" : "translate(.6 1)"}
+                  transform={line.weight === "thick" ? "translate(.8 1.3)" : "translate(.6 1)"}
                 />
-                <path className={styles[line.thick ? "thick" : "thin"]} d={line.d} pathLength={1} />
+                <path className={styles[line.weight]} d={line.d} pathLength={1} />
                 {/* The brighter head that travels with the line while it is being drawn. */}
                 {timing ? <path className={cx(styles.tip, styles[`tip${size}`])} d={line.d} pathLength={1} /> : null}
               </>
