@@ -1,0 +1,29 @@
+/* One column of sticky cards. Each sticks --stack-step below the previous one, so the top edges of
+   the cards behind show as steps; the margin under each is the scroll it takes the next to slide over. */
+.stack {
+  --stack-step: var(--space-4);
+  max-width: 960px;
+  margin: var(--space-12) auto 0;
+  padding: 0 0 var(--space-12);
+  list-style: none;
+}
+.item {
+  position: sticky;
+  top: calc(var(--header-offset) + var(--i) * var(--stack-step));
+  margin-bottom: var(--space-32);
+}
+.item:last-child { margin-bottom: 0; }
+
+@media (max-width: 720px) {
+  .stack { --stack-step: var(--space-3); margin-top: var(--space-8); }
+  .item { margin-bottom: var(--space-16); }
+  .item:last-child { margin-bottom: 0; }
+}
+
+/* Reduced motion, or a screen too short to hold a stuck card (a phone on its side): a plain list.
+   ServiceStack mirrors this query to leave the cards unscaled. */
+@media (prefers-reduced-motion: reduce), (max-height: 640px) {
+  .stack { padding-bottom: 0; }
+  .item { position: static; margin-bottom: var(--space-6); }
+  .item:last-child { margin-bottom: 0; }
+}

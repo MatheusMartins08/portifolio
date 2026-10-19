@@ -1,16 +1,28 @@
+/* Desktop: text on the left, the motif centred on the right. All cards share one height (--card-h,
+   measured by ServiceStack) so they stack cleanly; --s shrinks a card as others stack over it. */
 .svc {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  grid-template-rows: auto auto auto 1fr;
+  grid-template-areas:
+    "ids motif"
+    "title motif"
+    "desc motif"
+    "list motif";
+  column-gap: var(--space-12);
+  min-height: var(--card-h, 0);
   padding: 28px;
   border-radius: var(--radius-md);
   background: var(--paper);
   border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-float);
   overflow: hidden;
   box-sizing: border-box;
   isolation: isolate;
-  transition: border-color var(--mf-dur-3) var(--mf-ease-out), transform var(--mf-dur-3) var(--mf-ease-out);
+  transform: scale(var(--s, 1));
+  transform-origin: top center;
+  transition: border-color var(--mf-dur-3) var(--mf-ease-out);
 }
 /* Soft light that follows the pointer. */
 .svc::before {
@@ -23,7 +35,7 @@
   transition: opacity var(--mf-dur-3) var(--mf-ease-out);
 }
 .svc:hover::before { opacity: 1; }
-.svc:hover { border-color: var(--hairline-strong); }
+.svc:is(:hover, [data-active]) { border-color: var(--hairline-strong); }
 
 .edgeTop {
   position: absolute;
@@ -36,20 +48,18 @@
   transform-origin: left;
   transition: transform var(--mf-dur-4) var(--mf-ease-out);
 }
-.svc:hover .edgeTop { transform: scaleX(1); }
+.svc:is(:hover, [data-active]) .edgeTop { transform: scaleX(1); }
 
-.top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 40px; }
-.ids { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.ids { grid-area: ids; display: flex; align-items: center; gap: var(--space-4); margin-bottom: 28px; }
 .num { font: 300 40px/40px var(--font-mono); letter-spacing: -0.04em; color: var(--ink-faint); transition: color var(--mf-dur-3) var(--mf-ease-out); }
-.svc:hover .num { color: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .num { color: var(--terracota-strong); }
 
-.motifBox { width: 168px; flex: none; }
-.md .motifBox { width: 136px; }
+.motifBox { grid-area: motif; align-self: center; width: 100%; }
 
-.title { margin: 0 0 var(--space-3); font: 500 28px/34px var(--font-sans); letter-spacing: -0.02em; }
-.desc { margin: 0 0 var(--space-6); max-width: 46ch; font: 400 15px/24px var(--font-sans); color: var(--ink-2); }
+.title { grid-area: title; margin: 0 0 var(--space-3); font: 500 28px/34px var(--font-sans); letter-spacing: -0.02em; }
+.desc { grid-area: desc; margin: 0 0 var(--space-6); max-width: 54ch; font: 400 15px/24px var(--font-sans); color: var(--ink-2); }
 
-.list { margin: auto 0 0; padding: var(--space-4) 0 0; list-style: none; border-top: 1px solid var(--hairline); display: grid; gap: 10px; }
+.list { grid-area: list; align-self: end; margin: 0; padding: var(--space-4) 0 0; list-style: none; border-top: 1px solid var(--hairline); display: grid; gap: 10px; }
 .list li { display: flex; align-items: center; gap: var(--space-3); font: 500 14px/20px var(--font-sans); color: var(--ink); }
 .tick {
   width: 14px;
@@ -58,7 +68,25 @@
   transition: background-color var(--mf-dur-2) var(--mf-ease-out), width var(--mf-dur-3) var(--mf-ease-out);
   transition-delay: calc(var(--i) * 70ms);
 }
-.svc:hover .tick { background: var(--terracota-strong); width: 22px; }
+.svc:is(:hover, [data-active]) .tick { background: var(--terracota-strong); width: 22px; }
+
+/* Phones: numeral and tag stacked, the motif beside them, the text below at full width. */
+@media (max-width: 720px) {
+  .svc {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      "ids motif"
+      "title title"
+      "desc desc"
+      "list list";
+    column-gap: var(--space-4);
+    padding: var(--space-6);
+  }
+  .ids { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: var(--space-8); }
+  .motifBox { align-self: start; width: 120px; }
+  .title { font-size: 24px; line-height: 30px; }
+}
 
 /* ---------- motifs ---------- */
 .motif { display: block; width: 100%; height: auto; overflow: visible; }
@@ -73,13 +101,13 @@
 .g2 { transition-delay: 60ms; }
 .g3 { transition-delay: 120ms; }
 .g4 { transition-delay: 160ms; }
-.svc:hover .text, .svc:hover .sub { transform: none; }
+.svc:is(:hover, [data-active]) .text, .svc:is(:hover, [data-active]) .sub { transform: none; }
 .cta { fill: var(--hairline-strong); transition: fill var(--mf-dur-3) var(--mf-ease-out) 200ms; }
-.svc:hover .cta { fill: var(--terracota); }
+.svc:is(:hover, [data-active]) .cta { fill: var(--terracota); }
 .block { fill: var(--sand-2); transition: fill var(--mf-dur-3) var(--mf-ease-out); }
-.svc:hover .block { fill: var(--terracota-soft); }
+.svc:is(:hover, [data-active]) .block { fill: var(--terracota-soft); }
 .cursor { fill: var(--ink); stroke: var(--paper); stroke-width: 1; transition: transform var(--mf-dur-4) var(--mf-ease-out); }
-.svc:hover .cursor { transform: translate(-84px, 36px); }
+.svc:is(:hover, [data-active]) .cursor { transform: translate(-84px, 36px); }
 
 .edge { fill: none; stroke: var(--hairline-strong); stroke-width: 1; }
 .flow {
@@ -92,7 +120,7 @@
   animation: dash 1.4s linear infinite;
   animation-play-state: paused;
 }
-.svc:hover .flow { opacity: 1; animation-play-state: running; }
+.svc:is(:hover, [data-active]) .flow { opacity: 1; animation-play-state: running; }
 .node rect {
   fill: var(--sand);
   stroke: var(--line-strong);
@@ -101,8 +129,8 @@
   transition-delay: calc(var(--i) * 90ms);
 }
 .node circle { fill: var(--ink-faint); transition: fill var(--mf-dur-3) var(--mf-ease-out); transition-delay: calc(var(--i) * 90ms); }
-.svc:hover .node rect { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
-.svc:hover .node circle { fill: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .node rect { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .node circle { fill: var(--terracota-strong); }
 
 /* Backend, data, deploy: blocks and their strokes light up in turn, by the --i of their group. */
 .box, .glyph, .pin, .head { transition-delay: calc(var(--i, 0) * 90ms); }
@@ -114,7 +142,7 @@
   transition-duration: var(--mf-dur-3);
   transition-timing-function: var(--mf-ease-out);
 }
-.svc:hover .box { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .box { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
 .glyph {
   fill: none;
   stroke: var(--ink-faint);
@@ -125,11 +153,11 @@
   transition-duration: var(--mf-dur-3);
   transition-timing-function: var(--mf-ease-out);
 }
-.svc:hover .glyph { stroke: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .glyph { stroke: var(--terracota-strong); }
 .pin { fill: var(--ink-faint); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
-.svc:hover .pin { fill: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .pin { fill: var(--terracota-strong); }
 .head { fill: var(--sand-2); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
-.svc:hover .head { fill: var(--terracota-soft); }
+.svc:is(:hover, [data-active]) .head { fill: var(--terracota-soft); }
 
 /* Rows and labels fill in from the left, like the Web text bars. */
 .row {
@@ -140,7 +168,7 @@
   transition: transform var(--mf-dur-4) var(--mf-ease-out);
   transition-delay: calc(var(--i, 0) * 120ms);
 }
-.svc:hover .row { transform: none; }
+.svc:is(:hover, [data-active]) .row { transform: none; }
 
 /* A request travelling from the client to the database, behind the blocks it passes. */
 .packet {
@@ -150,7 +178,7 @@
   animation: request 1.8s var(--mf-ease-inout) infinite;
   animation-play-state: paused;
 }
-.svc:hover .packet { opacity: 1; animation-play-state: running; }
+.svc:is(:hover, [data-active]) .packet { opacity: 1; animation-play-state: running; }
 
 /* The build bar fills, then the check is drawn in the cloud. */
 .bar {
@@ -160,7 +188,7 @@
   transform: scaleX(0);
   transition: transform 1.1s var(--mf-ease-inout) 120ms;
 }
-.svc:hover .bar { transform: none; }
+.svc:is(:hover, [data-active]) .bar { transform: none; }
 .check {
   fill: none;
   stroke: var(--terracota-strong);
@@ -171,7 +199,7 @@
   stroke-dashoffset: 1;
   transition: stroke-dashoffset var(--mf-dur-3) var(--mf-ease-out);
 }
-.svc:hover .check { stroke-dashoffset: 0; transition-delay: 1.15s; }
+.svc:is(:hover, [data-active]) .check { stroke-dashoffset: 0; transition-delay: 1.15s; }
 
 @keyframes dash { to { stroke-dashoffset: -20; } }
 @keyframes request {

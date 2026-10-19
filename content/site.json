@@ -37,11 +37,11 @@
     { "id": "contato", "i18n": "contact.label", "index": "06", "inNav": false }
   ],
   "services": [
-    { "key": "web", "index": "01", "motif": "web", "size": "lg" },
-    { "key": "ai", "index": "02", "motif": "ai", "size": "md" },
-    { "key": "backend", "index": "03", "motif": "backend", "size": "md" },
-    { "key": "data", "index": "04", "motif": "data", "size": "md" },
-    { "key": "deploy", "index": "05", "motif": "deploy", "size": "md" }
+    { "key": "web", "index": "01", "motif": "web" },
+    { "key": "ai", "index": "02", "motif": "ai" },
+    { "key": "backend", "index": "03", "motif": "backend" },
+    { "key": "data", "index": "04", "motif": "data" },
+    { "key": "deploy", "index": "05", "motif": "deploy" }
   ],
   "experience": {
     "pro": [

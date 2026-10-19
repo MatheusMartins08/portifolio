@@ -20,22 +20,22 @@ interface ServiceCardProps {
   index: string;
   /** Quiet tag: WEB, IA, BACKEND… */
   label: string;
-  /** Graphic motif that reacts to the service on hover. */
+  /** Graphic motif that reacts to the service on hover, or while the card is active. */
   motif: ServiceKey;
-  /** lg = the wide lead card, md = every other one (smaller motif). */
-  size?: "lg" | "md";
   title: string;
   description: string;
   highlights: string[];
+  /** The card in front of the stack: plays what the hover plays. */
+  active?: boolean;
   className?: string;
 }
 
 /**
- * Service card: numeral, label, motif, title, description and highlights. On hover the top edge
- * draws in terracota, the numeral lights up, the highlight ticks grow and the motif reacts.
- * A soft light follows the pointer.
+ * Service card: numeral, label, motif, title, description and highlights. On hover, and while it is
+ * active, the top edge draws in terracota, the numeral lights up, the highlight ticks grow and the
+ * motif reacts. A soft light follows the pointer. Scaled by `--s` when other cards stack over it.
  */
-export function ServiceCard({ index, label, motif, size = "lg", title, description, highlights, className }: ServiceCardProps) {
+export function ServiceCard({ index, label, motif, title, description, highlights, active = false, className }: ServiceCardProps) {
   const ref = useRef<HTMLElement>(null);
   const Motif = MOTIFS[motif];
 
@@ -48,15 +48,18 @@ export function ServiceCard({ index, label, motif, size = "lg", title, descripti
   }
 
   return (
-    <article ref={ref} onPointerMove={onPointerMove} className={cx(styles.svc, styles[size], className)}>
+    <article
+      ref={ref}
+      onPointerMove={onPointerMove}
+      data-active={active || undefined}
+      className={cx(styles.svc, className)}
+    >
       <span className={styles.edgeTop} aria-hidden="true" />
-      <div className={styles.top}>
-        <div className={styles.ids}>
-          <span className={styles.num}>{index}</span>
-          <Tag tone="quiet">{label}</Tag>
-        </div>
-        <div className={styles.motifBox}><Motif /></div>
+      <div className={styles.ids}>
+        <span className={styles.num}>{index}</span>
+        <Tag tone="quiet">{label}</Tag>
       </div>
+      <div className={styles.motifBox}><Motif /></div>
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.desc}>{description}</p>
       {highlights.length ? (

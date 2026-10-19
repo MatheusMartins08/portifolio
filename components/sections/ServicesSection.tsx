@@ -1,10 +1,8 @@
 import { Section } from "@/components/layout/Section";
-import { ServiceCard } from "@/components/services/ServiceCard";
-import { Reveal } from "@/components/ui/Reveal";
+import { ServiceStack } from "@/components/services/ServiceStack";
 import { Statement } from "@/components/ui/Statement";
 import { sectionIndex, site } from "@/lib/content/site";
 import { getDictionary } from "@/lib/i18n/dictionary";
-import styles from "./ServicesSection.module.css";
 
 export async function ServicesSection() {
   const t = await getDictionary();
@@ -19,27 +17,21 @@ export async function ServicesSection() {
         {t.services.statement}
       </Statement>
 
-      {/* Services in site.json order: two on the first row (7/5, the second offset down), three on the
-          next. Each row enters on its own, so the stagger restarts per row. */}
-      <div className={styles.grid}>
-        {site.services.map((service, i) => {
+      {/* Services in site.json order, as a stack of cards on scroll. */}
+      <ServiceStack
+        items={site.services.map((service) => {
           const copy = t.services[service.key];
-          const place = i === 0 ? styles.lead : i === 1 ? styles.side : styles.trio;
-          return (
-            <Reveal key={service.key} variant="blur" delay={(i < 2 ? i : i - 2) * 120} className={place}>
-              <ServiceCard
-                index={service.index}
-                label={copy.label}
-                motif={service.motif}
-                size={service.size}
-                title={copy.title}
-                description={copy.description}
-                highlights={copy.highlights}
-              />
-            </Reveal>
-          );
+          return {
+            key: service.key,
+            index: service.index,
+            motif: service.motif,
+            label: copy.label,
+            title: copy.title,
+            description: copy.description,
+            highlights: copy.highlights,
+          };
         })}
-      </div>
+      />
     </Section>
   );
 }

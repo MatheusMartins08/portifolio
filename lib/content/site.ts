@@ -21,7 +21,6 @@ export interface Service {
   key: ServiceKey;
   index: string;
   motif: ServiceKey;
-  size: "lg" | "md";
 }
 
 export type ExperienceGroup = keyof Dictionary["experience"]["tabs"];
