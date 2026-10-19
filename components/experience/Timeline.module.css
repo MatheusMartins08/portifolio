@@ -3,16 +3,40 @@
 .tl { position: relative; padding: var(--space-3) 0; }
 .list { margin: 0; padding: 0; list-style: none; }
 
-.rail {
+/* ---------- the bolt is the rail, drawn by the scroll (--p: share of its length, from the script) ---------- */
+.bolt {
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 50%;
-  width: 1px;
-  margin-left: -0.5px;
-  background: var(--hairline-strong);
+  margin-left: calc(-1 * var(--bolt-half));
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 4;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--terracota-strong) 35%, transparent));
 }
-.fill { position: absolute; inset: 0; background: var(--terracota); transform-origin: top; transform: scaleY(0); }
+.bolt path { stroke-dasharray: 1 2; stroke-dashoffset: calc(1 - var(--p, 0)); }
+.boltEdge { stroke: var(--paper); stroke-opacity: .7; stroke-width: 3.6px; }
+.boltCore { stroke: var(--terracota-strong); stroke-opacity: .9; stroke-width: 2.4px; }
+/* The lit head: a short dash at the drawing edge (dash end = --p), gone at either end of the course. */
+.bolt .boltGlow,
+.bolt .boltHot {
+  stroke-dasharray: var(--head) 2;
+  stroke-dashoffset: calc(var(--head) - var(--p, 0));
+  opacity: min(.75, var(--p, 0) * 30, (1 - var(--p, 0)) * 30);
+}
+.boltGlow { stroke: var(--ember); stroke-opacity: .55; stroke-width: 7px; }
+.boltHot { stroke: var(--ember-hot); stroke-width: 2px; }
+/* Twigs: drawn from where they break off, at the trunk's pace; an undrawn one would leave a round dot. */
+.twig path {
+  --k: clamp(0, (var(--p, 0) - var(--a)) / var(--b), 1);
+  stroke-dashoffset: calc(1 - var(--k));
+  opacity: clamp(0, var(--k) * 400, 1);
+}
+.twig .boltEdge { stroke-width: 2.2px; }
+.twig .boltCore { stroke-width: 1.3px; stroke-opacity: .8; }
 
 /* ---------- items ---------- */
 /* Items overlap by 36px to interlock left/right; only the card takes the pointer, so an item's empty
@@ -44,20 +68,46 @@
   box-shadow: 0 0 0 4px var(--sand), 0 0 0 5px rgba(188, 90, 54, .35);
   transform: scale(1.1);
 }
+/* The charge: as the bolt reaches a node, an ember ring opens out of it and fades (replayed each time). */
+.node::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--ember), 0 0 10px 2px color-mix(in srgb, var(--ember) 50%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+.item[data-active]:not(.future) .node::before { animation: charge 560ms var(--mf-ease-out); }
+@keyframes charge {
+  from { opacity: .95; transform: scale(.6); }
+  to { opacity: 0; transform: scale(2.2); }
+}
 
+/* The arm is a twig from the node to the card (drawn from the node side, mirrored on the left). It grows
+   in with the card, then the current runs along it in terracota once the node is lit. */
 .arm {
   position: absolute;
-  top: 35px;
-  height: 1px;
+  top: 30px;
+  height: 10px;
   width: 30px;
-  background: var(--hairline-strong);
   transform: scaleX(0);
-  transition: transform var(--mf-dur-3) var(--mf-ease-out) 120ms, background-color var(--mf-dur-3);
+  transition: transform var(--mf-dur-3) var(--mf-ease-out) 120ms;
 }
 .left .arm { right: 50%; margin-right: 6px; transform-origin: right; }
 .right .arm { left: 50%; margin-left: 6px; transform-origin: left; }
 .item[data-in] .arm { transform: scaleX(1); }
-.item[data-active] .arm { background: var(--terracota-strong); }
+.armSvg { display: block; width: 100%; height: 100%; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: miter; }
+.left .armSvg { transform: scaleX(-1); }
+.armBase { stroke: var(--hairline-strong); stroke-width: 1px; }
+.armLit {
+  stroke: var(--terracota-strong);
+  stroke-width: 1.3px;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--mf-dur-3) var(--mf-ease-out);
+}
+.item[data-active]:not(.future) .armLit { stroke-dashoffset: 0; transition-delay: 80ms; }
 
 /* ---------- card: enters, then its content in four beats ---------- */
 .card {
@@ -139,15 +189,17 @@
 
 /* ---------- single column ---------- */
 @container (max-width: 720px) {
-  .rail { left: 6px; }
+  .bolt { left: 6px; }
   .item { grid-template-columns: 36px 1fr; }
   .item + .item { margin-top: 20px; }
   .left .card, .right .card { grid-column: 2; }
   .node { left: 6px; top: 26px; }
-  .left .arm, .right .arm { left: 12px; right: auto; margin: 0; width: 22px; top: 31px; transform-origin: left; }
+  .left .arm, .right .arm { left: 12px; right: auto; margin: 0; width: 22px; top: 26px; transform-origin: left; }
+  .left .armSvg { transform: none; }
   .card { padding: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card, .card > * { opacity: 1 !important; transform: none !important; }
+  .boltGlow, .boltHot, .node::before { display: none; }
 }

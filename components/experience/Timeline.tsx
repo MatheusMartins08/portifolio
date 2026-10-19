@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { Tag, Tags } from "@/components/ui/Tag";
 import { scrollParent } from "@/hooks/useInView";
 import { cssVars, cx } from "@/lib/cx";
+import { drawChannel, drawTwig, type Channel } from "./channel";
 import styles from "./Timeline.module.css";
 
 export interface TimelineEntry {
@@ -38,14 +39,38 @@ interface TimelineProps {
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
+/** Half the width of the bolt's drawing, px: room for its kinks, twigs and glow either side of the rail. */
+const BOLT_HALF = 40;
+/** Container width where the timeline turns into one column (the CSS @container query). */
+const ONE_COLUMN = 720;
+/** Length of the lit head at the drawing edge, px. */
+const HEAD = 28;
+
+interface Layout {
+  stops: number[];
+  height: number;
+  cap: number;
+  twoSided: boolean;
+}
+
 /**
- * Vertical timeline alternating left/right. The terracota fill follows the scroll up to a trigger at
- * 62% of the viewport; each node lights up when its centre passes the trigger, and the card enters in
- * four beats. Single column below 720px of container width.
+ * Vertical timeline alternating left/right. A lightning bolt is the rail (geometry in ./channel): through
+ * every node, drawn by the scroll up to a trigger at 62% of the viewport, a lit head at its edge; each
+ * node lights up — with a brief charge — when its centre passes the trigger, its arm a twig to the card,
+ * and the card enters in four beats. Single column below 720px of container width.
  */
 export function Timeline({ items, moreLabel, lessLabel, trigger = 0.62, className }: TimelineProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const fillRef = useRef<HTMLSpanElement>(null);
+  const [layout, setLayout] = useState<Layout | null>(null);
+  const seed = items.length * 13 + 7;
+  const bolt = useMemo(() => (layout ? drawChannel({ ...layout, seed }) : null), [layout, seed]);
+  // The scroll handler reads the current bolt (to turn depth into drawn length) and is re-run when it changes.
+  const boltRef = useRef<Channel | null>(null);
+  const redrawRef = useRef<() => void>(() => {});
+  useEffect(() => {
+    boltRef.current = bolt;
+    redrawRef.current();
+  }, [bolt]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -60,8 +85,11 @@ export function Timeline({ items, moreLabel, lessLabel, trigger = 0.62, classNam
       const viewTop = parent ? parent.getBoundingClientRect().top : 0;
       const viewHeight = parent ? parent.clientHeight : window.innerHeight;
       const line = viewTop + viewHeight * trigger;
-      const progress = rect.height ? clamp((line - rect.top) / rect.height, 0, 1) : 0;
-      if (fillRef.current) fillRef.current.style.transform = `scaleY(${progress.toFixed(4)})`;
+      // The head sits at the trigger line: its depth into the timeline, as a share of the bolt's length.
+      const depth = clamp(line - rect.top, 0, rect.height);
+      const bolt = boltRef.current;
+      const progress = bolt ? bolt.shareAt(depth) : rect.height ? depth / rect.height : 0;
+      root!.style.setProperty("--p", progress.toFixed(4));
       root!.querySelectorAll<HTMLElement>("[data-tl-item]").forEach((item) => {
         const node = item.querySelector("[data-tl-node]");
         if (!node) return;
@@ -74,12 +102,33 @@ export function Timeline({ items, moreLabel, lessLabel, trigger = 0.62, classNam
       if (!raf) raf = requestAnimationFrame(measure);
     }
 
+    // Where the bolt has to pass: the node centres. Only re-read when the timeline's size changes.
+    let key = "";
+    function lay() {
+      const rect = root!.getBoundingClientRect();
+      const stops = Array.from(root!.querySelectorAll("[data-tl-node]"), (node) => {
+        const box = node.getBoundingClientRect();
+        return Math.round(box.top + box.height / 2 - rect.top);
+      });
+      const height = Math.round(rect.height);
+      const oneColumn = root!.clientWidth <= ONE_COLUMN;
+      const next = `${stops.join(",")}|${height}|${oneColumn}`;
+      if (next === key) return;
+      key = next;
+      setLayout({ stops, height, cap: oneColumn ? 7 : 14, twoSided: !oneColumn });
+    }
+
+    redrawRef.current = schedule;
+    lay();
     measure();
     const target = parent ?? window;
     target.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    // Opening "Ver atividades" changes the height, and so the progress.
-    const observer = new ResizeObserver(schedule);
+    // Opening "Ver atividades" changes the height: the bolt's course, and the progress.
+    const observer = new ResizeObserver(() => {
+      lay();
+      schedule();
+    });
     observer.observe(root);
     return () => {
       target.removeEventListener("scroll", schedule);
@@ -92,9 +141,28 @@ export function Timeline({ items, moreLabel, lessLabel, trigger = 0.62, classNam
   return (
     <div className={cx(styles.wrap, className)}>
       <div className={styles.tl} ref={rootRef}>
-        <span className={styles.rail} aria-hidden="true">
-          <span className={styles.fill} ref={fillRef} />
-        </span>
+        {bolt && layout ? (
+          <svg
+            className={styles.bolt}
+            width={BOLT_HALF * 2}
+            height={layout.height}
+            viewBox={`${-BOLT_HALF} 0 ${BOLT_HALF * 2} ${layout.height}`}
+            style={cssVars({ "--bolt-half": `${BOLT_HALF}px`, "--head": Math.min(0.2, HEAD / bolt.length).toFixed(4) })}
+            aria-hidden="true"
+          >
+            {/* A light edge just below the line, the slight carved feel of the other bolts. */}
+            <path className={styles.boltEdge} d={bolt.d} pathLength={1} transform="translate(.6 1)" />
+            <path className={styles.boltCore} d={bolt.d} pathLength={1} />
+            <path className={styles.boltGlow} d={bolt.d} pathLength={1} />
+            <path className={styles.boltHot} d={bolt.d} pathLength={1} />
+            {bolt.twigs.map((twig, i) => (
+              <g key={i} className={styles.twig} style={cssVars({ "--a": twig.a.toFixed(4), "--b": twig.b.toFixed(4) })}>
+                <path className={styles.boltEdge} d={twig.d} pathLength={1} transform="translate(.5 .8)" />
+                <path className={styles.boltCore} d={twig.d} pathLength={1} />
+              </g>
+            ))}
+          </svg>
+        ) : null}
         <ol className={styles.list}>
           {items.map((item, i) => (
             <TimelineItem
@@ -123,6 +191,7 @@ interface TimelineItemProps {
 function TimelineItem({ item, index, side, moreLabel, lessLabel }: TimelineItemProps) {
   const [open, setOpen] = useState(false);
   const detailsId = useId();
+  const twig = useMemo(() => drawTwig(index + 3), [index]);
 
   return (
     <li
@@ -131,7 +200,12 @@ function TimelineItem({ item, index, side, moreLabel, lessLabel }: TimelineItemP
       style={cssVars({ "--i": index })}
     >
       <span className={styles.node} data-tl-node="" aria-hidden="true" />
-      <span className={styles.arm} aria-hidden="true" />
+      <span className={styles.arm} aria-hidden="true">
+        <svg className={styles.armSvg} viewBox="0 0 30 10" preserveAspectRatio="none">
+          <path className={styles.armBase} d={twig} />
+          <path className={styles.armLit} d={twig} pathLength={1} />
+        </svg>
+      </span>
       <article className={styles.card}>
         {item.future ? (
           <p className={cx(styles.period, styles.s1)}>{item.kicker}</p>
