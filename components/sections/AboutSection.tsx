@@ -1,4 +1,4 @@
-import { AboutLightning } from "@/components/about/AboutLightning";
+import { ScrollLightning } from "@/components/lightning/ScrollLightning";
 import { Coordinates } from "@/components/about/Coordinates";
 import { InfoCard, InfoNote, InfoValue } from "@/components/about/InfoCard";
 import { ProfileTerminal } from "@/components/about/ProfileTerminal";
@@ -19,7 +19,7 @@ export async function AboutSection() {
     <Section id="sobre" labelledBy="sobre-title">
       {/* The lightning runs behind the stage's content, down the middle of the section. */}
       <div className={styles.stage}>
-        <AboutLightning />
+        <ScrollLightning />
 
         <Statement
           label={t.about.label}

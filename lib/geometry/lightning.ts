@@ -1,6 +1,6 @@
 /**
  * Primitives for lightning-like lines, shared by the Hero backdrop (components/hero/contours.ts) and the
- * About bolt (components/about/lightning.ts): seeded noise, fractal breaks, and polyline helpers.
+ * scroll-drawn bolts (components/lightning/bolt.ts): seeded noise, fractal breaks, and polyline helpers.
  */
 
 export type Point = [number, number];

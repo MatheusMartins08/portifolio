@@ -1,4 +1,4 @@
-/* Holds the lightning (AboutLightning, z-index -1) behind the title, terminal and cards. */
+/* Holds the lightning (ScrollLightning, z-index -1) behind the title, terminal and cards. */
 .stage { position: relative; isolation: isolate; }
 
 /* Terminal (7) + bento of info cards (5). */
