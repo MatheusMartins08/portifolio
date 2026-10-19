@@ -27,16 +27,19 @@
   stroke-miterlimit: 6;
 }
 
-/* ---------- dimmed: thick, thin and the twigs, thinner at every level, with the About bolt's soft glow ---------- */
-.off .svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--terracota-strong) 35%, transparent)); }
-.edgeThin, .edgeThick, .edgeTwig { stroke: var(--paper); stroke-opacity: .8; }
+/* ---------- dimmed: thick, thin and the twigs, thinner at every level, with the About bolt's soft glow ----------
+   At rest the terracota is muted towards caramel, so the lines sit in the sand instead of on it; the
+   hover still lights them in full ember. */
+.off { --bolt: color-mix(in srgb, var(--terracota-strong) 55%, var(--caramel)); }
+.off .svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bolt) 22%, transparent)); }
+.edgeThin, .edgeThick, .edgeTwig { stroke: var(--paper); stroke-opacity: .55; }
 .edgeTwig { stroke-width: 1.2px; }
 .edgeThin { stroke-width: 1.6px; }
 .edgeThick { stroke-width: 3px; }
-.thin, .thick, .twig { stroke: var(--terracota-strong); }
-.twig { stroke-opacity: .34; stroke-width: .8px; }
-.thin { stroke-opacity: .42; stroke-width: 1px; }
-.thick { stroke-opacity: .72; stroke-width: 2.2px; }
+.thin, .thick, .twig { stroke: var(--bolt); }
+.twig { stroke-opacity: .28; stroke-width: .8px; }
+.thin { stroke-opacity: .34; stroke-width: 1px; }
+.thick { stroke-opacity: .55; stroke-width: 2.2px; }
 
 /* ---------- lit: halo, core, hot centre ---------- */
 .haloThin, .haloThick, .haloTwig, .coreThin, .coreThick, .coreTwig { stroke: var(--ember); }
