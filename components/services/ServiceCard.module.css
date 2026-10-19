@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
   padding: 28px;
   border-radius: var(--radius-md);
   background: var(--paper);
@@ -80,8 +81,9 @@
 .cursor { fill: var(--ink); stroke: var(--paper); stroke-width: 1; transition: transform var(--mf-dur-4) var(--mf-ease-out); }
 .svc:hover .cursor { transform: translate(-84px, 36px); }
 
-.edge { stroke: var(--hairline-strong); stroke-width: 1; }
+.edge { fill: none; stroke: var(--hairline-strong); stroke-width: 1; }
 .flow {
+  fill: none;
   stroke: var(--terracota-strong);
   stroke-width: 1.5;
   stroke-dasharray: 3 7;
@@ -102,4 +104,77 @@
 .svc:hover .node rect { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
 .svc:hover .node circle { fill: var(--terracota-strong); }
 
+/* Backend, data, deploy: blocks and their strokes light up in turn, by the --i of their group. */
+.box, .glyph, .pin, .head { transition-delay: calc(var(--i, 0) * 90ms); }
+.box {
+  fill: var(--sand);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  transition-property: fill, stroke;
+  transition-duration: var(--mf-dur-3);
+  transition-timing-function: var(--mf-ease-out);
+}
+.svc:hover .box { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
+.glyph {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition-property: stroke;
+  transition-duration: var(--mf-dur-3);
+  transition-timing-function: var(--mf-ease-out);
+}
+.svc:hover .glyph { stroke: var(--terracota-strong); }
+.pin { fill: var(--ink-faint); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
+.svc:hover .pin { fill: var(--terracota-strong); }
+.head { fill: var(--sand-2); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
+.svc:hover .head { fill: var(--terracota-soft); }
+
+/* Rows and labels fill in from the left, like the Web text bars. */
+.row {
+  fill: var(--ink-faint);
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(.45);
+  transition: transform var(--mf-dur-4) var(--mf-ease-out);
+  transition-delay: calc(var(--i, 0) * 120ms);
+}
+.svc:hover .row { transform: none; }
+
+/* A request travelling from the client to the database, behind the blocks it passes. */
+.packet {
+  fill: var(--terracota-strong);
+  opacity: 0;
+  transition: opacity var(--mf-dur-2) var(--mf-ease-out);
+  animation: request 1.8s var(--mf-ease-inout) infinite;
+  animation-play-state: paused;
+}
+.svc:hover .packet { opacity: 1; animation-play-state: running; }
+
+/* The build bar fills, then the check is drawn in the cloud. */
+.bar {
+  fill: var(--terracota-strong);
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 1.1s var(--mf-ease-inout) 120ms;
+}
+.svc:hover .bar { transform: none; }
+.check {
+  fill: none;
+  stroke: var(--terracota-strong);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--mf-dur-3) var(--mf-ease-out);
+}
+.svc:hover .check { stroke-dashoffset: 0; transition-delay: 1.15s; }
+
 @keyframes dash { to { stroke-dashoffset: -20; } }
+@keyframes request {
+  from { transform: translateX(0); }
+  to { transform: translateX(109px); }
+}

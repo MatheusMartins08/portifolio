@@ -19,12 +19,14 @@ export async function ServicesSection() {
         {t.services.statement}
       </Statement>
 
-      {/* Only these two services (site.json): 7/5 with the second one offset down. */}
+      {/* Services in site.json order: two on the first row (7/5, the second offset down), three on the
+          next. Each row enters on its own, so the stagger restarts per row. */}
       <div className={styles.grid}>
         {site.services.map((service, i) => {
           const copy = t.services[service.key];
+          const place = i === 0 ? styles.lead : i === 1 ? styles.side : styles.trio;
           return (
-            <Reveal key={service.key} variant="blur" delay={i * 120}>
+            <Reveal key={service.key} variant="blur" delay={(i < 2 ? i : i - 2) * 120} className={place}>
               <ServiceCard
                 index={service.index}
                 label={copy.label}

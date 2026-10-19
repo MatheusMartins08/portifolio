@@ -360,6 +360,108 @@
           "Conexión entre Sistemas y Servicios"
         ]
       }
+    },
+    "backend": {
+      "label": {
+        "pt": "BACKEND",
+        "en": "BACKEND",
+        "es": "BACKEND"
+      },
+      "title": {
+        "pt": "Backend & Integrações",
+        "en": "Backend & Integrations",
+        "es": "Backend & Integraciones"
+      },
+      "description": {
+        "pt": "Desenvolvimento da lógica por trás das aplicações, estruturando serviços, regras de negócio e integrações para conectar sistemas de forma segura, organizada e escalável.",
+        "en": "Building the logic behind applications — structuring services, business rules and integrations that connect systems in a secure, organized and scalable way.",
+        "es": "Desarrollo de la lógica detrás de las aplicaciones, estructurando servicios, reglas de negocio e integraciones para conectar sistemas de forma segura, organizada y escalable."
+      },
+      "highlights": {
+        "pt": [
+          "APIs REST e Integrações",
+          "Regras de Negócio e Serviços",
+          "Autenticação e Comunicação entre Sistemas"
+        ],
+        "en": [
+          "REST APIs & Integrations",
+          "Business Rules & Services",
+          "Authentication & System-to-System Communication"
+        ],
+        "es": [
+          "APIs REST e Integraciones",
+          "Reglas de Negocio y Servicios",
+          "Autenticación y Comunicación entre Sistemas"
+        ]
+      }
+    },
+    "data": {
+      "label": {
+        "pt": "DATA",
+        "en": "DATA",
+        "es": "DATA"
+      },
+      "title": {
+        "pt": "Dados & Bancos",
+        "en": "Data & Databases",
+        "es": "Datos & Bases de Datos"
+      },
+      "description": {
+        "pt": "Estruturação e manipulação de dados para transformar informações em recursos confiáveis para aplicações, processos internos e tomadas de decisão.",
+        "en": "Structuring and handling data to turn information into a reliable resource for applications, internal processes and decision-making.",
+        "es": "Estructuración y manejo de datos para convertir la información en un recurso confiable para aplicaciones, procesos internos y toma de decisiones."
+      },
+      "highlights": {
+        "pt": [
+          "Modelagem de Dados",
+          "SQL e Consultas",
+          "Persistência e Organização de Informações"
+        ],
+        "en": [
+          "Data Modeling",
+          "SQL & Queries",
+          "Storing & Organizing Information"
+        ],
+        "es": [
+          "Modelado de Datos",
+          "SQL y Consultas",
+          "Persistencia y Organización de la Información"
+        ]
+      }
+    },
+    "deploy": {
+      "label": {
+        "pt": "DEPLOY",
+        "en": "DEPLOY",
+        "es": "DEPLOY"
+      },
+      "title": {
+        "pt": "Deploy & Infraestrutura",
+        "en": "Deployment & Infrastructure",
+        "es": "Despliegue & Infraestructura"
+      },
+      "description": {
+        "pt": "Preparação de aplicações para ambientes reais, cuidando da publicação, configuração e estrutura necessária para manter produtos disponíveis e funcionando corretamente.",
+        "en": "Getting applications ready for the real world — handling the release, configuration and infrastructure that keep products available and running properly.",
+        "es": "Preparación de aplicaciones para entornos reales, cuidando la publicación, la configuración y la estructura necesarias para mantener los productos disponibles y funcionando correctamente."
+      },
+      "highlights": {
+        "pt": [
+          "Deploy de Aplicações",
+          "Cloud e Hospedagem",
+          "Versionamento e Ambientes"
+        ],
+        "en": [
+          "Application Deployment",
+          "Cloud & Hosting",
+          "Versioning & Environments"
+        ],
+        "es": [
+          "Despliegue de Aplicaciones",
+          "Cloud y Hosting",
+          "Versionado y Entornos"
+        ]
+      }
     }
   },
   "experience": {

@@ -66,3 +66,127 @@ export function MotifAI() {
     </svg>
   );
 }
+
+/**
+ * Backend: client → API → server → database in a row. On hover the blocks light up from left to
+ * right and a request packet runs down the line, passing behind them, into the database.
+ */
+export function MotifBackend() {
+  return (
+    <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
+      <line x1={29.5} y1={48} x2={138.5} y2={48} className={styles.edge} />
+      <line x1={29.5} y1={48} x2={138.5} y2={48} className={styles.flow} />
+      <circle cx={29.5} cy={48} r={2.2} className={styles.packet} />
+
+      {/* client: a small window */}
+      <g style={cssVars({ "--i": 0 })}>
+        <rect x={0.5} y={32} width={29} height={32} rx={3} className={styles.box} />
+        <line x1={0.5} y1={39} x2={29.5} y2={39} className={styles.glyph} />
+        <circle cx={5} cy={35.5} r={1} className={styles.pin} />
+        <circle cx={9} cy={35.5} r={1} className={styles.pin} />
+        <path d="M6 47h17M6 52h11M6 57h14" className={styles.glyph} />
+      </g>
+      {/* API: braces around an endpoint */}
+      <g style={cssVars({ "--i": 1 })}>
+        <rect x={46.5} y={32} width={29} height={32} rx={10} className={styles.box} />
+        <path d="M57 40q-3 0-3 3v3q0 2-2 2q2 0 2 2v3q0 3 3 3M65 40q3 0 3 3v3q0 2 2 2q-2 0-2 2v3q0 3-3 3" className={styles.glyph} />
+        <circle cx={61} cy={48} r={1.4} className={styles.pin} />
+      </g>
+      {/* server: a rack of three units */}
+      <g style={cssVars({ "--i": 2 })}>
+        <rect x={92.5} y={32} width={29} height={32} rx={3} className={styles.box} />
+        <path d="M98 41h12M98 48h12M98 55h12" className={styles.glyph} />
+        <circle cx={115} cy={41} r={1.2} className={styles.pin} />
+        <circle cx={115} cy={48} r={1.2} className={styles.pin} />
+        <circle cx={115} cy={55} r={1.2} className={styles.pin} />
+      </g>
+      {/* database: a cylinder */}
+      <g style={cssVars({ "--i": 3 })}>
+        <path d="M139 38v20a14 4 0 0 0 28 0v-20z" className={styles.box} />
+        <ellipse cx={153} cy={38} rx={14} ry={4} className={styles.box} />
+        <path d="M139 48a14 4 0 0 0 28 0" className={styles.glyph} />
+      </g>
+
+      {[15, 61, 107, 153].map((x, i) => (
+        <rect key={x} x={x - 8} y={72} width={16} height={3} rx={1.5} className={styles.row} style={cssVars({ "--i": i })} />
+      ))}
+    </svg>
+  );
+}
+
+/** One mini table per branch: top edge of the table, and its row lengths. */
+const TABLES: Array<{ y: number; rows: number[] }> = [
+  { y: 10, rows: [44, 30] },
+  { y: 43, rows: [36, 48] },
+  { y: 76, rows: [50, 26] },
+];
+
+/**
+ * Data: a database cylinder feeding three small tables. On hover data flows along the branches,
+ * the cylinder lights up and the table rows fill in, one table after the other.
+ */
+export function MotifData() {
+  return (
+    <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
+      {TABLES.map(({ y }, i) => {
+        const d = `M42 ${38 + i * 16}C70 ${38 + i * 16} 72 ${y + 11} 100 ${y + 11}`;
+        return (
+          <g key={`branch-${y}`}>
+            <path d={d} className={styles.edge} />
+            <path d={d} className={styles.flow} />
+          </g>
+        );
+      })}
+
+      <g style={cssVars({ "--i": 0 })}>
+        <path d="M6 26v56a18 5 0 0 0 36 0v-56z" className={styles.box} />
+        <ellipse cx={24} cy={26} rx={18} ry={5} className={styles.box} />
+        <path d="M6 45a18 5 0 0 0 36 0M6 64a18 5 0 0 0 36 0" className={styles.glyph} />
+      </g>
+
+      {TABLES.map(({ y, rows }, i) => (
+        <g key={`table-${y}`} style={cssVars({ "--i": i + 1 })}>
+          <rect x={100.5} y={y} width={66} height={22} rx={3} className={styles.frame} />
+          <rect x={102} y={y + 1.5} width={63} height={5} rx={1.5} className={styles.head} />
+          {rows.map((w, j) => (
+            <rect key={j} x={106} y={y + 10 + j * 6} width={w} height={2.5} rx={1.25} className={styles.row} />
+          ))}
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * Deploy: code → build → cloud. On hover the pipeline runs: the build bar fills and, once it is
+ * done, a check is drawn inside the cloud.
+ */
+export function MotifDeploy() {
+  return (
+    <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
+      <line x1={46.5} y1={52} x2={124} y2={52} className={styles.edge} />
+      <line x1={46.5} y1={52} x2={124} y2={52} className={styles.flow} />
+
+      {/* code: an editor window with </> */}
+      <g style={cssVars({ "--i": 0 })}>
+        <rect x={0.75} y={32} width={45.75} height={40} rx={4} className={styles.frame} />
+        <line x1={0.75} y1={40} x2={46.5} y2={40} className={styles.line} />
+        <circle cx={6} cy={36} r={1.4} className={styles.dot} />
+        <circle cx={11} cy={36} r={1.4} className={styles.dot} />
+        <path d="M17 51l-5 5 5 5M30 51l5 5-5 5M26 49l-5 14" className={styles.glyph} />
+      </g>
+      {/* build: a log line and a progress bar */}
+      <g style={cssVars({ "--i": 1 })}>
+        <rect x={64} y={38} width={40} height={28} rx={3} className={styles.box} />
+        <path d="M70 45h20" className={styles.glyph} />
+        <rect x={70} y={53} width={28} height={4} rx={2} className={styles.pill} />
+        <rect x={70} y={53} width={28} height={4} rx={2} className={styles.bar} />
+      </g>
+      {/* cloud, with the check drawn once the build is through */}
+      <g style={cssVars({ "--i": 2 })}>
+        <path d="M128 70a10 10 0 0 1-1-19.9a14 14 0 0 1 26.5-4.5a12.5 12.5 0 0 1 6.5 24.4z" className={styles.box} />
+        <path d="M135 59l5 5 9-10" pathLength={1} className={styles.check} />
+      </g>
+    </svg>
+  );
+}

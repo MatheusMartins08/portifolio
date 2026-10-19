@@ -1,19 +1,28 @@
 "use client";
 
-import { useRef, type PointerEvent } from "react";
+import { useRef, type ComponentType, type PointerEvent } from "react";
 import { Tag } from "@/components/ui/Tag";
+import type { ServiceKey } from "@/lib/content/site";
 import { cssVars, cx } from "@/lib/cx";
-import { MotifAI, MotifWeb } from "./Motifs";
+import { MotifAI, MotifBackend, MotifData, MotifDeploy, MotifWeb } from "./Motifs";
 import styles from "./ServiceCard.module.css";
+
+const MOTIFS: Record<ServiceKey, ComponentType> = {
+  web: MotifWeb,
+  ai: MotifAI,
+  backend: MotifBackend,
+  data: MotifData,
+  deploy: MotifDeploy,
+};
 
 interface ServiceCardProps {
   /** Mono numeral: "01". */
   index: string;
-  /** Quiet tag: WEB, IA. */
+  /** Quiet tag: WEB, IA, BACKEND… */
   label: string;
   /** Graphic motif that reacts to the service on hover. */
-  motif: "web" | "ai";
-  /** lg = the 7-column card, md = the 5-column one. */
+  motif: ServiceKey;
+  /** lg = the wide lead card, md = every other one (smaller motif). */
   size?: "lg" | "md";
   title: string;
   description: string;
@@ -28,6 +37,7 @@ interface ServiceCardProps {
  */
 export function ServiceCard({ index, label, motif, size = "lg", title, description, highlights, className }: ServiceCardProps) {
   const ref = useRef<HTMLElement>(null);
+  const Motif = MOTIFS[motif];
 
   function onPointerMove(event: PointerEvent<HTMLElement>) {
     const el = ref.current;
@@ -45,7 +55,7 @@ export function ServiceCard({ index, label, motif, size = "lg", title, descripti
           <span className={styles.num}>{index}</span>
           <Tag tone="quiet">{label}</Tag>
         </div>
-        <div className={styles.motifBox}>{motif === "ai" ? <MotifAI /> : <MotifWeb />}</div>
+        <div className={styles.motifBox}><Motif /></div>
       </div>
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.desc}>{description}</p>

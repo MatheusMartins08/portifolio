@@ -1,14 +1,23 @@
-/* .mf-svc-grid: asymmetric 7/5, the second card offset down. */
+/* .mf-svc-grid: a 12-column grid. First row asymmetric 7/5 with the second card offset down; the
+   three services after it share the next row in equal thirds, at equal heights. */
 .grid {
   display: grid;
-  grid-template-columns: 7fr 5fr;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 20px;
   align-items: start;
   margin-top: var(--space-12);
 }
-.grid > :nth-child(2) { margin-top: 72px; }
+.lead { grid-column: span 7; }
+.side { grid-column: span 5; margin-top: 72px; }
+.trio { grid-column: span 4; align-self: stretch; }
 
-@media (max-width: 860px) {
+/* Tablet: two columns, the lead card across the top, then pairs. */
+@media (max-width: 960px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
+  .lead { grid-column: 1 / -1; }
+  .side, .trio { grid-column: auto; margin-top: 0; }
+}
+
+@media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
-  .grid > :nth-child(2) { margin-top: 0; }
 }

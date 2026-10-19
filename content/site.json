@@ -38,7 +38,10 @@
   ],
   "services": [
     { "key": "web", "index": "01", "motif": "web", "size": "lg" },
-    { "key": "ai", "index": "02", "motif": "ai", "size": "md" }
+    { "key": "ai", "index": "02", "motif": "ai", "size": "md" },
+    { "key": "backend", "index": "03", "motif": "backend", "size": "md" },
+    { "key": "data", "index": "04", "motif": "data", "size": "md" },
+    { "key": "deploy", "index": "05", "motif": "deploy", "size": "md" }
   ],
   "experience": {
     "pro": [

@@ -15,7 +15,7 @@ export interface SiteSection {
   inNav?: boolean;
 }
 
-export type ServiceKey = "web" | "ai";
+export type ServiceKey = "web" | "ai" | "backend" | "data" | "deploy";
 
 export interface Service {
   key: ServiceKey;
