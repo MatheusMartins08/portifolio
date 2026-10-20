@@ -14,9 +14,33 @@
 .tall .media { aspect-ratio: 4 / 5; }
 
 .img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1s var(--mf-ease-out); }
-.alt { opacity: 0; transition: opacity var(--mf-dur-3) var(--mf-ease-out), transform 1s var(--mf-ease-out); }
-.media:hover .alt { opacity: 1; }
 .proj:hover .img { transform: scale(1.03); }
+
+/* The second screenshot comes in through a lightning crack sweeping left to right (and back out), its
+   edge lit by a thin spark that rides the clip. At rest the spark sits past the media's edge, clipped. */
+.alt {
+  clip-path: var(--crack-off);
+  transition: clip-path var(--mf-dur-4) var(--mf-ease-inout), transform 1s var(--mf-ease-out);
+}
+.media:hover .alt { clip-path: var(--crack-on); }
+.spark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke: var(--ember-hot);
+  stroke-width: 1.4px;
+  stroke-linejoin: miter;
+  filter: drop-shadow(0 0 3px var(--ember));
+  transform: translateX(var(--spark-off));
+  transition: transform var(--mf-dur-4) var(--mf-ease-inout);
+}
+.spark path { vector-effect: non-scaling-stroke; }
+/* Scaled like the screenshot under it, so the spark stays on the clip's edge. */
+.media:hover .spark { transform: scale(1.03) translateX(var(--spark-on)); }
 
 .count {
   position: absolute;
@@ -93,14 +117,41 @@
 .tags { margin-bottom: 18px; }
 .links { display: flex; flex-wrap: wrap; gap: 20px; }
 
+/* The bottom rule takes a charge: a faint broken line drawn left to right in terracota, a hot head
+   running just ahead of it and out at the far end. Also on keyboard focus. */
 .rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--hairline); }
-.rule::after {
-  content: "";
+.rule svg {
   position: absolute;
-  inset: 0;
-  background: var(--terracota-strong);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--mf-dur-4) var(--mf-ease-out);
+  left: 0;
+  top: -2.5px;
+  width: 100%;
+  height: 6px;
+  overflow: visible;
+  fill: none;
 }
-.proj:hover .rule::after { transform: scaleX(1); }
+.rule path { vector-effect: non-scaling-stroke; }
+.charge {
+  stroke: var(--terracota-strong);
+  stroke-width: 1px;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--mf-dur-4) var(--mf-ease-out);
+}
+/* Starts just before the line, ends just past it: lit only while it runs. */
+.head {
+  stroke: var(--ember-hot);
+  stroke-width: 1.6px;
+  stroke-dasharray: .08 2;
+  stroke-dashoffset: .08;
+  filter: drop-shadow(0 0 2px var(--ember));
+  transition: stroke-dashoffset var(--mf-dur-4) var(--mf-ease-out);
+}
+.proj:is(:hover, :has(:focus-visible)) .charge { stroke-dashoffset: 0; }
+.proj:is(:hover, :has(:focus-visible)) .head { stroke-dashoffset: -1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .alt { clip-path: none; opacity: 0; transition: opacity var(--mf-dur-3) var(--mf-ease-out); }
+  .media:hover .alt { clip-path: none; opacity: 1; }
+  .spark, .head { display: none; }
+  .charge { transition: none; }
+}

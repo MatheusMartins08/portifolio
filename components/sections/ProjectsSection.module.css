@@ -1,5 +1,6 @@
 /* .mf-pgrid: 12 columns, projects of different sizes, one offset for rhythm. */
 .grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 56px 28px;

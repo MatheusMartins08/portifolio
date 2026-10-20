@@ -1,0 +1,75 @@
+/* Fills the projects grid, behind the cards (first in the grid, so they paint over it and hide the
+   joins). Never catches the pointer. */
+.root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 4;
+}
+
+/* Each stroke's progress from the scroll: 0 before t0, 1 after t1 (--t per arc, from the script). An
+   undrawn stroke would still leave its round cap as a dot: hidden until it starts. */
+.stroke {
+  --k: clamp(0, (var(--t, -1) - var(--t0)) / (var(--t1) - var(--t0)), 1);
+  opacity: clamp(0, var(--k) * 400, 1);
+}
+.stroke path {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: calc(1 - var(--k));
+}
+
+/* ---------- body: fine and quiet at rest, warmer while a charge runs ---------- */
+.core {
+  stroke: color-mix(in srgb, var(--terracota-strong) 40%, var(--hairline-strong));
+  transition: stroke var(--mf-dur-3) var(--mf-ease-out);
+}
+.l0 .core { stroke-width: 1.4px; }
+.l1 .core { stroke-width: 1px; }
+[data-run] .core { stroke: color-mix(in srgb, var(--terracota-strong) 70%, transparent); }
+
+/* ---------- lit head: a short dash at the drawing edge (dash end = 1 − offset), only while drawing ---------- */
+.l0 { --head: .06; }
+.l1 { --head: .2; }
+.stroke .hot {
+  stroke: var(--ember-hot);
+  stroke-dasharray: var(--head) 2;
+  stroke-dashoffset: calc(var(--head) - var(--k));
+  opacity: min(.8, var(--k) * 12, (1 - var(--k)) * 12);
+  filter: drop-shadow(0 0 2px var(--ember));
+}
+.l0 .hot { stroke-width: 1.8px; }
+.l1 .hot { stroke-width: 1.2px; }
+
+/* ---------- charge: one short hot dash down the trunk, away from the card in front ---------- */
+.pulse {
+  stroke: var(--ember-hot);
+  stroke-width: 1.6px;
+  stroke-dasharray: .14 1.2;
+  stroke-dashoffset: .14;
+  filter: drop-shadow(0 0 2px var(--ember));
+  opacity: 0;
+  transition: opacity var(--mf-dur-2) var(--mf-ease-out);
+  animation: charge 1.3s var(--mf-ease-inout) infinite;
+  animation-play-state: paused;
+}
+[data-run] .pulse { opacity: 1; animation-play-state: running; }
+[data-run="back"] .pulse { animation-direction: reverse; }
+@keyframes charge {
+  from { stroke-dashoffset: .14; }
+  to { stroke-dashoffset: -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stroke { --k: 1; }
+  .hot, .pulse { display: none; }
+}

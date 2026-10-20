@@ -7,7 +7,8 @@ import { Icon } from "@/components/ui/Icon";
 import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
 import { Tag, Tags } from "@/components/ui/Tag";
 import type { ImageAsset } from "@/lib/content/assets";
-import { cx, pad2 } from "@/lib/cx";
+import { cssVars, cx, pad2 } from "@/lib/cx";
+import { crack, RULE_PATH } from "./crack";
 import styles from "./ProjectCard.module.css";
 
 export interface ProjectCardLabels {
@@ -39,10 +40,18 @@ interface ProjectCardProps {
   className?: string;
 }
 
+/** The crack's clip-paths and the spark's travel, as CSS variables on the media (geometry in ./crack). */
+const CRACK_VARS = cssVars({
+  "--crack-off": crack.off,
+  "--crack-on": crack.on,
+  "--spark-off": crack.sparkOff,
+  "--spark-on": crack.sparkOn,
+});
+
 /**
- * Project card where the image leads: slow zoom, second screenshot on hover with a 01 / 02 counter,
- * a "VIEW ↗" tooltip that follows the cursor (pointer devices only), title sliding with an arrow and a
- * bottom rule that lights up in terracota.
+ * Project card where the image leads: slow zoom, second screenshot on hover coming in through a
+ * lightning crack with a 01 / 02 counter, a "VIEW ↗" tooltip that follows the cursor (pointer devices
+ * only), title sliding with an arrow and a bottom rule that takes a charge in terracota.
  */
 export function ProjectCard({
   size = "half",
@@ -80,6 +89,8 @@ export function ProjectCard({
       <a
         ref={media}
         className={styles.media}
+        style={CRACK_VARS}
+        data-project-media=""
         href={target}
         {...linkProps}
         tabIndex={-1}
@@ -89,12 +100,18 @@ export function ProjectCard({
         {shots.length ? (
           <>
             <Image src={shots[0].src} alt="" fill sizes={sizes} className={styles.img} />
-            {shots[1] ? <Image src={shots[1].src} alt="" fill sizes={sizes} className={cx(styles.img, styles.alt)} /> : null}
             {shots[1] ? (
-              <span className={styles.count}>
-                <b>{pad2(1)}</b>
-                <i>{pad2(2)}</i> / {pad2(shots.length)}
-              </span>
+              <>
+                <Image src={shots[1].src} alt="" fill sizes={sizes} className={cx(styles.img, styles.alt)} />
+                {/* The crack's lit edge, riding the clip from one side to the other. */}
+                <svg className={styles.spark} viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <path d={crack.d} />
+                </svg>
+                <span className={styles.count}>
+                  <b>{pad2(1)}</b>
+                  <i>{pad2(2)}</i> / {pad2(shots.length)}
+                </span>
+              </>
             ) : null}
           </>
         ) : (
@@ -142,7 +159,12 @@ export function ProjectCard({
           </ArrowLink>
         ) : null}
       </div>
-      <span className={styles.rule} aria-hidden="true" />
+      <span className={styles.rule} aria-hidden="true">
+        <svg viewBox="0 0 600 6" preserveAspectRatio="none">
+          <path d={RULE_PATH} pathLength={1} className={styles.charge} />
+          <path d={RULE_PATH} pathLength={1} className={styles.head} />
+        </svg>
+      </span>
     </article>
   );
 }

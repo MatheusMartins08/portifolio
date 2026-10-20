@@ -1,5 +1,6 @@
 import { Section } from "@/components/layout/Section";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { ProjectsArc } from "@/components/projects/ProjectsArc";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -32,6 +33,8 @@ export async function ProjectsSection() {
 
       {/* .mf-pgrid: Black Crown as feature (7 col), Métrica as half (5 col) offset down. */}
       <div className={styles.grid}>
+        {/* First, so the cards paint over it. */}
+        <ProjectsArc />
         {site.projects.map((project) => {
           const copy = t.projects.items[project.key];
           return (
