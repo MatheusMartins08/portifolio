@@ -19,6 +19,16 @@ const canGlow = () => window.matchMedia(GLOW_QUERY).matches;
 
 /** Share of the remaining distance the glow covers each frame: a soft trail behind the cursor. */
 const EASE = 0.22;
+/** Section variant: wait for the stage to settle before redrawing (a folder opening resizes it on every frame). */
+const SETTLE = 200;
+/** Section variant: the drawing's scale never passes this share of the stage's width. */
+const UNIT_SHARE = 0.12;
+/**
+ * Section variant: the field is drawn this much taller than the stage (at least as tall again), and
+ * only redrawn when the width changes. A folder opening makes the section taller: the lines already
+ * there stay put, and the ones below come into view through the fade at the foot.
+ */
+const ROOM = 1400;
 
 /**
  * Entrance, in ms. The lines start drawing once the rest of the Hero is nearly in (counted from the
@@ -193,7 +203,17 @@ function Lines({ drawing, intro, lit, glowId }: LinesProps) {
 
 interface HeroBackdropProps {
   /** Every phrase the Hero cycles through: the clear space is sized for the widest. */
-  phrases: string[];
+  phrases?: string[];
+  /**
+   * "hero": the Hero's own backdrop, with its entrance. "section": the same field behind another
+   * section — no entrance, clear spaces from `holes`, scaled by `unit`, redrawn once a resize settles.
+   */
+  variant?: "hero" | "section";
+  /** Section variant: selector, in the stage, of the elements the lines keep clear of. */
+  holes?: string;
+  /** Section variant: the drawing's scale, px (the Hero uses its name's font size). */
+  unit?: number;
+  className?: string;
 }
 
 /**
@@ -205,8 +225,10 @@ interface HeroBackdropProps {
  * Entrance (once, with motion allowed): the lines are drawn from the edges towards the name and meet
  * there; then a short pulse, and the name's own hover effects play once, set off through
  * `data-energized` on the elements marked `data-energy` (sweep on "Matheus", wave on the "Freitas" letters).
+ *
+ * The "section" variant puts the same field behind another section's stage (Skills), without the entrance.
  */
-export function HeroBackdrop({ phrases }: HeroBackdropProps) {
+export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-hole]", unit = 110, className }: HeroBackdropProps) {
   const glow = useSyncExternalStore(subscribe, canGlow, () => false);
   const [drawing, setDrawing] = useState<Drawing | null>(null);
   const [intro, setIntro] = useState<Intro | null>(null);
@@ -220,29 +242,45 @@ export function HeroBackdrop({ phrases }: HeroBackdropProps) {
     const stage = rootRef.current?.parentElement;
     if (!stage) return;
     const list = phrasesKey.split("\n");
+    const section = variant === "section";
     /** The entrance plays once: before the first drawing, while playing, then never again. */
-    let phase: "pending" | "playing" | "done" = prefersReducedMotion() ? "done" : "pending";
+    let phase: "pending" | "playing" | "done" = section || prefersReducedMotion() ? "done" : "pending";
     let size = "";
     let fontsReady = false;
     let active = true;
     let frame = 0;
+    let settle = 0;
+    /** Section variant: the field as last drawn (its height runs past the stage's). */
+    let drawn = { width: 0, height: 0 };
     const draw = () => {
       frame = 0;
       // Measure the final text only (web fonts in), so the entrance is not redrawn under itself.
       if (!fontsReady || !active) return;
-      const marked = Array.from(stage.querySelectorAll<HTMLElement>("[data-hole]"));
-      const name = marked.find((el) => el.dataset.hole === "name");
-      if (!name) return;
-      const boxes = marked.map((el) =>
-        layoutBox(el, stage, el.dataset.hole === "phrase" ? widestPhrase(el, list) : textWidth(el)),
-      );
-      const width = stage.clientWidth;
-      const height = stage.clientHeight;
-      const next: Drawing = {
-        width,
-        height,
-        lines: drawContours({ width, height, boxes, unit: parseFloat(getComputedStyle(name).fontSize) }),
-      };
+      const marked = Array.from(stage.querySelectorAll<HTMLElement>(holes));
+      const root = rootRef.current;
+      // Behind a section, the field runs edge to edge of the viewport, not just the stage's container.
+      // Rounded up, so the right edge never passes the viewport (no sideways scroll).
+      const shift = section ? Math.ceil(stage.getBoundingClientRect().left) : 0;
+      if (section && root) {
+        root.style.left = `${-shift}px`;
+        root.style.width = `${document.documentElement.clientWidth}px`;
+      }
+      const width = section ? document.documentElement.clientWidth : stage.clientWidth;
+      const stageHeight = stage.clientHeight;
+      // Behind a section, a taller stage only shows more of the field: no new drawing, unless it outgrows it.
+      if (section && width === drawn.width && stageHeight <= drawn.height) return;
+      const height = section ? stageHeight + Math.max(ROOM, stageHeight) : stageHeight;
+      let scale = Math.min(unit, width * UNIT_SHARE);
+      if (!section) {
+        const name = marked.find((el) => el.dataset.hole === "name");
+        if (!name) return;
+        scale = parseFloat(getComputedStyle(name).fontSize);
+      }
+      const boxes = marked.map((el) => {
+        const box = layoutBox(el, stage, el.dataset.hole === "phrase" ? widestPhrase(el, list) : textWidth(el));
+        return { ...box, x: box.x + shift };
+      });
+      const next: Drawing = { width, height, lines: drawContours({ width, height, boxes, unit: scale }) };
       const nextSize = `${width}x${height}`;
       if (phase === "pending") {
         phase = "playing";
@@ -253,13 +291,25 @@ export function HeroBackdrop({ phrases }: HeroBackdropProps) {
         setIntro(null);
       }
       size = nextSize;
+      drawn = { width, height };
       setDrawing(next);
     };
     const schedule = () => {
+      // Behind a section, a resize waits until the stage settles (the first drawing does not); a change
+      // of height alone then costs nothing (see ROOM).
+      if (section && size) {
+        window.clearTimeout(settle);
+        settle = window.setTimeout(() => {
+          if (!frame) frame = requestAnimationFrame(draw);
+        }, SETTLE);
+        return;
+      }
       if (!frame) frame = requestAnimationFrame(draw);
     };
     const observer = new ResizeObserver(schedule);
     observer.observe(stage);
+    // Edge to edge: the viewport can change width while the stage (a capped container) does not.
+    if (section) window.addEventListener("resize", schedule);
     document.fonts.ready.then(() => {
       fontsReady = true;
       schedule();
@@ -268,8 +318,10 @@ export function HeroBackdrop({ phrases }: HeroBackdropProps) {
       active = false;
       observer.disconnect();
       cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
+      window.removeEventListener("resize", schedule);
     };
-  }, [phrasesKey]);
+  }, [phrasesKey, variant, holes, unit]);
 
   // ---- entrance, after the lines connect: pulse → "Matheus" sweep → "Freitas" wave ----
   useEffect(() => {
@@ -308,7 +360,8 @@ export function HeroBackdrop({ phrases }: HeroBackdropProps) {
   useEffect(() => {
     const root = rootRef.current;
     const layer = litRef.current;
-    const stage = root?.parentElement;
+    // Behind a section, the whole section (edge to edge, like the field) catches the mouse.
+    const stage = variant === "section" ? (root?.closest("section") ?? root?.parentElement) : root?.parentElement;
     if (!glow || !root || !layer || !stage) return;
 
     let frame = 0;
@@ -371,12 +424,12 @@ export function HeroBackdrop({ phrases }: HeroBackdropProps) {
       cancelAnimationFrame(frame);
       delete layer.dataset.on;
     };
-  }, [glow]);
+  }, [glow, variant]);
 
   return (
     <div
       ref={rootRef}
-      className={styles.backdrop}
+      className={cx(styles.backdrop, variant === "section" && styles.section, className)}
       data-ready={drawing ? "" : undefined}
       data-intro={intro ? "" : undefined}
       aria-hidden="true"

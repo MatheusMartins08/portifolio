@@ -1,4 +1,5 @@
 import siteJson from "@/content/site.json";
+import type { IconName } from "@/components/ui/Icon";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 
 /**
@@ -43,6 +44,8 @@ export interface SkillItem {
 export interface SkillFolder {
   key: keyof Dictionary["skills"]["folders"];
   index: string;
+  /** Shown on the folder's front, bottom left: what the folder holds. */
+  icon: IconName;
   items: SkillItem[];
 }
 

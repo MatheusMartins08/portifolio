@@ -11,6 +11,15 @@
   mask-image: linear-gradient(to bottom, #000 80%, transparent);
 }
 .backdrop[data-ready] { opacity: 1; }
+/* Behind another section's stage (variant "section"): under its content (the stage isolates it, so -1
+   stays above the section's sand), fading in at the top and out at the foot. */
+.section {
+  z-index: -1;
+  /* The field is drawn taller than the stage: what lies below shows as the stage grows. */
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--space-16), #000 calc(100% - var(--space-16)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--space-16), #000 calc(100% - var(--space-16)), transparent);
+}
 /* With the entrance, the lines draw themselves in: no fade on top of that. */
 .backdrop[data-intro] { transition: none; }
 

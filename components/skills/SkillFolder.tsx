@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { Icon } from "@/components/ui/Icon";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { cssVars, cx, pad2 } from "@/lib/cx";
+import { balancedColumns } from "@/lib/layout";
 import styles from "./SkillFolder.module.css";
 
 export interface SkillChip {
@@ -18,6 +19,8 @@ export interface SkillChip {
 interface SkillFolderProps {
   index: string;
   title: string;
+  /** What the folder holds, bottom left of its front. */
+  icon: IconName;
   items: SkillChip[];
   /** "itens" / "items" / "elementos". */
   unit: string;
@@ -33,10 +36,10 @@ const CHIP_GAP = 10;
 
 /**
  * Skills folder. Closed, the mini-cards peek out stacked; open, the tab lifts, the front tips over
- * (rotateX -16deg) and the cards rise on a spring (45ms stagger), laid out in 1–3 columns by width.
- * Closes in reverse order.
+ * (rotateX -16deg) and the cards rise on a spring (45ms stagger), in up to 1–3 columns by width,
+ * balanced by their count (4 → 2 + 2), the short last row centred. Closes in reverse order.
  */
-export function SkillFolder({ index, title, items, unit, openLabel, closeLabel, defaultOpen = false, className }: SkillFolderProps) {
+export function SkillFolder({ index, title, icon, items, unit, openLabel, closeLabel, defaultOpen = false, className }: SkillFolderProps) {
   const [open, setOpen] = useState(defaultOpen);
   const [cols, setCols] = useState(3);
   // The column count depends on the rendered width; until it is measured, chips move without transition.
@@ -56,8 +59,11 @@ export function SkillFolder({ index, title, items, unit, openLabel, closeLabel, 
     return () => observer.disconnect();
   }, []);
 
-  const c = Math.max(1, Math.min(cols, items.length || 1));
+  const c = balancedColumns(items.length, cols);
   const rows = Math.ceil(items.length / c);
+  // The short last row is centred: its cards move over by half the columns it leaves empty.
+  const lastRow = rows - 1;
+  const shift = (c - (items.length - lastRow * c)) / 2;
   const tray = rows * CHIP_HEIGHT + (rows - 1) * CHIP_GAP + 22;
 
   return (
@@ -83,7 +89,7 @@ export function SkillFolder({ index, title, items, unit, openLabel, closeLabel, 
                 key={item.name}
                 className={styles.chip}
                 style={cssVars({
-                  "--col": col,
+                  "--col": row === lastRow ? col + shift : col,
                   "--oy": `${-tray + row * (CHIP_HEIGHT + CHIP_GAP)}px`,
                   // Closed: the first three peek out stacked, the rest hide behind them.
                   "--cy": `${i < 3 ? 6 + i * 5 : 34}px`,
@@ -113,7 +119,10 @@ export function SkillFolder({ index, title, items, unit, openLabel, closeLabel, 
           onClick={() => setOpen(!open)}
         >
           <span className={styles.title}>{title}</span>
-          <span className={styles.count}>
+          <span className={styles.icon} aria-hidden="true">
+            <Icon name={icon} size={18} />
+          </span>
+          <span className="sr-only">
             {pad2(items.length)} {unit}
           </span>
           <span className={styles.toggle} aria-hidden="true">

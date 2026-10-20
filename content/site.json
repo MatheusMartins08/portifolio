@@ -57,18 +57,18 @@
     ]
   },
   "skills": [
-    { "key": "systems", "index": "01", "items": [
+    { "key": "systems", "index": "01", "icon": "server", "items": [
       { "name": "Linux", "ext": ".sh", "category": "os", "glyph": "Li" },
       { "name": "Windows", "ext": ".exe", "category": "os", "glyph": "Wi" },
       { "name": "macOS", "ext": ".app", "category": "os", "glyph": "ma" },
       { "name": "VPS", "ext": ".ssh", "category": "server", "glyph": "VP" }
     ]},
-    { "key": "programming", "index": "02", "items": [
+    { "key": "programming", "index": "02", "icon": "code", "items": [
       { "name": "Python", "ext": ".py", "category": "language", "glyph": "Py" },
       { "name": "TypeScript", "ext": ".ts", "category": "language", "glyph": "TS" },
       { "name": "MySQL", "ext": ".sql", "category": "database", "glyph": "My" }
     ]},
-    { "key": "webMobile", "index": "03", "items": [
+    { "key": "webMobile", "index": "03", "icon": "devices", "items": [
       { "name": "HTML", "ext": ".html", "category": "web", "glyph": "<>" },
       { "name": "CSS", "ext": ".css", "category": "web", "glyph": "{}" },
       { "name": "React", "ext": ".tsx", "category": "web", "glyph": "Re" },
@@ -76,7 +76,7 @@
       { "name": "Kotlin", "ext": ".kt", "category": "android", "glyph": "Kt" },
       { "name": "Swift", "ext": ".swift", "category": "ios", "glyph": "Sw" }
     ]},
-    { "key": "tools", "index": "04", "items": [
+    { "key": "tools", "index": "04", "icon": "sliders", "items": [
       { "name": "Claude / Claude Code", "ext": ".ai", "category": "ai", "glyph": "Cl" },
       { "name": "Figma", "ext": ".fig", "category": "design", "glyph": "Fg" }
     ]}

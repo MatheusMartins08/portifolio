@@ -1,8 +1,26 @@
-/* .mf-folder-grid: rows align to the bottom, so an opening folder pushes its row down together. */
+/* Holds the section's lightning backdrop (HeroBackdrop, z-index -1) behind the title and the folders. */
+.stage { position: relative; isolation: isolate; }
+
+/* .mf-folder-grid: as many folders per row as fit at 340px+ (up to 4), balanced by their count (the
+   --cols-N from the script: the column count when at most N fit), the short row centred last. Rows
+   align to the bottom, so an opening folder pushes its row down together. */
+.fit { container-type: inline-size; margin-top: var(--space-12); }
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-  gap: 40px var(--space-8);
-  align-items: end;
-  margin-top: var(--space-12);
+  --gap-x: var(--space-8);
+  --cols: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 40px var(--gap-x);
 }
+.cell {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap-x)) / var(--cols));
+  max-width: 600px;
+  min-width: 0;
+}
+
+/* 2 × 340 + gap, 3 × 340 + 2 gaps, 4 × 340 + 3 gaps. */
+@container (min-width: 712px) { .grid { --cols: var(--cols-2); } }
+@container (min-width: 1084px) { .grid { --cols: var(--cols-3); } }
+@container (min-width: 1456px) { .grid { --cols: var(--cols-4); } }

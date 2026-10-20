@@ -1,4 +1,5 @@
-.folder { position: relative; max-width: 480px; }
+/* Fills its cell in the folder grid (SkillsSection), so no row is left with a gap beside it. */
+.folder { position: relative; }
 
 /* Opening makes room above for the tray of cards. */
 .body {
@@ -133,7 +134,8 @@
 .open .front { transform: rotateX(-16deg); }
 
 .title { grid-column: 1; align-self: start; font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
-.count { grid-column: 1; grid-row: 2; font: 400 12px/16px var(--font-mono); color: var(--ink-muted); }
+.icon { grid-column: 1; grid-row: 2; display: grid; place-items: center; width: 30px; height: 30px; color: var(--ink-muted); transition: color var(--mf-dur-2); }
+.front:hover .icon, .open .icon { color: var(--terracota-strong); }
 .toggle {
   grid-column: 2;
   grid-row: 2;
