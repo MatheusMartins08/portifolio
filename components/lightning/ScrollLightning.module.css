@@ -1,6 +1,6 @@
-/* Behind its stage's content (the About stage, the services rails: each isolates it, so -1 stays above
-   the section's sand), reaching up into the padding above. Fades in at the top, as if coming down from
-   the section before, and out at the foot. Never catches the pointer. */
+/* Behind its stage's content (the About stage isolates it, so -1 stays above the section's sand),
+   reaching up into the padding above. Fades in at the top, as if coming down from the section before,
+   and out at the foot. Never catches the pointer. */
 .backdrop {
   position: absolute;
   top: calc(-1 * var(--space-16));

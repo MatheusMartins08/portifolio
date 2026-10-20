@@ -1,7 +1,35 @@
 import { cssVars, cx } from "@/lib/cx";
+import { jag, toPath, type Point } from "@/lib/geometry/lightning";
 import styles from "./ServiceCard.module.css";
 
-/** Web: a page wireframe that assembles itself on hover (text bars grow, CTA fills, cursor travels). */
+/**
+ * The motifs speak the site's lightning language: their connections are broken lines (`zag`, the same
+ * fractal as the bolts, a few px off true) and what runs along them is a charge pulse (`.pulse`), not a
+ * dashed flow. Computed once at module load and seeded, so server and client draw the same lines.
+ */
+function zag(a: Point, b: Point, salt: number, cap = 3): string {
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  return toPath(jag(a, b, { seed: 11, salt, cap: Math.min(cap, length * 0.12), rough: 0.25, minSeg: 4 }));
+}
+
+/** A connection: the broken line at rest and its charge pulse (staggered by `i`). */
+function Charge({ d, i = 0 }: { d: string; i?: number }) {
+  return (
+    <>
+      <path d={d} className={styles.zap} />
+      <path d={d} pathLength={1} className={styles.pulse} style={cssVars({ "--i": i })} />
+    </>
+  );
+}
+
+/** Where the Web cursor starts and ends (its tip; the CSS moves it by -84, 36). */
+const CURSOR_TRAIL = zag([136, 46], [52, 82], 1, 4);
+const RIDGE = "M98 74l16-14 12 10 10-8 20 16";
+
+/**
+ * Web: a page wireframe that assembles itself on hover (text bars grow, CTA fills, the picture's ridge
+ * draws in terracota) while the cursor travels, leaving a short electric trail.
+ */
 export function MotifWeb() {
   return (
     <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
@@ -16,7 +44,9 @@ export function MotifWeb() {
       <rect x={12} y={62} width={48} height={3} rx={1.5} className={cx(styles.sub, styles.g4)} />
       <rect x={12} y={76} width={32} height={11} rx={2} className={styles.cta} />
       <rect x={98} y={28} width={58} height={60} rx={3} className={styles.block} />
-      <path d="M98 74l16-14 12 10 10-8 20 16" className={cx(styles.line, styles.img)} />
+      <path d={RIDGE} className={cx(styles.line, styles.img)} />
+      <path d={RIDGE} pathLength={1} className={styles.ridge} />
+      <path d={CURSOR_TRAIL} pathLength={1} className={styles.trail} />
       <path d="M136 46l6 14 3-5 5 0z" className={styles.cursor} />
     </svg>
   );
@@ -39,23 +69,14 @@ const EDGES: Array<[number, number]> = [
   [3, 5],
 ];
 
-/** AI: a small graph of nodes; on hover a dashed flow runs along the edges and the nodes light up in turn. */
+const AI_LINKS = EDGES.map(([a, b], i) => zag(NODES[a], NODES[b], 10 + i));
+
+/** AI: a small graph of nodes, linked by broken lines; on hover charge runs along them and the nodes light up in turn. */
 export function MotifAI() {
   return (
     <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
-      {EDGES.map(([a, b], i) => (
-        <line key={`edge-${i}`} x1={NODES[a][0]} y1={NODES[a][1]} x2={NODES[b][0]} y2={NODES[b][1]} className={styles.edge} />
-      ))}
-      {EDGES.map(([a, b], i) => (
-        <line
-          key={`flow-${i}`}
-          x1={NODES[a][0]}
-          y1={NODES[a][1]}
-          x2={NODES[b][0]}
-          y2={NODES[b][1]}
-          className={styles.flow}
-          style={cssVars({ "--i": i })}
-        />
+      {AI_LINKS.map((d, i) => (
+        <Charge key={`link-${i}`} d={d} i={i} />
       ))}
       {NODES.map(([x, y], i) => (
         <g key={`node-${i}`} className={styles.node} style={cssVars({ "--i": i })}>
@@ -67,16 +88,16 @@ export function MotifAI() {
   );
 }
 
+const BACKEND_LINE = zag([29.5, 48], [138.5, 48], 20);
+
 /**
- * Backend: client → API → server → database in a row. On hover the blocks light up from left to
- * right and a request packet runs down the line, passing behind them, into the database.
+ * Backend: client → API → server → database in a row, on one broken line. On hover the blocks light up
+ * from left to right and a charge runs down the line, passing behind them, into the database.
  */
 export function MotifBackend() {
   return (
     <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
-      <line x1={29.5} y1={48} x2={138.5} y2={48} className={styles.edge} />
-      <line x1={29.5} y1={48} x2={138.5} y2={48} className={styles.flow} />
-      <circle cx={29.5} cy={48} r={2.2} className={styles.packet} />
+      <Charge d={BACKEND_LINE} />
 
       {/* client: a small window */}
       <g style={cssVars({ "--i": 0 })}>
@@ -121,22 +142,24 @@ const TABLES: Array<{ y: number; rows: number[] }> = [
   { y: 76, rows: [50, 26] },
 ];
 
+/** Cylinder → table, each with a kink halfway so it reads as a branch. */
+const DATA_BRANCHES = TABLES.map(({ y }, i): string => {
+  const from: Point = [42, 38 + i * 16];
+  const to: Point = [100, y + 11];
+  const mid: Point = [71, (from[1] + to[1]) / 2 + (i - 1) * 3];
+  return zag(from, mid, 30 + i * 2) + zag(mid, to, 31 + i * 2).replace(/^M/, "L");
+});
+
 /**
- * Data: a database cylinder feeding three small tables. On hover data flows along the branches,
- * the cylinder lights up and the table rows fill in, one table after the other.
+ * Data: a database cylinder feeding three small tables along broken branches. On hover charge runs
+ * along them, the cylinder lights up and the table rows fill in, one table after the other.
  */
 export function MotifData() {
   return (
     <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
-      {TABLES.map(({ y }, i) => {
-        const d = `M42 ${38 + i * 16}C70 ${38 + i * 16} 72 ${y + 11} 100 ${y + 11}`;
-        return (
-          <g key={`branch-${y}`}>
-            <path d={d} className={styles.edge} />
-            <path d={d} className={styles.flow} />
-          </g>
-        );
-      })}
+      {DATA_BRANCHES.map((d, i) => (
+        <Charge key={`branch-${i}`} d={d} i={i} />
+      ))}
 
       <g style={cssVars({ "--i": 0 })}>
         <path d="M6 26v56a18 5 0 0 0 36 0v-56z" className={styles.box} />
@@ -157,15 +180,16 @@ export function MotifData() {
   );
 }
 
+const DEPLOY_LINE = zag([46.5, 52], [124, 52], 40);
+
 /**
- * Deploy: code → build → cloud. On hover the pipeline runs: the build bar fills and, once it is
- * done, a check is drawn inside the cloud.
+ * Deploy: code → build → cloud, on one broken line. On hover the pipeline runs: charge goes down the
+ * line, the build bar fills and, once it is done, a check is drawn inside the cloud.
  */
 export function MotifDeploy() {
   return (
     <svg viewBox="0 0 168 108" className={styles.motif} aria-hidden="true">
-      <line x1={46.5} y1={52} x2={124} y2={52} className={styles.edge} />
-      <line x1={46.5} y1={52} x2={124} y2={52} className={styles.flow} />
+      <Charge d={DEPLOY_LINE} />
 
       {/* code: an editor window with </> */}
       <g style={cssVars({ "--i": 0 })}>

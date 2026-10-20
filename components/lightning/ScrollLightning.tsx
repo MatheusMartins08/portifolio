@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cssVars, cx } from "@/lib/cx";
-import { drawLightning, drawRailLightning, type Lightning } from "./bolt";
+import { drawLightning, type Lightning } from "./bolt";
 import styles from "./ScrollLightning.module.css";
 
 /** The reading line the bolt's head follows: this share of the viewport height, from the top. */
@@ -19,16 +19,13 @@ interface Drawing {
 
 /**
  * A lightning bolt that fills its parent (geometry in ./bolt), drawn by the scroll — behind the About
- * section, and down both sides of the services stack: `--t` is how
+ * section: `--t` is how
  * much of the bolt is out — the reading line's depth into the drawing, scaled onto the trunk's length,
  * eased — and each stroke turns it into a dash offset in CSS. Scrolling back draws it back up. A lit head
  * rides the drawing edge. With reduced motion the bolt is simply there, whole.
  */
-/**
- * `shape`: "center" for one bolt down the middle of a wide stage (About), "rail" for a tall, narrow
- * column (beside the services stack). `seed` picks the bolt (bolt.ts's defaults otherwise).
- */
-export function ScrollLightning({ shape = "center", seed }: { shape?: "center" | "rail"; seed?: number }) {
+/** `seed` picks the bolt's shape (bolt.ts's default for the About one). */
+export function ScrollLightning({ seed }: { seed?: number }) {
   const [drawing, setDrawing] = useState<Drawing | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +41,7 @@ export function ScrollLightning({ shape = "center", seed }: { shape?: "center" |
       const height = root.clientHeight;
       if (`${width}x${height}` === size) return;
       size = `${width}x${height}`;
-      setDrawing({ width, height, bolt: (shape === "rail" ? drawRailLightning : drawLightning)({ width, height, seed }) });
+      setDrawing({ width, height, bolt: drawLightning({ width, height, seed }) });
     };
     const observer = new ResizeObserver(() => {
       if (!frame) frame = requestAnimationFrame(draw);
@@ -54,7 +51,7 @@ export function ScrollLightning({ shape = "center", seed }: { shape?: "center" |
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [shape, seed]);
+  }, [seed]);
 
   // ---- scroll: the reading line draws the bolt ----
   useEffect(() => {
