@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef, type ReactNode } from "react";
+import { EdgeLight } from "@/components/ui/EdgeLight";
 import { Icon } from "@/components/ui/Icon";
 import { useInView } from "@/hooks/useInView";
 import { prefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -69,7 +70,8 @@ function markText(text: string, highlight: string[]): ReactNode {
  * "matheus.profile": the About text opened as a markdown file in a beige editor — command,
  * frontmatter and every paragraph numbered like a line. Tilts up to `maxTilt`° following the cursor
  * (rAF interpolation, factor 0.085) with layers on translateZ, a sheen and a shadow that react;
- * eases back on leave. Off on touch and with reduced motion. Paragraphs enter in sequence.
+ * eases back on leave. Off on touch and with reduced motion. Paragraphs enter in sequence. The border
+ * lights up around the pointer (EdgeLight).
  */
 export function ProfileTerminal({
   title,
@@ -210,6 +212,7 @@ export function ProfileTerminal({
           <span className={styles.status}>{status}</span>
         </div>
         <span className={styles.sheen} aria-hidden="true" />
+        <EdgeLight />
       </div>
     </div>
   );

@@ -111,6 +111,7 @@
 
 /* ---------- card: enters, then its content in four beats ---------- */
 .card {
+  position: relative;
   grid-row: 1;
   padding: 22px var(--space-6);
   background: var(--paper);

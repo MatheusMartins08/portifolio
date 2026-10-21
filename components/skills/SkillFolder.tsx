@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { EdgeLight } from "@/components/ui/EdgeLight";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { cssVars, cx, pad2 } from "@/lib/cx";
 import { balancedColumns } from "@/lib/layout";
@@ -106,6 +107,7 @@ export function SkillFolder({ index, title, icon, items, unit, openLabel, closeL
                     <b>{item.ext}</b> · {item.category}
                   </span>
                 </span>
+                <EdgeLight className={styles.chipEdge} />
               </li>
             );
           })}
@@ -129,6 +131,7 @@ export function SkillFolder({ index, title, icon, items, unit, openLabel, closeL
             <Icon name="plus" size={16} />
           </span>
           <span className="sr-only"> — {open ? closeLabel : openLabel}</span>
+          <EdgeLight inset />
         </button>
       </div>
     </div>

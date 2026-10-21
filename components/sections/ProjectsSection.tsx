@@ -71,8 +71,11 @@ export async function ProjectsSection() {
 
       <MoreWork
         kicker={t.projects.moreWork}
-        cta={t.projects.viewGithub}
+        line={t.projects.moreWorkLine}
         href={site.social.github}
+        label={t.contact.channels.github}
+        handle={site.social.githubHandle}
+        status={t.projects.githubStatus}
         newTabLabel={t.a11y.newTab}
       />
     </Section>

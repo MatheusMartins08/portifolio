@@ -81,6 +81,8 @@
   transition-delay: calc(var(--d) * 45ms + 90ms);
 }
 .open .chip:hover { box-shadow: var(--shadow-float), 0 0 0 1px var(--hairline-strong); }
+/* The lit border only on cards laid out: closed, the stack peeking over the front stays still. */
+.folder:not(.open) .chipEdge { display: none; }
 .unmeasured .chip { transition: none; }
 
 .glyph {

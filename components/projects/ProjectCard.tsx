@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, type PointerEvent } from "react";
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { EdgeLight } from "@/components/ui/EdgeLight";
 import { Icon } from "@/components/ui/Icon";
 import { MediaPlaceholder } from "@/components/ui/MediaPlaceholder";
 import { Tag, Tags } from "@/components/ui/Tag";
@@ -117,6 +118,8 @@ export function ProjectCard({
         ) : (
           <MediaPlaceholder variant="ui" />
         )}
+        {/* Inside the edge: the media clips its overflow. Under the cursor's bubble. */}
+        <EdgeLight inset />
         <span className={styles.bubble} ref={bubble}>
           <span>{labels.cursor}</span>
           <Icon name="arrow-up-right" size={12} />

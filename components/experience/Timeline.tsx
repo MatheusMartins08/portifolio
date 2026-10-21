@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { EdgeLight } from "@/components/ui/EdgeLight";
 import { Icon } from "@/components/ui/Icon";
 import { StatusDot } from "@/components/ui/StatusDot";
 import { Tag, Tags } from "@/components/ui/Tag";
@@ -263,6 +264,7 @@ function TimelineItem({ item, index, side, moreLabel, lessLabel }: TimelineItemP
             </div>
           </>
         ) : null}
+        <EdgeLight />
       </article>
     </li>
   );

@@ -1,0 +1,25 @@
+/* Laid over the parent's 1px border (transparent or not); `inset` draws it just inside the edge instead. */
+.edge {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.inset { inset: 0; }
+
+/* The light, masked to a 1px ring: a terracota spot centred on the pointer (--mx/--my, from the script).
+   On the pseudo-element, so a parent's rules for its children (entrances, opacity) never switch it on. */
+.edge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), var(--terracota-strong), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity var(--mf-dur-3) var(--mf-ease-out);
+}
+:is(:hover, :focus-visible) > .edge::before { opacity: 1; }

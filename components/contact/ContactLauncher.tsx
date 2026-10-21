@@ -11,7 +11,7 @@ interface ContactLauncherProps {
   modal: ContactModalCopy;
 }
 
-/** The section's CTA ("Let's talk") and the contact dialog it opens. */
+/** The section's CTA ("Vamos conversar") and the contact dialog it opens. */
 export function ContactLauncher({ cta, modal }: ContactLauncherProps) {
   const [state, setState] = useState<"closed" | "open" | "closing">("closed");
   const timer = useRef<number | undefined>(undefined);

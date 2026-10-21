@@ -49,7 +49,7 @@
       "es": "Idioma"
     },
     "cv": {
-      "pt": "Download CV",
+      "pt": "Baixar CV",
       "en": "Download CV",
       "es": "Descargar CV"
     },
@@ -82,19 +82,19 @@
     },
     "phrases": {
       "pt": [
-        "Fullstack Developer",
-        "Produtos Digitais",
-        "Automações & IA"
+        "Desenvolvedor Full Stack",
+        "Automações & IA",
+        "Produtos Digitais"
       ],
       "en": [
-        "Fullstack Developer",
-        "Digital Products",
-        "Automation & AI"
+        "Full Stack Developer",
+        "Automation & AI",
+        "Digital Products"
       ],
       "es": [
-        "Desarrollador Fullstack",
-        "Productos Digitales",
-        "Automatización & IA"
+        "Desarrollador Full Stack",
+        "Automatización & IA",
+        "Productos Digitales"
       ]
     },
     "photoAlt": {
@@ -108,9 +108,9 @@
       "es": "Matheus Freitas programando en su portátil en un aula"
     },
     "scrollLabel": {
-      "pt": "Scroll",
+      "pt": "Rolar",
       "en": "Scroll",
-      "es": "Scroll"
+      "es": "Deslizar"
     },
     "scrollAria": {
       "pt": "Ir para Sobre mim",
@@ -146,15 +146,37 @@
         "en": "cat about.md",
         "es": "cat sobre-mi.md"
       },
+      "keys": {
+        "name": {
+          "pt": "nome",
+          "en": "name",
+          "es": "nombre"
+        },
+        "role": {
+          "pt": "cargo",
+          "en": "role",
+          "es": "rol"
+        },
+        "since": {
+          "pt": "desde",
+          "en": "since",
+          "es": "desde"
+        },
+        "study": {
+          "pt": "formação",
+          "en": "study",
+          "es": "estudios"
+        }
+      },
       "role": {
-        "pt": "Fullstack Developer",
-        "en": "Fullstack Developer",
-        "es": "Desarrollador Fullstack"
+        "pt": "Desenvolvedor Full Stack",
+        "en": "Full Stack Developer",
+        "es": "Desarrollador Full Stack"
       },
       "study": {
         "pt": "Desenvolvimento Web & Mobile — COTEMIG",
         "en": "Web & Mobile Development — COTEMIG",
-        "es": "Desarrollo Web & Mobile — COTEMIG"
+        "es": "Desarrollo Web & Móvil — COTEMIG"
       },
       "status": {
         "pt": "{count} parágrafos · UTF-8 · pt-BR",
@@ -178,7 +200,7 @@
         ],
         "es": [
           "Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos, participando en todo el ciclo de desarrollo — desde la comprensión del problema y la definición de la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue.",
-          "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica. Actualmente curso Desarrollo Web y Mobile en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales.",
+          "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica. Actualmente curso Desarrollo Web y Móvil en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales.",
           "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional.",
           "Por eso, busco entender el problema antes de elegir la tecnología. Para mí, una buena solución no tiene por qué ser innecesariamente compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar.",
           "Para mí, la tecnología es un medio. El objetivo es transformar necesidades en productos sólidos, fáciles de mantener y, sobre todo, útiles en el mundo real."
@@ -219,17 +241,17 @@
           "es": "Estado"
         },
         "resume": {
-          "pt": "Resume",
+          "pt": "Currículo",
           "en": "Resume",
           "es": "Currículum"
         },
         "location": {
-          "pt": "Location",
+          "pt": "Localização",
           "en": "Location",
           "es": "Ubicación"
         },
         "availableFor": {
-          "pt": "Available for",
+          "pt": "Disponível para",
           "en": "Available for",
           "es": "Disponible para"
         }
@@ -260,12 +282,12 @@
         "es": "Minas Gerais, Brasil"
       },
       "availableFor": {
-        "pt": "Local + Remote",
-        "en": "Local + Remote",
-        "es": "Local + Remoto"
+        "pt": "Presencial + Remoto",
+        "en": "On-site + Remote",
+        "es": "Presencial + Remoto"
       },
       "availableWhere": {
-        "pt": "worldwide",
+        "pt": "em todo o mundo",
         "en": "worldwide",
         "es": "en todo el mundo"
       }
@@ -397,9 +419,9 @@
     },
     "data": {
       "label": {
-        "pt": "DATA",
+        "pt": "DADOS",
         "en": "DATA",
-        "es": "DATA"
+        "es": "DATOS"
       },
       "title": {
         "pt": "Dados & Bancos",
@@ -525,7 +547,7 @@
         "es": "Ver menos"
       },
       "nextChapter": {
-        "pt": "Next chapter",
+        "pt": "Próximo capítulo",
         "en": "Next chapter",
         "es": "Próximo capítulo"
       }
@@ -688,7 +710,7 @@
         "title": {
           "pt": "Desenvolvimento Web & Mobile",
           "en": "Web & Mobile Development",
-          "es": "Desarrollo Web & Mobile"
+          "es": "Desarrollo Web & Móvil"
         },
         "org": {
           "pt": "COTEMIG",
@@ -768,7 +790,7 @@
         "summary": {
           "pt": "Formação prática e progressiva em desenvolvimento web, abrangendo fundamentos e tecnologias modernas de Front-End e Back-End, como HTML, CSS, JavaScript, TypeScript, React, Next.js e Node.js, além de UI Design e banco de dados. O aprendizado é desenvolvido por meio de projetos práticos, aplicando conceitos de interface, responsividade, arquitetura e construção de aplicações web completas.",
           "en": "A hands-on, progressive web development program covering the fundamentals and modern Front-End and Back-End technologies such as HTML, CSS, JavaScript, TypeScript, React, Next.js and Node.js, as well as UI Design and databases. Learning happens through practical projects that apply interface design, responsiveness, architecture and the building of complete web applications.",
-          "es": "Formación práctica y progresiva en desarrollo web que abarca los fundamentos y tecnologías modernas de Front-End y Back-End, como HTML, CSS, JavaScript, TypeScript, React, Next.js y Node.js, además de UI Design y bases de datos. El aprendizaje se desarrolla a través de proyectos prácticos, aplicando conceptos de interfaz, responsividad, arquitectura y construcción de aplicaciones web completas."
+          "es": "Formación práctica y progresiva en desarrollo web que abarca los fundamentos y tecnologías modernas de Front-End y Back-End, como HTML, CSS, JavaScript, TypeScript, React, Next.js y Node.js, además de diseño UI y bases de datos. El aprendizaje se desarrolla a través de proyectos prácticos, aplicando conceptos de interfaz, responsividad, arquitectura y construcción de aplicaciones web completas."
         },
         "tags": {
           "pt": [
@@ -801,7 +823,7 @@
             "React",
             "Next.js",
             "Node.js",
-            "UI Design",
+            "Diseño UI",
             "Bases de datos"
           ]
         }
@@ -859,10 +881,10 @@
       "webMobile": {
         "pt": "Web & Mobile",
         "en": "Web & Mobile",
-        "es": "Web & Mobile"
+        "es": "Web & Móvil"
       },
       "tools": {
-        "pt": "Tools",
+        "pt": "Ferramentas",
         "en": "Tools",
         "es": "Herramientas"
       }
@@ -896,7 +918,7 @@
       "mobile": {
         "pt": "Mobile",
         "en": "Mobile",
-        "es": "Mobile"
+        "es": "Móvil"
       },
       "android": {
         "pt": "Android",
@@ -948,12 +970,12 @@
       "es": "Ver sitio"
     },
     "caseStudy": {
-      "pt": "Case study",
+      "pt": "Estudo de caso",
       "en": "Case study",
       "es": "Caso de estudio"
     },
     "cursor": {
-      "pt": "View",
+      "pt": "Ver",
       "en": "View",
       "es": "Ver"
     },
@@ -962,25 +984,30 @@
       "en": "This is just the beginning",
       "es": "Esto es solo el comienzo"
     },
-    "viewGithub": {
-      "pt": "Acompanhe o que vem por aí no GitHub",
-      "en": "Follow what's next on GitHub",
-      "es": "Sigue lo que viene en GitHub"
+    "moreWorkLine": {
+      "pt": "Novas ideias saindo do papel, um commit por vez.",
+      "en": "New ideas getting off the ground, one commit at a time.",
+      "es": "Ideas nuevas tomando forma, un commit a la vez."
+    },
+    "githubStatus": {
+      "pt": "main · em construção",
+      "en": "main · in progress",
+      "es": "main · en construcción"
     },
     "case": {
       "meta": {
         "role": {
-          "pt": "My role",
+          "pt": "Minha função",
           "en": "My role",
           "es": "Mi rol"
         },
         "timeline": {
-          "pt": "Timeline",
+          "pt": "Período",
           "en": "Timeline",
           "es": "Período"
         },
         "stack": {
-          "pt": "Tech stack",
+          "pt": "Tecnologias",
           "en": "Tech stack",
           "es": "Stack tecnológico"
         },
@@ -992,9 +1019,9 @@
       },
       "links": {
         "live": {
-          "pt": "Live project",
+          "pt": "Projeto no ar",
           "en": "Live project",
-          "es": "Proyecto en vivo"
+          "es": "Proyecto en línea"
         },
         "github": {
           "pt": "GitHub",
@@ -1004,74 +1031,74 @@
       },
       "sections": {
         "overview": {
-          "pt": "Overview",
+          "pt": "Visão geral",
           "en": "Overview",
           "es": "Resumen"
         },
         "problem": {
-          "pt": "Problem",
+          "pt": "Problema",
           "en": "Problem",
           "es": "Problema"
         },
         "solution": {
-          "pt": "Solution",
+          "pt": "Solução",
           "en": "Solution",
           "es": "Solución"
         },
         "role": {
-          "pt": "My role",
+          "pt": "Minha função",
           "en": "My role",
           "es": "Mi rol"
         },
         "features": {
-          "pt": "Features",
+          "pt": "Funcionalidades",
           "en": "Features",
           "es": "Funcionalidades"
         },
         "architecture": {
-          "pt": "Architecture",
+          "pt": "Arquitetura",
           "en": "Architecture",
           "es": "Arquitectura"
         },
         "stack": {
-          "pt": "Tech stack",
+          "pt": "Tecnologias",
           "en": "Tech stack",
           "es": "Stack tecnológico"
         },
         "decisions": {
-          "pt": "Technical decisions",
+          "pt": "Decisões técnicas",
           "en": "Technical decisions",
           "es": "Decisiones técnicas"
         },
         "challenges": {
-          "pt": "Challenges",
+          "pt": "Desafios",
           "en": "Challenges",
           "es": "Desafíos"
         },
         "solutions": {
-          "pt": "Solutions",
+          "pt": "Soluções",
           "en": "Solutions",
           "es": "Soluciones"
         },
         "results": {
-          "pt": "Results",
+          "pt": "Resultados",
           "en": "Results",
           "es": "Resultados"
         },
         "learned": {
-          "pt": "What I learned",
+          "pt": "O que aprendi",
           "en": "What I learned",
           "es": "Lo que aprendí"
         },
         "gallery": {
-          "pt": "Gallery",
+          "pt": "Galeria",
           "en": "Gallery",
           "es": "Galería"
         },
         "live": {
-          "pt": "Live project",
+          "pt": "Projeto no ar",
           "en": "Live project",
-          "es": "Proyecto en vivo"
+          "es": "Proyecto en línea"
         },
         "github": {
           "pt": "GitHub",
@@ -1140,7 +1167,7 @@
       ]
     },
     "cta": {
-      "pt": "Let's talk",
+      "pt": "Vamos conversar",
       "en": "Let's talk",
       "es": "Hablemos"
     },
@@ -1225,7 +1252,7 @@
     },
     "channels": {
       "email": {
-        "pt": "Email",
+        "pt": "E-mail",
         "en": "Email",
         "es": "Correo"
       },
@@ -1248,9 +1275,9 @@
   },
   "footer": {
     "role": {
-      "pt": "Fullstack Developer",
-      "en": "Fullstack Developer",
-      "es": "Desarrollador Fullstack"
+      "pt": "Desenvolvedor Full Stack",
+      "en": "Full Stack Developer",
+      "es": "Desarrollador Full Stack"
     },
     "navigation": {
       "pt": "Navegação",

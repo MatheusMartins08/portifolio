@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { EdgeLight } from "@/components/ui/EdgeLight";
 import { cx } from "@/lib/cx";
 import styles from "./InfoCard.module.css";
 
@@ -16,7 +17,7 @@ interface InfoCardProps {
   children: ReactNode;
 }
 
-/** Small auxiliary card (bento around the terminal): mono label, content, optional footer. */
+/** Small auxiliary card (bento around the terminal): mono label, content, optional footer; its border lights up around the pointer. */
 export function InfoCard({ label, aside, tone = "paper", layout = "stack", footer, className, children }: InfoCardProps) {
   return (
     <div className={cx(styles.info, styles[tone], layout === "row" && styles.row, className)}>
@@ -26,6 +27,7 @@ export function InfoCard({ label, aside, tone = "paper", layout = "stack", foote
       </div>
       <div className={styles.body}>{children}</div>
       {footer ? <div className={styles.foot}>{footer}</div> : null}
+      <EdgeLight />
     </div>
   );
 }

@@ -1,124 +1,29 @@
-/* How much of the bolt is out, px along its trunk (as --t in ScrollLightning): registered so the strike
-   can tween it. Its own name, so the scroll-drawn bolts' --t stays a plain custom property. */
-@property --strike {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: -1;
-}
-
-/* The closing line, centred under the projects; the padding above holds the bolt. */
+/* The closing line, centred under the projects, and the card out to GitHub. */
 .more {
-  position: relative;
   display: grid;
   justify-items: center;
   gap: var(--space-3);
-  margin-top: var(--space-8);
-  padding-top: var(--space-24);
+  margin-top: var(--space-24);
 }
 
-/* ---------- the strike: drawn top to bottom, then it settles faint (re-lit by the link) ---------- */
-.strike {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  translate: -50% 0;
-  overflow: visible;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: miter;
-  stroke-miterlimit: 4;
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--terracota-strong) 45%, transparent));
-  opacity: .55;
-  transition: opacity var(--mf-dur-3) var(--mf-ease-out);
-  pointer-events: none;
-  /* Fades in at the top, as if coming down from the projects. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--space-6));
-  mask-image: linear-gradient(to bottom, transparent, #000 var(--space-6));
-}
-/* No forwards fill on the flash: it ends where the rest opacity is, so the hover can still change it. */
-.in .strike {
-  animation:
-    strike-down 420ms linear forwards,
-    strike-flash 1600ms var(--mf-ease-out) backwards;
-}
-.more:has(.link:is(:hover, :focus-visible)) .strike { opacity: .9; }
-
-@keyframes strike-down { from { --strike: 0; } to { --strike: var(--trunk); } }
-@keyframes strike-flash { 0%, 30% { opacity: 1; } 100% { opacity: .55; } }
-
-/* Each stroke's progress: 0 before t0, 1 after t1. An undrawn stroke would still leave its round cap
-   as a dot: hidden until it starts. */
-.stroke {
-  --k: clamp(0, (var(--strike) - var(--t0)) / (var(--t1) - var(--t0)), 1);
-  opacity: clamp(0, var(--k) * 400, 1);
-}
-.stroke path {
-  stroke-dasharray: 1 2;
-  stroke-dashoffset: calc(1 - var(--k));
-}
-
-/* Body: the scroll-drawn bolts' colours, finer for the size. */
-.edge { stroke: var(--paper); stroke-opacity: .7; }
-.core { stroke: var(--terracota-strong); }
-.l0 .core { stroke-width: 3px; }
-.l0 .edge { stroke-width: 4.2px; }
-.l1 .core { stroke-width: 1.8px; stroke-opacity: .85; }
-.l1 .edge { stroke-width: 2.6px; }
-.l2 .core { stroke-width: 1.1px; stroke-opacity: .7; }
-.l2 .edge { stroke-width: 1.8px; }
-
-/* Lit head: a short dash at the drawing edge, only while drawing. */
-.l0 { --head: .12; }
-.l1 { --head: .22; }
-.l2 { --head: .3; }
-.stroke .glow,
-.stroke .hot {
-  stroke-dasharray: var(--head) 2;
-  stroke-dashoffset: calc(var(--head) - var(--k));
-  opacity: min(.8, var(--k) * 12, (1 - var(--k)) * 12);
-}
-.glow { stroke: var(--ember); stroke-opacity: .55; }
-.hot { stroke: var(--ember-hot); }
-.l0 .glow { stroke-width: 6px; }
-.l0 .hot { stroke-width: 2px; }
-.l1 .glow { stroke-width: 4px; }
-.l1 .hot { stroke-width: 1.3px; }
-.l2 .glow { stroke-width: 3px; }
-.l2 .hot { stroke-width: 1px; }
-
-/* ---------- impact: a flash where the trunk lands, just above the label ---------- */
-.impact {
-  position: absolute;
-  top: var(--foot-y);
-  left: calc(50% + var(--foot-x));
-  width: var(--space-12);
-  height: var(--space-12);
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    var(--ember-hot) 0,
-    color-mix(in srgb, var(--ember) 40%, transparent) 35%,
-    transparent 70%
-  );
-  opacity: 0;
-  pointer-events: none;
-}
-.in .impact { animation: strike-impact 700ms var(--mf-ease-out) 380ms forwards; }
-@keyframes strike-impact {
-  from { opacity: .9; transform: scale(.3); }
-  to { opacity: 0; transform: scale(1.6); }
-}
-
-/* ---------- label and words: lit by the strike ---------- */
+/* ---------- label and line: lit in sequence on entering ---------- */
 .kicker {
   opacity: 0;
   transform: translateY(6px);
   transition:
-    opacity var(--mf-dur-3) var(--mf-ease-out) 380ms,
-    transform var(--mf-dur-3) var(--mf-ease-out) 380ms;
+    opacity var(--mf-dur-3) var(--mf-ease-out),
+    transform var(--mf-dur-3) var(--mf-ease-out);
 }
 .in .kicker { opacity: 1; transform: none; }
+
+.line {
+  margin: 0;
+  font: 500 24px/30px var(--font-sans);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-align: center;
+  text-wrap: balance;
+}
 
 .word {
   display: inline-block;
@@ -127,89 +32,174 @@
   transition:
     opacity var(--mf-dur-4) var(--mf-ease-out),
     transform var(--mf-dur-4) var(--mf-ease-out);
-  transition-delay: calc(460ms + var(--i, 0) * 45ms);
+  transition-delay: calc(140ms + var(--i, 0) * 45ms);
 }
 .in .word { opacity: 1; transform: none; }
 
-/* The underline's hairline comes with the label, the arrow after the last word (--n words). */
-.rule,
-.icon {
-  opacity: 0;
-  transition: opacity var(--mf-dur-3) var(--mf-ease-out) 380ms;
-}
-.icon { transition-delay: calc(460ms + var(--n, 0) * 45ms); }
-.in .rule,
-.in .icon { opacity: 1; }
-
-/* ---------- the link: ArrowLink's lg look, with a charged underline ---------- */
-.link {
+/* ---------- the dock: the card rises in after the last word (--n words), then floats ---------- */
+.dock {
   position: relative;
-  display: inline-flex;
+  display: grid;
+  width: min(100%, 400px);
+  margin-top: var(--space-8);
+  padding-bottom: var(--space-4);
+  opacity: 0;
+  transform: translateY(var(--space-3));
+  transition:
+    opacity var(--mf-dur-4) var(--mf-ease-out),
+    transform var(--mf-dur-4) var(--mf-ease-out);
+  transition-delay: calc(240ms + var(--n, 0) * 45ms);
+}
+.in .dock { opacity: 1; transform: none; }
+
+/* A slow rise and fall, a few px; the shadow on the ground narrows and fades as the card goes up.
+   Both stop where they are while the card is hovered or focused. */
+.float { animation: float 3.4s var(--mf-ease-inout) infinite alternate; }
+.ground {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 0;
+  height: var(--space-4);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--ink) 16%, transparent), transparent);
+  pointer-events: none;
+  animation: ground 3.4s var(--mf-ease-inout) infinite alternate;
+}
+.dock:has(.card:is(:hover, :focus-visible)) :is(.float, .ground) { animation-play-state: paused; }
+
+@keyframes float { to { translate: 0 calc(-1.5 * var(--space-1)); } }
+@keyframes ground { to { scale: .86; opacity: .55; } }
+
+/* ---------- the card ---------- */
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "mark name icon"
+    "log  log  log";
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  box-shadow: var(--shadow-float);
+  color: var(--ink);
+  text-align: left;
+  text-decoration: none;
+  transition:
+    translate var(--mf-dur-3) var(--mf-ease-out),
+    box-shadow var(--mf-dur-3) var(--mf-ease-out),
+    border-color var(--mf-dur-2) var(--mf-ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.card:is(:hover, :focus-visible) {
+  translate: 0 calc(-1 * var(--space-1));
+  border-color: color-mix(in srgb, var(--terracota-strong) 30%, var(--hairline-strong));
+  box-shadow: var(--shadow-depth);
+}
+.card:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring), var(--shadow-depth); }
+
+/* The mark: GitHub on ink, tilting a little on hover (terracota, as on the solid button). */
+.mark {
+  grid-area: mark;
+  display: grid;
+  place-items: center;
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--on-ink);
+  transition:
+    rotate var(--mf-dur-3) var(--mf-ease-spring),
+    scale var(--mf-dur-3) var(--mf-ease-spring),
+    color var(--mf-dur-2) var(--mf-ease-out);
+}
+.card:is(:hover, :focus-visible) .mark { rotate: -6deg; scale: 1.04; color: var(--terracota); }
+
+.name { grid-area: name; display: flex; flex-direction: column; min-width: 0; }
+.title { font: 500 18px/24px var(--font-sans); letter-spacing: -0.01em; }
+.handle {
+  overflow: hidden;
+  font: 400 12px/18px var(--font-mono);
+  letter-spacing: .02em;
+  color: var(--ink-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.icon { grid-area: icon; color: var(--terracota-strong); }
+
+/* ---------- the log: a commit graph and the branch's note ---------- */
+.log {
+  grid-area: log;
+  display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-1) 0;
-  font: 500 24px/30px var(--font-sans);
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  text-decoration: none;
-  transition: color var(--mf-dur-2) var(--mf-ease-out);
+  min-width: 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
 }
-.link:hover { color: var(--terracota-ink); }
-.link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+.graph { flex: none; overflow: visible; }
+.status {
+  overflow: hidden;
+  font: 400 11px/16px var(--font-mono);
+  letter-spacing: .06em;
+  color: var(--ink-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-.text { position: relative; transition: transform var(--mf-dur-2) var(--mf-ease-out); }
-.link:hover .text { transform: translateX(2px); }
-.icon { color: var(--terracota-strong); }
+.trunk,
+.push { fill: none; stroke: var(--line-strong); stroke-opacity: .5; stroke-width: 1px; }
+.commit { fill: var(--line-strong); }
+.head,
+.next { fill: var(--terracota-strong); transform-box: fill-box; transform-origin: center; }
+.head { transition: fill var(--mf-dur-2) var(--mf-ease-out); }
 
-/* A hairline at rest; the strike draws the fractal break over it in terracota, a hot head running out
-   at the far end. (No non-scaling-stroke: the box is only stretched sideways, the stroke keeps its width,
-   and the dashes stay in step with pathLength.) */
-.rule { position: absolute; left: 0; right: 0; bottom: calc(-1 * var(--space-1)); height: 1px; background: var(--hairline-strong); }
-.rule svg {
-  position: absolute;
-  left: 0;
-  top: -2.5px;
-  width: 100%;
-  height: 6px;
-  overflow: visible;
+/* HEAD's halo, as on the location pin; it moves to the pushed commit. */
+.halo {
   fill: none;
+  stroke: var(--terracota);
+  stroke-width: 1px;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: halo 2.8s var(--mf-ease-out) infinite;
 }
-.charge {
-  stroke: var(--terracota-strong);
-  stroke-width: 1.2px;
+.haloNow,
+.haloNext { transition: opacity var(--mf-dur-2) var(--mf-ease-out); }
+.haloNext { opacity: 0; }
+
+@keyframes halo {
+  0% { transform: scale(.4); opacity: .9; }
+  80%, 100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* The push: the line reaches out, the new commit pops in, HEAD hands over. */
+.push {
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--mf-dur-3) var(--mf-ease-out);
 }
-/* Starts just before the line, ends just past it: lit only while it runs. */
-.head,
-.rehead {
-  stroke: var(--ember-hot);
-  stroke-width: 1.8px;
-  stroke-dasharray: .08 2;
-  stroke-dashoffset: .08;
-  filter: drop-shadow(0 0 2px var(--ember));
-}
-.in .charge,
-.in .head {
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset var(--mf-dur-4) var(--mf-ease-out) 720ms;
-}
-.in .head { stroke-dashoffset: -1; }
-/* Runs forward on hover or focus; back at the start at once when it ends. */
-.link:is(:hover, :focus-visible) .rehead {
-  stroke-dashoffset: -1;
-  transition: stroke-dashoffset var(--mf-dur-4) var(--mf-ease-out);
-}
+.next { scale: 0; transition: scale var(--mf-dur-3) var(--mf-ease-spring) 160ms; }
+.card:is(:hover, :focus-visible) .push { stroke-dashoffset: 0; }
+.card:is(:hover, :focus-visible) .head { fill: var(--line-strong); }
+.card:is(:hover, :focus-visible) .next { scale: 1; }
+.card:is(:hover, :focus-visible) .haloNow { opacity: 0; }
+.card:is(:hover, :focus-visible) .haloNext { opacity: 1; transition-delay: 240ms; }
 
-/* Phones: the subtitle size, so the line fits in one; centred if it still breaks on a narrow one. */
+/* Phones: the subtitle size, so the line breaks evenly. */
 @media (max-width: 720px) {
-  .link { font-size: 18px; line-height: 26px; letter-spacing: -0.01em; gap: var(--space-2); }
-  .text { text-align: center; text-wrap: balance; }
+  .line { font-size: 18px; line-height: 26px; letter-spacing: -0.01em; }
 }
 
-/* The final state at once: the bolt whole and faint, the underline charged, no heads, no flash. */
+/* The final state at once and still: no float, pulse, lift or tilt; hovering only recolours. */
 @media (prefers-reduced-motion: reduce) {
-  .stroke { --k: 1; }
-  .glow, .hot, .impact, .head, .rehead { display: none; }
-  .kicker, .word, .rule, .icon { opacity: 1 !important; transform: none !important; }
+  .kicker, .word, .dock { opacity: 1 !important; transform: none !important; }
+  .float, .ground, .halo { animation: none; }
+  .halo { opacity: .5; }
+  .card, .mark, .push, .next, .head, .haloNow, .haloNext { transition: none !important; }
+  .card:is(:hover, :focus-visible) { translate: none; }
+  .card:is(:hover, :focus-visible) .mark { rotate: none; scale: none; }
 }

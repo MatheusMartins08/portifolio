@@ -38,10 +38,10 @@ export async function AboutSection() {
             prompt={site.terminal.prompt}
             command={terminal.command}
             entries={[
-              { key: "name", value: site.person.fullName },
-              { key: "role", value: terminal.role },
-              { key: "since", value: site.person.since },
-              { key: "study", value: terminal.study },
+              { key: terminal.keys.name, value: site.person.fullName },
+              { key: terminal.keys.role, value: terminal.role },
+              { key: terminal.keys.since, value: site.person.since },
+              { key: terminal.keys.study, value: terminal.study },
             ]}
             paragraphs={terminal.paragraphs}
             highlight={terminal.highlight}

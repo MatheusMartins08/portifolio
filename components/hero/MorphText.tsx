@@ -6,10 +6,12 @@ import { cx } from "@/lib/cx";
 import styles from "./MorphText.module.css";
 
 interface MorphTextProps {
-  /** The first one is shown first (Fullstack Developer). Keep them short (~24 chars) to fit one line on phones. */
+  /** The first one is shown first (Desenvolvedor Full Stack). Keep them short (~24 chars) to fit one line on phones. */
   phrases: string[];
   /** ms between morphs. */
   interval?: number;
+  /** ms the first phrase stays on arrival, before the first morph: longer than `interval`, so it is read. */
+  firstHold?: number;
   caret?: boolean;
   as?: "p" | "span" | "div";
   className?: string;
@@ -47,11 +49,13 @@ interface Glyph {
  * Hero phrase. Letters shared by the current and the next phrase travel to their new place
  * (matched per character, nearest position, on an absolute overlay); leftovers rise out with blur,
  * new ones blur in. Screen readers get every phrase at once, with no announcements.
- * Waits for fonts, pauses while the tab is hidden; plain cross-fade with reduced motion.
+ * Waits for fonts, holds the first phrase longer (`firstHold`), pauses while the tab is hidden; plain
+ * cross-fade with reduced motion.
  */
 export function MorphText({
   phrases,
   interval = 3400,
+  firstHold = 6500,
   caret = true,
   as: Tag = "p",
   className,
@@ -221,7 +225,7 @@ export function MorphText({
     }
 
     function start() {
-      if (alive && list.length > 1) timer = setTimeout(step, interval);
+      if (alive && list.length > 1) timer = setTimeout(step, firstHold);
     }
     if (document.fonts?.ready) document.fonts.ready.then(start);
     else start();
@@ -232,7 +236,7 @@ export function MorphText({
       running.forEach((animation) => animation.cancel());
       stage.querySelectorAll(`.${styles.overlay}`).forEach((node) => node.remove());
     };
-  }, [key, interval]);
+  }, [key, interval, firstHold]);
 
   return (
     <Tag className={cx(styles.morph, className)} data-hole={hole}>
