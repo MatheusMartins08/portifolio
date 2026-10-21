@@ -201,7 +201,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/pro
           ))}
         </div>
       </main>
-      <Footer />
+      <Footer onHome={false} />
     </>
   );
 }

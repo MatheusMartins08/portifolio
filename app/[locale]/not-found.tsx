@@ -19,7 +19,7 @@ export default async function NotFound() {
           {t.notFound.back}
         </ArrowLink>
       </main>
-      <Footer />
+      <Footer onHome={false} />
     </>
   );
 }

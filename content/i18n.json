@@ -1252,10 +1252,15 @@
       "en": "Fullstack Developer",
       "es": "Desarrollador Fullstack"
     },
-    "email": {
-      "pt": "Email",
-      "en": "Email",
-      "es": "Correo"
+    "navigation": {
+      "pt": "Navegação",
+      "en": "Navigation",
+      "es": "Navegación"
+    },
+    "backToTop": {
+      "pt": "Voltar ao topo",
+      "en": "Back to top",
+      "es": "Volver arriba"
     }
   },
   "notFound": {

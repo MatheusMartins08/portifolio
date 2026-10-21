@@ -1,25 +1,135 @@
+/* Closing band: sand-2 across the page, so the site ends on a base instead of a loose line. */
 .wrap {
+  position: relative;
+  background: var(--sand-2);
+  view-timeline: --footer block;
+}
+
+.inner {
   max-width: calc(var(--container-max) + 2 * var(--gutter));
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+  margin-inline: auto;
+  padding: var(--space-16) var(--gutter) 0;
 }
 
-.footer {
+.top {
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  align-items: center;
-  gap: var(--space-8);
-  padding: 28px 0;
-  border-top: 1px solid var(--hairline-strong);
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--space-12) var(--space-16);
+  padding-bottom: var(--space-12);
 }
 
-.id { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) 14px; }
-.name { font: 600 15px/20px var(--font-sans); letter-spacing: -0.01em; }
-.role { font: 400 12px/18px var(--font-mono); color: var(--ink-muted); }
+/* ---------- brand: bolt + name, role, the services line, status ---------- */
+.brand { display: grid; justify-items: start; align-content: start; gap: var(--space-2); }
 
-.links { display: flex; gap: 22px; margin: 0; padding: 0; list-style: none; }
-.copy { font: 400 12px/18px var(--font-mono); color: var(--ink-muted); }
+.name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font: 500 18px/26px var(--font-sans);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+/* The site's mark (the tab icon), at the name's size. */
+.bolt { width: 1em; height: 1em; flex: none; }
+.bolt path { fill: url(#footer-bolt); stroke: url(#footer-bolt); stroke-width: 1.6; stroke-linejoin: round; }
+.boltTop { stop-color: var(--terracota); }
+.boltBottom { stop-color: var(--terracota-strong); }
 
-@media (max-width: 640px) {
-  .footer { grid-template-columns: 1fr; gap: var(--space-4); }
+.role { margin: 0; font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--ink-muted); }
+.line { margin: var(--space-2) 0 0; max-width: 34ch; font: 400 14px/22px var(--font-sans); color: var(--ink-2); }
+.status { margin-top: var(--space-3); }
+
+/* ---------- columns: section index and contact channels ---------- */
+.col { display: grid; align-content: start; gap: var(--space-3); }
+.list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  font: 500 14px/20px var(--font-sans);
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color var(--mf-dur-2) var(--mf-ease-out);
+}
+.link:hover { color: var(--terracota-ink); }
+.link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+
+.text { transition: transform var(--mf-dur-2) var(--mf-ease-out); }
+.link:hover .text { transform: translateX(2px); }
+
+.index {
+  font: 400 12px/18px var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+  transition: color var(--mf-dur-2) var(--mf-ease-out);
+}
+.link:hover .index { color: var(--terracota-ink); }
+.arrow { color: var(--terracota-strong); }
+
+/* ---------- bottom bar: © and back to top ---------- */
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--hairline);
+}
+.copy { font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--ink-muted); }
+
+/* ---------- top edge: a hairline that takes a charge ----------
+   At rest (and without scroll-driven animations) the charge is drawn: a fine fractal break in terracota.
+   Where the browser can, the last stretch of scroll draws it left to right, a hot head running just
+   ahead and out at the far end as the page bottoms out. */
+.rule { position: absolute; inset: 0 0 auto; height: 1px; background: var(--hairline-strong); }
+.rule svg {
+  position: absolute;
+  left: 0;
+  top: -2.5px;
+  width: 100%;
+  height: 6px;
+  overflow: visible;
+  fill: none;
+}
+/* No non-scaling-stroke here: it would lay the dashes out in screen px while pathLength counts in the
+   1200-wide box, so the charge would stop short on wider screens. The line is near-horizontal and the
+   box is never scaled vertically, so the stroke keeps its width anyway. */
+.charge { stroke: var(--terracota-strong); stroke-width: 1px; stroke-dasharray: 1 2; stroke-dashoffset: 0; }
+/* Starts just before the line, ends just past it: lit only while it runs. */
+.head {
+  stroke: var(--ember-hot);
+  stroke-width: 1.6px;
+  stroke-dasharray: .05 2;
+  stroke-dashoffset: .05;
+  filter: drop-shadow(0 0 2px var(--ember));
+}
+
+@keyframes footer-charge { from { stroke-dashoffset: 1; } }
+@keyframes footer-head { from { stroke-dashoffset: .05; } to { stroke-dashoffset: -1; } }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .charge { animation: footer-charge linear both; }
+    .head { animation: footer-head linear both; }
+    .charge,
+    .head {
+      animation-timeline: --footer;
+      animation-range: entry 10% entry 100%;
+    }
+  }
+}
+
+/* Tablet: the brand takes the whole first row, the two columns share the second. */
+@media (max-width: 960px) {
+  .top { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-8); }
+  .brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 720px) {
+  .inner { padding-top: var(--space-12); }
+  .top { row-gap: var(--space-8); padding-bottom: var(--space-8); }
 }

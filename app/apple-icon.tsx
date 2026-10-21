@@ -1,10 +1,10 @@
 import { ImageResponse } from "next/og";
-import { Monogram } from "@/components/layout/Monogram";
+import { BoltMark } from "@/components/layout/BoltMark";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/** Home-screen icon (iOS): the MF monogram, larger. */
-export default function AppleIcon() {
-  return new ImageResponse(<Monogram size={size.width} />, size);
+/** Home-screen icon (iOS): the bolt on a sand square, which iOS rounds itself. */
+export default function AppIcon() {
+  return new ImageResponse(<BoltMark size={size.width} plate />, size);
 }
