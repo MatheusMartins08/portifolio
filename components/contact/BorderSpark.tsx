@@ -22,7 +22,7 @@ interface Drawing {
 }
 
 /**
- * A spark of lightning circling the contact dialog's border, slowly (geometry in ./borderBolt). Laid
+ * Two sparks of lightning circling the contact dialog's border, slowly and on opposite sides (geometry in ./borderBolt). Laid
  * over `target`, the dialog's panel, as its sibling: the panel scrolls, this does not. Follows the panel's
  * size and corner radii, so it keeps to the border when the form grows or becomes the phone's sheet.
  * Decorative: hidden from assistive tech, and not drawn at all with reduced motion.
@@ -81,12 +81,17 @@ export function BorderSpark({ target }: { target: RefObject<HTMLElement | null> 
         "--head": (HEAD / length).toFixed(4),
       })}
     >
-      {takes.map((d, i) => (
-        <g key={i} className={styles.take} style={cssVars({ "--take": i })}>
-          <path className={styles.tail} d={d} pathLength={1} />
-          <path className={styles.body} d={d} pathLength={1} />
-          <path className={styles.glow} d={d} pathLength={1} />
-          <path className={styles.hot} d={d} pathLength={1} />
+      {/* Two sparks on the same lap, half a lap apart: always on opposite sides, turning the same way. */}
+      {[undefined, styles.second].map((spark, s) => (
+        <g key={s} className={spark}>
+          {takes.map((d, i) => (
+            <g key={i} className={styles.take} style={cssVars({ "--take": i })}>
+              <path className={styles.tail} d={d} pathLength={1} />
+              <path className={styles.body} d={d} pathLength={1} />
+              <path className={styles.glow} d={d} pathLength={1} />
+              <path className={styles.hot} d={d} pathLength={1} />
+            </g>
+          ))}
         </g>
       ))}
     </svg>

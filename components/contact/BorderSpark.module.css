@@ -24,6 +24,8 @@
   stroke-dasharray: 0 calc(1 - var(--len)) var(--len) 0;
   animation: spark-lap var(--lap) linear infinite;
 }
+/* The second spark runs half a lap ahead: the opposite side of the border. */
+.second .take path { animation-delay: calc(var(--lap) * -0.5); }
 @keyframes spark-lap {
   from { stroke-dashoffset: 0; }
   to { stroke-dashoffset: -1; }
