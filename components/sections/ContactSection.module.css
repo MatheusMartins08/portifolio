@@ -1,1 +1,2 @@
-.cta { display: grid; gap: 28px; justify-items: center; }
+/* The stage isolates the attraction field (z-index -1) behind the sentence and the CTA. */
+.cta { position: relative; isolation: isolate; display: grid; gap: 28px; justify-items: center; }

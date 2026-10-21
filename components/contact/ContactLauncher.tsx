@@ -32,7 +32,7 @@ export function ContactLauncher({ cta, modal }: ContactLauncherProps) {
 
   return (
     <>
-      <Button variant="primary" size="lg" icon="arrow-up-right" onClick={open} aria-haspopup="dialog">
+      <Button variant="primary" size="lg" icon="arrow-up-right" onClick={open} aria-haspopup="dialog" data-field-target="">
         {cta}
       </Button>
       {state === "closed" ? null : <ContactModal {...modal} state={state} onClose={close} onSubmit={submitContact} />}

@@ -1,3 +1,4 @@
+import { AttractField } from "@/components/contact/AttractField";
 import { ContactLauncher } from "@/components/contact/ContactLauncher";
 import { Section } from "@/components/layout/Section";
 import { Statement } from "@/components/ui/Statement";
@@ -13,6 +14,8 @@ export async function ContactSection() {
   return (
     <Section id="contato" labelledBy="contato-title">
       <div className={styles.cta}>
+        {/* Dashes drawn to the CTA (and to the cursor), clear of the label and the sentence. */}
+        <AttractField target="[data-field-target]" holes="h2, p" />
         <Statement label={contact.label} index={index} highlight={contact.statementHighlight} headingId="contato-title">
           {contact.statement}
         </Statement>

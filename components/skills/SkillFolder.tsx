@@ -131,7 +131,6 @@ export function SkillFolder({ index, title, icon, items, unit, openLabel, closeL
             <Icon name="plus" size={16} />
           </span>
           <span className="sr-only"> — {open ? closeLabel : openLabel}</span>
-          <EdgeLight inset />
         </button>
       </div>
     </div>
