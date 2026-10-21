@@ -1,0 +1,51 @@
+/* Over the panel, on its border; the glow may spill past it. Never catches the pointer. Comes in once
+   the dialog has popped in. */
+.spark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  opacity: 0;
+  animation: spark-in var(--mf-dur-4) var(--mf-ease-out) 300ms forwards;
+}
+@keyframes spark-in { to { opacity: 1; } }
+
+/* ---------- the run: per layer, a gap then its dash, one lap long, so it loops without a seam and
+   every layer's dash ends on the same point (the path's start, at offset 0). Literal keyframes: with
+   var() in them Chrome steps the offset instead of tweening it. Butt caps, so the pattern's leading
+   zero-length dash draws nothing. ---------- */
+.take path {
+  stroke-linecap: butt;
+  stroke-dasharray: 0 calc(1 - var(--len)) var(--len) 0;
+  animation: spark-lap var(--lap) linear infinite;
+}
+@keyframes spark-lap {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -1; }
+}
+
+/* Trail fading back into the border, the body in terracota, a hot head in an ember glow. */
+.tail { --len: var(--tail); stroke: var(--terracota-strong); stroke-width: 1.2px; stroke-opacity: .4; }
+.body { --len: var(--body); stroke: var(--terracota-strong); stroke-width: 2px; }
+.glow { --len: var(--body); stroke: var(--ember); stroke-width: 7px; stroke-opacity: .22; }
+.hot { --len: var(--head); stroke: var(--ember-hot); stroke-width: 2.4px; }
+
+/* ---------- crackle: the three takes in turn, ~120ms each, exactly one showing ---------- */
+.take {
+  opacity: 0;
+  animation: spark-crackle 360ms steps(1, end) infinite;
+  animation-delay: calc(var(--take) * -120ms);
+}
+@keyframes spark-crackle {
+  0% { opacity: 1; }
+  33.33%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark { display: none; }
+}

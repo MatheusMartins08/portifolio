@@ -7,6 +7,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SlideIcon } from "@/components/ui/SlideIcon";
 import type { ContactMessage } from "@/lib/contact/submitContact";
 import { cx } from "@/lib/cx";
+import { BorderSpark } from "./BorderSpark";
 import { ContactForm, type ContactFormLabels } from "./ContactForm";
 import styles from "./ContactModal.module.css";
 
@@ -88,47 +89,51 @@ export function ContactModal({ state, onClose, onSubmit, index, kicker, title, i
   return createPortal(
     <div className={cx(styles.modal, state === "open" ? styles.isOpen : styles.isClosing)}>
       <div className={styles.scrim} onClick={onClose} aria-hidden="true" />
-      <div ref={panel} className={styles.panel} role="dialog" aria-modal="true" aria-labelledby={titleId}>
-        <button type="button" className={styles.close} onClick={onClose} aria-label={closeLabel}>
-          <Icon name="close" size={18} />
-        </button>
+      {/* The shell holds the panel and the spark on its border: the panel scrolls, the spark stays put. */}
+      <div className={styles.shell}>
+        <div ref={panel} className={styles.panel} role="dialog" aria-modal="true" aria-labelledby={titleId}>
+          <button type="button" className={styles.close} onClick={onClose} aria-label={closeLabel}>
+            <Icon name="close" size={18} />
+          </button>
 
-        <aside className={styles.aside}>
-          <SectionLabel index={index}>{kicker}</SectionLabel>
-          <h2 className={styles.title} id={titleId}>
-            {title}
-          </h2>
-          <p className={styles.intro}>{intro}</p>
-          <ul className={styles.contacts}>
-            {channels.map((channel) => {
-              const external = /^https?:/.test(channel.href);
-              return (
-                <li key={channel.label}>
-                  <a
-                    className={styles.contact}
-                    href={channel.href}
-                    target={external ? "_blank" : undefined}
-                    rel={external ? "noopener noreferrer" : undefined}
-                  >
-                    <span className={styles.contactIcon} aria-hidden="true">
-                      <Icon name={channel.icon} size={16} />
-                    </span>
-                    <span className={styles.contactText}>
-                      <span className={styles.contactLabel}>{channel.label}</span>
-                      <span className={styles.contactValue}>{channel.value}</span>
-                    </span>
-                    <SlideIcon name="arrow-up-right" size={14} className={styles.contactArrow} />
-                    {external ? <span className="sr-only"> {newTabLabel}</span> : null}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
+          <aside className={styles.aside}>
+            <SectionLabel index={index}>{kicker}</SectionLabel>
+            <h2 className={styles.title} id={titleId}>
+              {title}
+            </h2>
+            <p className={styles.intro}>{intro}</p>
+            <ul className={styles.contacts}>
+              {channels.map((channel) => {
+                const external = /^https?:/.test(channel.href);
+                return (
+                  <li key={channel.label}>
+                    <a
+                      className={styles.contact}
+                      href={channel.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                    >
+                      <span className={styles.contactIcon} aria-hidden="true">
+                        <Icon name={channel.icon} size={16} />
+                      </span>
+                      <span className={styles.contactText}>
+                        <span className={styles.contactLabel}>{channel.label}</span>
+                        <span className={styles.contactValue}>{channel.value}</span>
+                      </span>
+                      <SlideIcon name="arrow-up-right" size={14} className={styles.contactArrow} />
+                      {external ? <span className="sr-only"> {newTabLabel}</span> : null}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
 
-        <div className={styles.main}>
-          <ContactForm labels={form} onSubmit={onSubmit} />
+          <div className={styles.main}>
+            <ContactForm labels={form} onSubmit={onSubmit} />
+          </div>
         </div>
+        <BorderSpark target={panel} />
       </div>
     </div>,
     document.body,

@@ -10,8 +10,6 @@
 .half, .tall { grid-column: span 5; }
 .offset { margin-top: 96px; }
 
-.more { display: grid; justify-items: center; gap: 10px; margin-top: var(--space-16); }
-
 @media (max-width: 860px) {
   .grid { grid-template-columns: 1fr; gap: 40px; }
   .feature, .half, .tall { grid-column: auto; }

@@ -9,22 +9,28 @@
   animation: fade var(--mf-dur-3) var(--mf-ease-out);
 }
 
+/* Sizes and animates the panel and the spark on its border together. */
+.shell {
+  position: relative;
+  width: min(920px, 100%);
+  animation: pop var(--mf-dur-3) var(--mf-ease-out);
+}
+
 .panel {
   position: relative;
   display: grid;
   grid-template-columns: 5fr 7fr;
-  width: min(920px, 100%);
+  width: 100%;
   max-height: calc(100vh - 48px);
   overflow: auto;
   background: var(--paper);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-depth);
   border: 1px solid var(--hairline);
-  animation: pop var(--mf-dur-3) var(--mf-ease-out);
 }
 
 .isClosing .scrim { animation: fade 200ms var(--mf-ease-out) reverse forwards; }
-.isClosing .panel { animation: pop 200ms var(--mf-ease-out) reverse forwards; }
+.isClosing .shell { animation: pop 200ms var(--mf-ease-out) reverse forwards; }
 
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }

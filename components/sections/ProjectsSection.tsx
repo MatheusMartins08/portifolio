@@ -1,9 +1,8 @@
 import { Section } from "@/components/layout/Section";
+import { MoreWork } from "@/components/projects/MoreWork";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectsArc } from "@/components/projects/ProjectsArc";
-import { ArrowLink } from "@/components/ui/ArrowLink";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Statement } from "@/components/ui/Statement";
 import { asset } from "@/lib/content/assets";
 import { sectionIndex, site } from "@/lib/content/site";
@@ -70,12 +69,12 @@ export async function ProjectsSection() {
         })}
       </div>
 
-      <div className={styles.more}>
-        <SectionLabel>{t.projects.moreWork}</SectionLabel>
-        <ArrowLink href={site.social.github} size="lg" newTabLabel={t.a11y.newTab}>
-          {t.projects.viewGithub}
-        </ArrowLink>
-      </div>
+      <MoreWork
+        kicker={t.projects.moreWork}
+        cta={t.projects.viewGithub}
+        href={site.social.github}
+        newTabLabel={t.a11y.newTab}
+      />
     </Section>
   );
 }
