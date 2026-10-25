@@ -78,7 +78,26 @@ export function HeroIntro() {
     }
     SKIP_EVENTS.forEach((type) => window.addEventListener(type, skip, { passive: true }));
 
-    document.fonts.ready.then(() => {
+    // The clock starts only once the page is really on screen: Chrome may load it ahead in a hidden or
+    // prerendered tab (typing the address, a suggestion), and the intro would play to no one.
+    const onScreen = () => !document.hidden && !(document as Document & { prerendering?: boolean }).prerendering;
+    let stopWaiting = () => {};
+    const shown = new Promise<void>((resolve) => {
+      if (onScreen()) return resolve();
+      const check = () => {
+        if (!onScreen()) return;
+        stopWaiting();
+        resolve();
+      };
+      stopWaiting = () => {
+        document.removeEventListener("visibilitychange", check);
+        document.removeEventListener("prerenderingchange", check);
+      };
+      document.addEventListener("visibilitychange", check);
+      document.addEventListener("prerenderingchange", check);
+    });
+
+    Promise.all([document.fonts.ready, shown]).then(() => {
       if (!alive || over) return;
       // The name's final box (no transform yet): centre it on the viewport for the first beats.
       const box = name.getBoundingClientRect();
@@ -108,6 +127,7 @@ export function HeroIntro() {
 
     return () => {
       alive = false;
+      stopWaiting();
       timers.forEach((timer) => window.clearTimeout(timer));
       SKIP_EVENTS.forEach((type) => window.removeEventListener(type, skip));
     };
