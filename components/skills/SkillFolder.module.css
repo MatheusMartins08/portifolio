@@ -18,7 +18,7 @@
   right: 0;
   bottom: 0;
   top: var(--space-4);
-  background: var(--sand-3);
+  background: var(--bg-3);
   border-radius: 0 var(--radius-md) var(--radius-md) var(--radius-md);
 }
 .tab {
@@ -32,11 +32,11 @@
   gap: 6px;
   padding: 0 var(--space-3);
   box-sizing: border-box;
-  background: var(--sand-3);
+  background: var(--bg-3);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   font: 500 10px/1 var(--font-mono);
   letter-spacing: .1em;
-  color: var(--ink-2);
+  color: var(--fg-2);
   transition: transform var(--mf-dur-3) var(--mf-ease-spring);
 }
 .tab::after {
@@ -46,11 +46,11 @@
   bottom: 0;
   width: 10px;
   height: 10px;
-  background: radial-gradient(circle at 100% 0, transparent 9.5px, var(--sand-3) 10px);
+  background: radial-gradient(circle at 100% 0, transparent 9.5px, var(--bg-3) 10px);
 }
-.tabDot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-faint); transition: background-color var(--mf-dur-2); }
+.tabDot { width: 5px; height: 5px; border-radius: 50%; background: var(--fg-faint); transition: background-color var(--mf-dur-2); }
 .folder:hover .tab, .open .tab { transform: translateY(-2px); }
-.folder:hover .tabDot, .open .tabDot { background: var(--terracota-strong); }
+.folder:hover .tabDot, .open .tabDot { background: var(--mark); }
 
 /* ---------- mini-cards ---------- */
 .cards { position: absolute; left: 14px; right: 14px; top: 0; height: 0; margin: 0; padding: 0; list-style: none; z-index: 2; }
@@ -66,8 +66,8 @@
   align-items: center;
   gap: var(--space-3);
   padding: 0 var(--space-3);
-  background: var(--paper);
-  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-rest);
   transform: translate(calc(var(--mid) * (100% + 10px) + var(--jx)), var(--cy)) rotate(var(--rot)) scale(.94);
@@ -80,7 +80,7 @@
   transition: transform 640ms var(--mf-ease-spring), box-shadow var(--mf-dur-3) var(--mf-ease-out);
   transition-delay: calc(var(--d) * 45ms + 90ms);
 }
-.open .chip:hover { box-shadow: var(--shadow-float), 0 0 0 1px var(--hairline-strong); }
+.open .chip:hover { box-shadow: var(--shadow-float), 0 0 0 1px var(--line-strong); }
 /* The lit border only on cards laid out: closed, the stack peeking over the front stays still. */
 .folder:not(.open) .chipEdge { display: none; }
 .unmeasured .chip { transition: none; }
@@ -92,18 +92,18 @@
   width: 30px;
   height: 30px;
   border-radius: var(--radius-xs);
-  background: var(--sand);
-  border: 1px solid var(--hairline);
+  background: var(--bg);
+  border: 1px solid var(--line);
   font: 500 11px/1 var(--font-mono);
-  color: var(--ink);
+  color: var(--fg);
   text-transform: none;
 }
-.open .chip:hover .glyph { background: var(--terracota-soft); border-color: transparent; }
+.open .chip:hover .glyph { background: var(--accent-soft); border-color: transparent; }
 
 .main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.name { font: 500 14px/18px var(--font-sans); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meta { font: 400 11px/14px var(--font-mono); color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meta b { font-weight: 500; color: var(--terracota-ink); }
+.name { font: 500 14px/18px var(--font-sans); color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta { font: 400 11px/14px var(--font-mono); color: var(--fg-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta b { font-weight: 500; color: var(--mark-text); }
 
 /* ---------- front (the toggle) ---------- */
 .front {
@@ -120,24 +120,24 @@
   gap: 6px var(--space-3);
   padding: var(--space-4) 18px;
   box-sizing: border-box;
-  background: var(--sand-2);
+  background: var(--bg-2);
   border: 0;
-  border-top: 1px solid rgba(255, 255, 255, .55);
+  border-top: 1px solid color-mix(in srgb, var(--highlight) 55%, transparent);
   border-radius: var(--radius-md);
-  box-shadow: 0 -1px 0 var(--hairline), 0 -8px 18px -12px rgba(60, 40, 20, .25);
+  box-shadow: 0 -1px 0 var(--line), 0 -8px 18px -12px color-mix(in srgb, var(--shadow-tint) 50%, transparent);
   text-align: left;
   cursor: pointer;
-  color: var(--ink);
+  color: var(--fg);
   transform-origin: 50% 100%;
   transition: transform var(--mf-dur-3) var(--mf-ease-out), background-color var(--mf-dur-3);
 }
-.front:hover { background: #ece3d6; }
+.front:hover { background: var(--bg-3); }
 .front:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 .open .front { transform: rotateX(-16deg); }
 
-.title { grid-column: 1; align-self: start; font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
-.icon { grid-column: 1; grid-row: 2; display: grid; place-items: center; width: 30px; height: 30px; color: var(--ink-muted); transition: color var(--mf-dur-2); }
-.front:hover .icon, .open .icon { color: var(--terracota-strong); }
+.title { grid-column: 1; align-self: start; font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg); }
+.icon { grid-column: 1; grid-row: 2; display: grid; place-items: center; width: 30px; height: 30px; color: var(--fg-muted); transition: color var(--mf-dur-2); }
+.front:hover .icon, .open .icon { color: var(--mark); }
 .toggle {
   grid-column: 2;
   grid-row: 2;
@@ -146,9 +146,9 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
-  color: var(--ink);
+  border: 1px solid var(--control);
+  color: var(--fg);
   transition: transform var(--mf-dur-3) var(--mf-ease-spring), background-color var(--mf-dur-2), border-color var(--mf-dur-2);
 }
-.front:hover .toggle { border-color: var(--ink); }
-.open .toggle { transform: rotate(45deg); background: var(--terracota); border-color: var(--terracota); color: var(--on-terracota); }
+.front:hover .toggle { border-color: var(--fg); }
+.open .toggle { transform: rotate(45deg); background: var(--accent); border-color: var(--accent); color: var(--on-accent); }

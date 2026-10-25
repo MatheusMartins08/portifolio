@@ -3,7 +3,7 @@ import { cx } from "@/lib/cx";
 import styles from "./StatusDot.module.css";
 
 interface StatusDotProps {
-  /** open = available (terracota, pulsing); busy = grey, still; away = empty ring. */
+  /** open = available (white, pulsing); busy = grey, still; away = empty ring. */
   tone?: "open" | "busy" | "away";
   /** sm = 6px dot, for compact labels such as the timeline's "Atual". */
   size?: "md" | "sm";

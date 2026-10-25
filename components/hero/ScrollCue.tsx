@@ -15,7 +15,7 @@ interface ScrollCueProps {
   className?: string;
 }
 
-/** Cue to the next section: SCROLL label, rail with a terracota drop and a ring with an arrow, floating gently. */
+/** Cue to the next section: SCROLL label, rail with a white drop and a ring with an arrow, floating gently. */
 export function ScrollCue({ target, label, ariaLabel, className }: ScrollCueProps) {
   function go() {
     document.querySelector(target)?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });

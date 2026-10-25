@@ -18,7 +18,7 @@ type TextareaFieldProps = FieldOwnProps & { multiline: true } & Omit<TextareaHTM
 
 /**
  * Editorial form field: mono label above, only the baseline as border. Hover darkens the line; focus
- * draws a terracota-strong bar and lights the label; errors use danger with an icon and a message.
+ * draws a white bar and lights the label; errors use danger with an icon and a message.
  */
 export function Field(props: InputFieldProps | TextareaFieldProps) {
   const autoId = useId();

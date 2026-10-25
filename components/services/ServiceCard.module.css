@@ -14,8 +14,8 @@
   min-height: var(--card-h, 0);
   padding: 28px;
   border-radius: var(--radius-md);
-  background: var(--paper);
-  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-float);
   overflow: hidden;
   box-sizing: border-box;
@@ -30,12 +30,12 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(360px circle at var(--mx, 70%) var(--my, 20%), rgba(255, 255, 255, .7), transparent 60%);
+  background: radial-gradient(360px circle at var(--mx, 70%) var(--my, 20%), color-mix(in srgb, var(--highlight) 70%, transparent), transparent 60%);
   opacity: 0;
   transition: opacity var(--mf-dur-3) var(--mf-ease-out);
 }
 .svc:hover::before { opacity: 1; }
-.svc:is(:hover, [data-active]) { border-color: var(--hairline-strong); }
+.svc:is(:hover, [data-active]) { border-color: var(--line-strong); }
 
 .edgeTop {
   position: absolute;
@@ -43,7 +43,7 @@
   top: 0;
   height: 2px;
   width: 100%;
-  background: var(--terracota);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--mf-dur-4) var(--mf-ease-out);
@@ -51,24 +51,24 @@
 .svc:is(:hover, [data-active]) .edgeTop { transform: scaleX(1); }
 
 .ids { grid-area: ids; display: flex; align-items: center; gap: var(--space-4); margin-bottom: 28px; }
-.num { font: 300 40px/40px var(--font-mono); letter-spacing: -0.04em; color: var(--ink-faint); transition: color var(--mf-dur-3) var(--mf-ease-out); }
-.svc:is(:hover, [data-active]) .num { color: var(--terracota-strong); }
+.num { font: 300 40px/40px var(--font-mono); letter-spacing: -0.04em; color: var(--fg-faint); transition: color var(--mf-dur-3) var(--mf-ease-out); }
+.svc:is(:hover, [data-active]) .num { color: var(--mark); }
 
 .motifBox { grid-area: motif; align-self: center; width: 100%; }
 
 .title { grid-area: title; margin: 0 0 var(--space-3); font: 500 28px/34px var(--font-sans); letter-spacing: -0.02em; }
-.desc { grid-area: desc; margin: 0 0 var(--space-6); max-width: 54ch; font: 400 15px/24px var(--font-sans); color: var(--ink-2); }
+.desc { grid-area: desc; margin: 0 0 var(--space-6); max-width: 54ch; font: 400 15px/24px var(--font-sans); color: var(--fg-2); }
 
-.list { grid-area: list; align-self: end; margin: 0; padding: var(--space-4) 0 0; list-style: none; border-top: 1px solid var(--hairline); display: grid; gap: 10px; }
-.list li { display: flex; align-items: center; gap: var(--space-3); font: 500 14px/20px var(--font-sans); color: var(--ink); }
+.list { grid-area: list; align-self: end; margin: 0; padding: var(--space-4) 0 0; list-style: none; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+.list li { display: flex; align-items: center; gap: var(--space-3); font: 500 14px/20px var(--font-sans); color: var(--fg); }
 .tick {
   width: 14px;
   height: 1px;
-  background: var(--ink-faint);
+  background: var(--fg-faint);
   transition: background-color var(--mf-dur-2) var(--mf-ease-out), width var(--mf-dur-3) var(--mf-ease-out);
   transition-delay: calc(var(--i) * 70ms);
 }
-.svc:is(:hover, [data-active]) .tick { background: var(--terracota-strong); width: 22px; }
+.svc:is(:hover, [data-active]) .tick { background: var(--mark); width: 22px; }
 
 /* Phones: numeral and tag stacked, the motif beside them, the text below at full width. */
 @media (max-width: 720px) {
@@ -91,27 +91,27 @@
 /* ---------- motifs ---------- */
 .motif { display: block; width: 100%; height: auto; overflow: visible; }
 
-.frame { fill: var(--sand); stroke: var(--hairline-strong); stroke-width: 1; }
-.line { fill: none; stroke: var(--hairline-strong); stroke-width: 1; }
-.dot { fill: var(--hairline-strong); }
-.pill { fill: var(--sand-2); }
-.text { fill: var(--ink-2); transform-box: fill-box; transform-origin: left center; }
-.sub { fill: var(--ink-faint); transform-box: fill-box; transform-origin: left center; }
+.frame { fill: var(--bg); stroke: var(--line-strong); stroke-width: 1; }
+.line { fill: none; stroke: var(--line-strong); stroke-width: 1; }
+.dot { fill: var(--line-strong); }
+.pill { fill: var(--bg-2); }
+.text { fill: var(--fg-2); transform-box: fill-box; transform-origin: left center; }
+.sub { fill: var(--fg-faint); transform-box: fill-box; transform-origin: left center; }
 .text, .sub { transform: scaleX(.55); transition: transform var(--mf-dur-4) var(--mf-ease-out); }
 .g2 { transition-delay: 60ms; }
 .g3 { transition-delay: 120ms; }
 .g4 { transition-delay: 160ms; }
 .svc:is(:hover, [data-active]) .text, .svc:is(:hover, [data-active]) .sub { transform: none; }
-.cta { fill: var(--hairline-strong); transition: fill var(--mf-dur-3) var(--mf-ease-out) 200ms; }
-.svc:is(:hover, [data-active]) .cta { fill: var(--terracota); }
-.block { fill: var(--sand-2); transition: fill var(--mf-dur-3) var(--mf-ease-out); }
-.svc:is(:hover, [data-active]) .block { fill: var(--terracota-soft); }
-.cursor { fill: var(--ink); stroke: var(--paper); stroke-width: 1; transition: transform var(--mf-dur-4) var(--mf-ease-out); }
+.cta { fill: var(--line-strong); transition: fill var(--mf-dur-3) var(--mf-ease-out) 200ms; }
+.svc:is(:hover, [data-active]) .cta { fill: var(--accent); }
+.block { fill: var(--bg-2); transition: fill var(--mf-dur-3) var(--mf-ease-out); }
+.svc:is(:hover, [data-active]) .block { fill: var(--accent-soft); }
+.cursor { fill: var(--fg); stroke: var(--surface); stroke-width: 1; transition: transform var(--mf-dur-4) var(--mf-ease-out); }
 .svc:is(:hover, [data-active]) .cursor { transform: translate(-84px, 36px); }
 /* The picture's ridge draws over in terracota; the cursor leaves a short electric trail as it travels. */
 .ridge {
   fill: none;
-  stroke: var(--terracota-strong);
+  stroke: var(--mark);
   stroke-width: 1.4;
   stroke-linejoin: miter;
   stroke-dasharray: 1 2;
@@ -121,14 +121,14 @@
 .svc:is(:hover, [data-active]) .ridge { stroke-dashoffset: 0; }
 .trail {
   fill: none;
-  stroke: var(--ember);
+  stroke: var(--bolt-lit);
   stroke-width: 1.3;
   stroke-linecap: round;
   stroke-linejoin: miter;
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
   opacity: 0;
-  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--ember) 60%, transparent));
+  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--bolt-lit) 60%, transparent));
 }
 .svc:is(:hover, [data-active]) .trail { animation: trail 1.1s var(--mf-ease-out) both; }
 @keyframes trail {
@@ -140,21 +140,21 @@
 /* ---------- the electric language: broken lines, and charge pulses running along them ---------- */
 .zap {
   fill: none;
-  stroke: var(--hairline-strong);
+  stroke: var(--line-strong);
   stroke-width: 1;
   stroke-linejoin: miter;
   transition: stroke var(--mf-dur-3) var(--mf-ease-out);
 }
-.svc:is(:hover, [data-active]) .zap { stroke: color-mix(in srgb, var(--terracota-strong) 45%, transparent); }
+.svc:is(:hover, [data-active]) .zap { stroke: color-mix(in srgb, var(--mark) 45%, transparent); }
 /* One short hot dash per line (pathLength 1; the gap outruns the line), in turn by --i. */
 .pulse {
   fill: none;
-  stroke: var(--ember-hot);
+  stroke: var(--bolt-hot);
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-dasharray: .14 1.2;
   stroke-dashoffset: .14;
-  filter: drop-shadow(0 0 2px var(--ember));
+  filter: drop-shadow(0 0 2px var(--bolt-lit));
   opacity: 0;
   transition: opacity var(--mf-dur-2) var(--mf-ease-out);
   animation: charge 1.3s var(--mf-ease-inout) infinite;
@@ -168,30 +168,30 @@
 }
 
 .node rect {
-  fill: var(--sand);
-  stroke: var(--line-strong);
+  fill: var(--bg);
+  stroke: var(--control);
   stroke-width: 1;
   transition: fill var(--mf-dur-3) var(--mf-ease-out), stroke var(--mf-dur-3) var(--mf-ease-out);
   transition-delay: calc(var(--i) * 90ms);
 }
-.node circle { fill: var(--ink-faint); transition: fill var(--mf-dur-3) var(--mf-ease-out); transition-delay: calc(var(--i) * 90ms); }
-.svc:is(:hover, [data-active]) .node rect { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
-.svc:is(:hover, [data-active]) .node circle { fill: var(--terracota-strong); }
+.node circle { fill: var(--fg-faint); transition: fill var(--mf-dur-3) var(--mf-ease-out); transition-delay: calc(var(--i) * 90ms); }
+.svc:is(:hover, [data-active]) .node rect { fill: var(--accent-soft); stroke: var(--mark); }
+.svc:is(:hover, [data-active]) .node circle { fill: var(--mark); }
 
 /* Backend, data, deploy: blocks and their strokes light up in turn, by the --i of their group. */
 .box, .glyph, .pin, .head { transition-delay: calc(var(--i, 0) * 90ms); }
 .box {
-  fill: var(--sand);
-  stroke: var(--line-strong);
+  fill: var(--bg);
+  stroke: var(--control);
   stroke-width: 1;
   transition-property: fill, stroke;
   transition-duration: var(--mf-dur-3);
   transition-timing-function: var(--mf-ease-out);
 }
-.svc:is(:hover, [data-active]) .box { fill: var(--terracota-soft); stroke: var(--terracota-strong); }
+.svc:is(:hover, [data-active]) .box { fill: var(--accent-soft); stroke: var(--mark); }
 .glyph {
   fill: none;
-  stroke: var(--ink-faint);
+  stroke: var(--fg-faint);
   stroke-width: 1;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -199,15 +199,15 @@
   transition-duration: var(--mf-dur-3);
   transition-timing-function: var(--mf-ease-out);
 }
-.svc:is(:hover, [data-active]) .glyph { stroke: var(--terracota-strong); }
-.pin { fill: var(--ink-faint); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
-.svc:is(:hover, [data-active]) .pin { fill: var(--terracota-strong); }
-.head { fill: var(--sand-2); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
-.svc:is(:hover, [data-active]) .head { fill: var(--terracota-soft); }
+.svc:is(:hover, [data-active]) .glyph { stroke: var(--mark); }
+.pin { fill: var(--fg-faint); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
+.svc:is(:hover, [data-active]) .pin { fill: var(--mark); }
+.head { fill: var(--bg-2); transition-property: fill; transition-duration: var(--mf-dur-3); transition-timing-function: var(--mf-ease-out); }
+.svc:is(:hover, [data-active]) .head { fill: var(--accent-soft); }
 
 /* Rows and labels fill in from the left, like the Web text bars. */
 .row {
-  fill: var(--ink-faint);
+  fill: var(--fg-faint);
   transform-box: fill-box;
   transform-origin: left center;
   transform: scaleX(.45);
@@ -218,7 +218,7 @@
 
 /* The build bar fills, then the check is drawn in the cloud. */
 .bar {
-  fill: var(--terracota-strong);
+  fill: var(--mark);
   transform-box: fill-box;
   transform-origin: left center;
   transform: scaleX(0);
@@ -227,7 +227,7 @@
 .svc:is(:hover, [data-active]) .bar { transform: none; }
 .check {
   fill: none;
-  stroke: var(--terracota-strong);
+  stroke: var(--mark);
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;

@@ -9,8 +9,10 @@ import styles from "./Statement.module.css";
 interface StatementProps {
   /** Plain text: it is split into words for the word-by-word reveal. */
   children: string;
-  /** Words painted terracota-strong (i18n `statementHighlight`), matched ignoring case and trailing punctuation. */
+  /** Words set in italic (i18n `statementHighlight`), matched ignoring case and trailing punctuation. */
   highlight?: string[];
+  /** Left-aligned (default) or centred on the page. */
+  align?: "start" | "center";
   /** Draws the SectionLabel above: index + label. */
   label?: string;
   index?: string;
@@ -19,7 +21,7 @@ interface StatementProps {
   /** Id of the heading, for the section's aria-labelledby. */
   headingId?: string;
   as?: "h1" | "h2" | "p";
-  /** Marks provisional copy (ink-2). */
+  /** Marks provisional copy (fg-2). */
   placeholder?: boolean;
   note?: string;
   className?: string;
@@ -29,10 +31,12 @@ function normalize(word: string): string {
   return word.toLowerCase().replace(/[.,;:!?]+$/, "");
 }
 
-/** Large opening sentence, revealed word by word when it enters the screen. */
+/** Large opening sentence, revealed word by word when it enters the screen ([data-in] also sparks
+    the SectionLabel's tick once). */
 export function Statement({
   children,
   highlight = [],
+  align = "start",
   label,
   index,
   labelId,
@@ -48,7 +52,11 @@ export function Statement({
   const words = children.split(/\s+/).filter(Boolean);
 
   return (
-    <div ref={ref} className={cx(styles.stmt, inView && styles.in, placeholder && styles.placeholder, className)}>
+    <div
+      ref={ref}
+      data-in={inView ? "" : undefined}
+      className={cx(styles.stmt, align === "center" && styles.center, inView && styles.in, placeholder && styles.placeholder, className)}
+    >
       {label ? (
         <SectionLabel index={index} id={labelId} className={styles.label}>
           {label}

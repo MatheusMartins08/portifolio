@@ -23,7 +23,7 @@
   stroke-linecap: round;
   stroke-linejoin: miter;
   stroke-miterlimit: 4;
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--terracota-strong) 40%, transparent));
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--mark) 40%, transparent));
 }
 
 /* Each stroke's progress from the scroll: 0 before t0, 1 after t1 (--t from the script). An undrawn
@@ -38,8 +38,8 @@
 }
 
 /* ---------- body: Hero colours, heavier, thinner at every level ---------- */
-.edge { stroke: var(--paper); stroke-opacity: .7; }
-.core { stroke: var(--terracota-strong); }
+.edge { stroke: var(--surface); stroke-opacity: .7; }
+.core { stroke: var(--mark); }
 .l0 .core { stroke-width: 3.4px; stroke-opacity: .85; }
 .l0 .edge { stroke-width: 4.6px; }
 .l1 .core { stroke-width: 2px; stroke-opacity: .72; }
@@ -57,8 +57,8 @@
   stroke-dashoffset: calc(var(--head) - var(--k));
   opacity: min(.7, var(--k) * 12, (1 - var(--k)) * 12);
 }
-.glow { stroke: var(--ember); stroke-opacity: .55; }
-.hot { stroke: var(--ember-hot); }
+.glow { stroke: var(--bolt-lit); stroke-opacity: .55; }
+.hot { stroke: var(--bolt-hot); }
 .l0 .glow { stroke-width: 7px; }
 .l0 .hot { stroke-width: 2.4px; }
 .l1 .glow { stroke-width: 4.5px; }

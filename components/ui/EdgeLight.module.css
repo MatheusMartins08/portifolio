@@ -7,7 +7,7 @@
 }
 .inset { inset: 0; }
 
-/* The light, masked to a 1px ring: a terracota spot centred on the pointer (--mx/--my, from the script).
+/* The light, masked to a 1px ring: a white spot centred on the pointer (--mx/--my, from the script).
    On the pseudo-element, so a parent's rules for its children (entrances, opacity) never switch it on. */
 .edge::before {
   content: "";
@@ -15,7 +15,7 @@
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), var(--terracota-strong), transparent 70%);
+  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), var(--mark), transparent 70%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);

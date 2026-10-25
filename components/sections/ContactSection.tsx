@@ -16,7 +16,7 @@ export async function ContactSection() {
       <div className={styles.cta}>
         {/* Dashes drawn to the CTA (and to the cursor), clear of the label and the sentence. */}
         <AttractField target="[data-field-target]" holes="h2, p" />
-        <Statement label={contact.label} index={index} highlight={contact.statementHighlight} headingId="contato-title">
+        <Statement align="center" label={contact.label} index={index} highlight={contact.statementHighlight} headingId="contato-title">
           {contact.statement}
         </Statement>
         <ContactLauncher

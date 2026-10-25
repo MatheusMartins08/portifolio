@@ -18,7 +18,7 @@ interface ArrowLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "
 
 const ICON_SIZE = { sm: 12, md: 14, lg: 20 } as const;
 
-/** Text link with an arrow: hairline underline that draws in terracota on hover, text shifts 2px. */
+/** Text link with an arrow: hairline underline that draws in white on hover, text shifts 2px. */
 export function ArrowLink({
   href,
   icon = "arrow-up-right",

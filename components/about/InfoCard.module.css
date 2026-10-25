@@ -5,26 +5,26 @@
   gap: 14px;
   padding: 20px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--line);
   box-sizing: border-box;
 }
 /* Translucent: the About lightning shows through, softly. */
-.paper { background: var(--glass-paper); }
-.sand { background: var(--glass-sand-2); border-color: transparent; }
-.deep { background: var(--glass-sand-3); border-color: transparent; }
-.ink { background: var(--ink); color: var(--on-ink); border-color: transparent; }
-.ink .label { color: #b8ab9b; }
+.paper { background: var(--glass-surface); }
+.sand { background: var(--glass-bg-2); border-color: transparent; }
+.deep { background: var(--glass-bg-3); border-color: transparent; }
+.ink { background: var(--fg); color: var(--on-fg); border-color: transparent; }
+.ink .label { color: var(--fg-faint); }
 
 .head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
-.label { font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); }
-.aside { font: 400 11px/16px var(--font-mono); color: var(--ink-muted); }
+.label { font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-muted); }
+.aside { font: 400 11px/16px var(--font-mono); color: var(--fg-muted); }
 
 .body { flex: 1; font: 400 15px/22px var(--font-sans); }
 .body p { margin: 0; }
 .big { display: block; font: 500 22px/28px var(--font-sans); letter-spacing: -0.02em; }
-.muted { color: var(--ink-muted); font-size: 14px; }
-/* ink-muted is only 4.3:1 on sand-3: small text there (label, aside, note) uses ink-2. */
-.deep .muted, .deep .label, .deep .aside { color: var(--ink-2); }
+.muted { color: var(--fg-muted); font-size: 14px; }
+/* On bg-3 small text (label, aside, note) steps up to fg-2. */
+.deep .muted, .deep .label, .deep .aside { color: var(--fg-2); }
 
 .foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
 

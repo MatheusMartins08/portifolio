@@ -9,7 +9,7 @@
   /* Two diagonal cuts, unequal: a larger one top-right, a smaller one bottom-left (in cqi: the figure's
      width, so they scale with the photo). They only take sky and pavement, never the subject. */
   clip-path: polygon(0 0, calc(100% - 15cqi) 0, 100% 15cqi, 100% 100%, 9cqi 100%, 0 calc(100% - 9cqi));
-  background: var(--sand-3);
+  background: var(--bg-3);
 }
 
 .img {
@@ -17,7 +17,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: saturate(.92) sepia(.06) contrast(1.02);
+  filter: var(--photo-filter);
 }
 
 /* Hover photo: stacked over the first, hidden until the pointer arrives; it comes in through a soft focus. */
@@ -25,14 +25,14 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  filter: saturate(.92) sepia(.06) contrast(1.02) blur(4px);
+  filter: var(--photo-filter) blur(4px);
   transition:
     opacity 700ms var(--mf-ease-inout),
     filter 700ms var(--mf-ease-inout);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .swap:hover .alt { opacity: 1; filter: saturate(.92) sepia(.06) contrast(1.02) blur(0); }
+  .swap:hover .alt { opacity: 1; filter: var(--photo-filter) blur(0); }
 }
 
 /* Entrance: the chamfered frame opens bottom-up while the photo settles. */

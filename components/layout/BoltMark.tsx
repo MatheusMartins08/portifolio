@@ -4,23 +4,24 @@ import { colorToken } from "@/lib/content/tokens";
 export const BOLT_PATH = "M20.5 1 5 18.5h9L11.5 31 27 13h-9z";
 
 /**
- * The bolt for the app icons: filled terracota → terracota-strong from top to bottom, its corners
- * softened by a stroke of the same fill. Colours from tokens.json (an icon cannot read CSS custom
- * properties). `plate` sets it on a sand square, for home screens that show a transparent icon on black.
+ * The bolt for the app icons: filled white → light gray from top to bottom, its corners softened by a
+ * stroke of the same fill. Colours from tokens.json (an icon cannot read CSS custom properties).
+ * Always on a black plate: a white bolt on a transparent icon would vanish on light browser chrome.
+ * `plate` shrinks the bolt inside the square, for home screens that crop icons.
  */
 export function BoltMark({ size, plate = false }: { size: number; plate?: boolean }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor={colorToken("terracota")} />
-          <stop offset="1" stopColor={colorToken("terracota-strong")} />
+          <stop offset="0" stopColor={colorToken("mark")} />
+          <stop offset="1" stopColor={colorToken("fg-muted")} />
         </linearGradient>
       </defs>
-      {plate ? <rect width="32" height="32" fill={colorToken("sand")} /> : null}
+      <rect width="32" height="32" rx={plate ? 0 : 7} fill={colorToken("bg")} />
       <path
         d={BOLT_PATH}
-        transform={plate ? "translate(16 16) scale(0.62) translate(-16 -16)" : undefined}
+        transform={`translate(16 16) scale(${plate ? 0.62 : 0.72}) translate(-16 -16)`}
         fill="url(#bolt)"
         stroke="url(#bolt)"
         strokeWidth="1.6"

@@ -25,18 +25,18 @@
 
 .btn:active { transform: translateY(1px); }
 
-.primary { background: var(--terracota); color: var(--on-terracota); box-shadow: inset 0 -1px 0 rgba(28, 25, 21, 0.12); }
-.primary:hover { box-shadow: inset 0 -1px 0 rgba(28, 25, 21, 0.12), 0 8px 20px -10px rgba(188, 90, 54, 0.7); }
+.primary { background: var(--accent); color: var(--on-accent); box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--on-accent) 12%, transparent); }
+.primary:hover { box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--on-accent) 12%, transparent), 0 8px 24px -10px color-mix(in srgb, var(--mark) 35%, transparent); }
 
-.solid { background: var(--ink); color: var(--on-ink); }
-.solid:hover { background: #2c2721; }
-.solid .icon { color: var(--terracota); }
+.solid { background: var(--fg); color: var(--on-fg); }
+.solid:hover { background: color-mix(in srgb, var(--fg) 88%, var(--on-fg)); }
+.solid .icon { color: var(--fg-faint); }
 
-.ghost { background: var(--paper); color: var(--ink); border-color: var(--hairline-strong); }
-.ghost:hover { border-color: var(--ink); }
-.ghost:hover .icon { color: var(--terracota-strong); }
+.ghost { background: var(--surface); color: var(--fg); border-color: var(--line-strong); }
+.ghost:hover { border-color: var(--fg); }
+.ghost:hover .icon { color: var(--mark); }
 
-.text { background: transparent; color: var(--ink); padding: 0 var(--space-1); height: auto; }
+.text { background: transparent; color: var(--fg); padding: 0 var(--space-1); height: auto; }
 
 .btn[disabled], .btn[aria-disabled="true"], .loading { cursor: default; }
 .loading { opacity: .9; }

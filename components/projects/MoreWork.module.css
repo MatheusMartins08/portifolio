@@ -20,7 +20,7 @@
   margin: 0;
   font: 500 24px/30px var(--font-sans);
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--fg);
   text-align: center;
   text-wrap: balance;
 }
@@ -62,7 +62,7 @@
   bottom: 0;
   height: var(--space-4);
   border-radius: 50%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--ink) 16%, transparent), transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--shadow-tint) 70%, transparent), transparent);
   pointer-events: none;
   animation: ground 3.4s var(--mf-ease-inout) infinite alternate;
 }
@@ -82,11 +82,11 @@
   align-items: center;
   gap: var(--space-3) var(--space-4);
   padding: var(--space-4) var(--space-4) var(--space-3);
-  border: 1px solid var(--hairline-strong);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-md);
-  background: var(--paper);
+  background: var(--surface);
   box-shadow: var(--shadow-float);
-  color: var(--ink);
+  color: var(--fg);
   text-align: left;
   text-decoration: none;
   transition:
@@ -97,7 +97,7 @@
 }
 .card:is(:hover, :focus-visible) {
   translate: 0 calc(-1 * var(--space-1));
-  border-color: color-mix(in srgb, var(--terracota-strong) 30%, var(--hairline-strong));
+  border-color: color-mix(in srgb, var(--mark) 30%, var(--line-strong));
   box-shadow: var(--shadow-depth);
 }
 .card:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring), var(--shadow-depth); }
@@ -110,14 +110,14 @@
   width: var(--space-12);
   height: var(--space-12);
   border-radius: var(--radius-sm);
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--fg);
+  color: var(--on-fg);
   transition:
     rotate var(--mf-dur-3) var(--mf-ease-spring),
     scale var(--mf-dur-3) var(--mf-ease-spring),
     color var(--mf-dur-2) var(--mf-ease-out);
 }
-.card:is(:hover, :focus-visible) .mark { rotate: -6deg; scale: 1.04; color: var(--terracota); }
+.card:is(:hover, :focus-visible) .mark { rotate: -6deg; scale: 1.04; color: var(--accent); }
 
 .name { grid-area: name; display: flex; flex-direction: column; min-width: 0; }
 .title { font: 500 18px/24px var(--font-sans); letter-spacing: -0.01em; }
@@ -125,11 +125,11 @@
   overflow: hidden;
   font: 400 12px/18px var(--font-mono);
   letter-spacing: .02em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.icon { grid-area: icon; color: var(--terracota-strong); }
+.icon { grid-area: icon; color: var(--mark); }
 
 /* ---------- the log: a commit graph and the branch's note ---------- */
 .log {
@@ -139,29 +139,29 @@
   gap: var(--space-3);
   min-width: 0;
   padding-top: var(--space-3);
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid var(--line);
 }
 .graph { flex: none; overflow: visible; }
 .status {
   overflow: hidden;
   font: 400 11px/16px var(--font-mono);
   letter-spacing: .06em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .trunk,
-.push { fill: none; stroke: var(--line-strong); stroke-opacity: .5; stroke-width: 1px; }
-.commit { fill: var(--line-strong); }
+.push { fill: none; stroke: var(--control); stroke-opacity: .5; stroke-width: 1px; }
+.commit { fill: var(--control); }
 .head,
-.next { fill: var(--terracota-strong); transform-box: fill-box; transform-origin: center; }
+.next { fill: var(--mark); transform-box: fill-box; transform-origin: center; }
 .head { transition: fill var(--mf-dur-2) var(--mf-ease-out); }
 
 /* HEAD's halo, as on the location pin; it moves to the pushed commit. */
 .halo {
   fill: none;
-  stroke: var(--terracota);
+  stroke: var(--accent);
   stroke-width: 1px;
   transform-box: fill-box;
   transform-origin: center;
@@ -184,7 +184,7 @@
 }
 .next { scale: 0; transition: scale var(--mf-dur-3) var(--mf-ease-spring) 160ms; }
 .card:is(:hover, :focus-visible) .push { stroke-dashoffset: 0; }
-.card:is(:hover, :focus-visible) .head { fill: var(--line-strong); }
+.card:is(:hover, :focus-visible) .head { fill: var(--control); }
 .card:is(:hover, :focus-visible) .next { scale: 1; }
 .card:is(:hover, :focus-visible) .haloNow { opacity: 0; }
 .card:is(:hover, :focus-visible) .haloNext { opacity: 1; transition-delay: 240ms; }

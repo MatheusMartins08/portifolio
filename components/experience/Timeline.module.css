@@ -15,11 +15,11 @@
   stroke-linecap: round;
   stroke-linejoin: miter;
   stroke-miterlimit: 4;
-  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--terracota-strong) 35%, transparent));
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--mark) 35%, transparent));
 }
 .bolt path { stroke-dasharray: 1 2; stroke-dashoffset: calc(1 - var(--p, 0)); }
-.boltEdge { stroke: var(--paper); stroke-opacity: .7; stroke-width: 3.6px; }
-.boltCore { stroke: var(--terracota-strong); stroke-opacity: .9; stroke-width: 2.4px; }
+.boltEdge { stroke: var(--surface); stroke-opacity: .7; stroke-width: 3.6px; }
+.boltCore { stroke: var(--mark); stroke-opacity: .9; stroke-width: 2.4px; }
 /* The lit head: a short dash at the drawing edge (dash end = --p), gone at either end of the course. */
 .bolt .boltGlow,
 .bolt .boltHot {
@@ -27,8 +27,8 @@
   stroke-dashoffset: calc(var(--head) - var(--p, 0));
   opacity: min(.75, var(--p, 0) * 30, (1 - var(--p, 0)) * 30);
 }
-.boltGlow { stroke: var(--ember); stroke-opacity: .55; stroke-width: 7px; }
-.boltHot { stroke: var(--ember-hot); stroke-width: 2px; }
+.boltGlow { stroke: var(--bolt-lit); stroke-opacity: .55; stroke-width: 7px; }
+.boltHot { stroke: var(--bolt-hot); stroke-width: 2px; }
 /* Twigs: drawn from where they break off, at the trunk's pace; an undrawn one would leave a round dot. */
 .twig path {
   --k: clamp(0, (var(--p, 0) - var(--a)) / var(--b), 1);
@@ -55,8 +55,8 @@
   height: 11px;
   margin-left: -5.5px;
   border-radius: 50%;
-  background: var(--sand);
-  box-shadow: inset 0 0 0 1px var(--line-strong);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--control);
   z-index: 1;
   transition:
     background-color var(--mf-dur-3) var(--mf-ease-out),
@@ -64,17 +64,17 @@
     transform var(--mf-dur-3) var(--mf-ease-spring);
 }
 .item[data-active] .node {
-  background: var(--terracota-strong);
-  box-shadow: 0 0 0 4px var(--sand), 0 0 0 5px rgba(188, 90, 54, .35);
+  background: var(--mark);
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px color-mix(in srgb, var(--mark) 35%, transparent);
   transform: scale(1.1);
 }
-/* The charge: as the bolt reaches a node, an ember ring opens out of it and fades (replayed each time). */
+/* The charge: as the bolt reaches a node, a bright ring opens out of it and fades (replayed each time). */
 .node::before {
   content: "";
   position: absolute;
   inset: -3px;
   border-radius: 50%;
-  box-shadow: 0 0 0 1.5px var(--ember), 0 0 10px 2px color-mix(in srgb, var(--ember) 50%, transparent);
+  box-shadow: 0 0 0 1.5px var(--bolt-lit), 0 0 10px 2px color-mix(in srgb, var(--bolt-lit) 50%, transparent);
   opacity: 0;
   pointer-events: none;
 }
@@ -85,7 +85,7 @@
 }
 
 /* The arm is a twig from the node to the card (drawn from the node side, mirrored on the left). It grows
-   in with the card, then the current runs along it in terracota once the node is lit. */
+   in with the card, then the current runs along it in white once the node is lit. */
 .arm {
   position: absolute;
   top: 30px;
@@ -99,9 +99,9 @@
 .item[data-in] .arm { transform: scaleX(1); }
 .armSvg { display: block; width: 100%; height: 100%; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: miter; }
 .left .armSvg { transform: scaleX(-1); }
-.armBase { stroke: var(--hairline-strong); stroke-width: 1px; }
+.armBase { stroke: var(--line-strong); stroke-width: 1px; }
 .armLit {
-  stroke: var(--terracota-strong);
+  stroke: var(--mark);
   stroke-width: 1.3px;
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
@@ -114,8 +114,8 @@
   position: relative;
   grid-row: 1;
   padding: 22px var(--space-6);
-  background: var(--paper);
-  border: 1px solid var(--hairline);
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-rest);
   opacity: 0;
@@ -144,15 +144,15 @@
   margin: 0 0 10px;
   font: 400 12px/18px var(--font-mono);
   letter-spacing: .02em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
 }
-.period .status { font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--terracota-ink); gap: var(--space-2); }
+.period .status { font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--mark-text); gap: var(--space-2); }
 
 .title { margin: 0 0 var(--space-1); font: 500 18px/26px var(--font-sans); letter-spacing: -0.01em; }
-.org { margin: 0 0 6px; font: 400 14px/20px var(--font-sans); color: var(--ink-2); }
-.org strong { font-weight: 500; color: var(--ink); }
-.place { display: flex; align-items: center; gap: 6px; margin: 0 0 14px; font: 400 12px/18px var(--font-mono); color: var(--ink-muted); }
-.summary { margin: 0 0 var(--space-4); font: 400 14px/22px var(--font-sans); color: var(--ink-2); }
+.org { margin: 0 0 6px; font: 400 14px/20px var(--font-sans); color: var(--fg-2); }
+.org strong { font-weight: 500; color: var(--fg); }
+.place { display: flex; align-items: center; gap: 6px; margin: 0 0 14px; font: 400 12px/18px var(--font-mono); color: var(--fg-muted); }
+.summary { margin: 0 0 var(--space-4); font: 400 14px/22px var(--font-sans); color: var(--fg-2); }
 
 .more {
   display: inline-flex;
@@ -164,29 +164,29 @@
   border: 0;
   cursor: pointer;
   font: 500 13px/18px var(--font-sans);
-  color: var(--ink);
+  color: var(--fg);
   border-radius: var(--radius-xs);
 }
 .more:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
-.moreIcon { color: var(--terracota-strong); transition: transform var(--mf-dur-3) var(--mf-ease-out); }
+.moreIcon { color: var(--mark); transition: transform var(--mf-dur-3) var(--mf-ease-out); }
 .more[aria-expanded="true"] .moreIcon { transform: rotate(45deg); }
-.more:hover { color: var(--terracota-ink); }
+.more:hover { color: var(--mark-text); }
 
 .details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--mf-dur-3) var(--mf-ease-out); }
 .detailsOpen { grid-template-rows: 1fr; }
 .details > div { overflow: hidden; }
-.details ul { margin: var(--space-3) 0 0; padding: var(--space-3) 0 0; list-style: none; border-top: 1px dashed var(--hairline-strong); display: grid; gap: 6px; }
-.details li { position: relative; padding-left: var(--space-4); font: 400 14px/22px var(--font-sans); color: var(--ink-2); }
-.details li::before { content: ""; position: absolute; left: 0; top: 11px; width: var(--space-2); height: 1px; background: var(--terracota-strong); }
+.details ul { margin: var(--space-3) 0 0; padding: var(--space-3) 0 0; list-style: none; border-top: 1px dashed var(--line-strong); display: grid; gap: 6px; }
+.details li { position: relative; padding-left: var(--space-4); font: 400 14px/22px var(--font-sans); color: var(--fg-2); }
+.details li::before { content: ""; position: absolute; left: 0; top: 11px; width: var(--space-2); height: 1px; background: var(--mark); }
 
 /* ---------- future chapter ---------- */
-.future .card { background: transparent; border-style: dashed; border-color: var(--line-strong); box-shadow: none; }
-.future .card > * { color: var(--ink-muted); }
-.future .title { color: var(--ink-2); }
+.future .card { background: transparent; border-style: dashed; border-color: var(--control); box-shadow: none; }
+.future .card > * { color: var(--fg-muted); }
+.future .title { color: var(--fg-2); }
 .future .period { font: 500 11px/16px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
 /* Same weight as the active rule and declared after it: a future chapter's node never lights up. */
-.item.future .node { background: var(--sand); box-shadow: inset 0 0 0 1px var(--line-strong); }
-.future .node::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px dashed var(--line-strong); }
+.item.future .node { background: var(--bg); box-shadow: inset 0 0 0 1px var(--control); }
+.future .node::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px dashed var(--control); }
 
 /* ---------- single column ---------- */
 @container (max-width: 720px) {

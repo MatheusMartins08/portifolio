@@ -3,7 +3,7 @@
 .scrim {
   position: absolute;
   inset: 0;
-  background: rgba(28, 25, 21, .32);
+  background: var(--scrim);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
   animation: fade var(--mf-dur-3) var(--mf-ease-out);
@@ -23,10 +23,10 @@
   width: 100%;
   max-height: calc(100vh - 48px);
   overflow: auto;
-  background: var(--paper);
+  background: var(--surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-depth);
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--line);
 }
 
 .isClosing .scrim { animation: fade 200ms var(--mf-ease-out) reverse forwards; }
@@ -45,29 +45,29 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--hairline);
-  background: var(--paper);
-  color: var(--ink);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
   cursor: pointer;
   transition: border-color var(--mf-dur-2), transform var(--mf-dur-3) var(--mf-ease-out);
 }
-.close:hover { border-color: var(--ink); transform: rotate(90deg); }
+.close:hover { border-color: var(--fg); transform: rotate(90deg); }
 .close:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
 /* ---------- channels ---------- */
-.aside { display: flex; flex-direction: column; gap: 14px; padding: var(--space-8); background: var(--sand-2); }
+.aside { display: flex; flex-direction: column; gap: 14px; padding: var(--space-8); background: var(--bg-2); }
 .title { margin: var(--space-3) 0 0; font: 500 32px/36px var(--font-sans); letter-spacing: -0.03em; }
-.intro { margin: 0 0 var(--space-3); font: 400 15px/24px var(--font-sans); color: var(--ink-2); }
+.intro { margin: 0 0 var(--space-3); font: 400 15px/24px var(--font-sans); color: var(--fg-2); }
 
-.contacts { margin: auto 0 0; padding: 0; list-style: none; border-top: 1px solid var(--hairline-strong); }
-.contacts li { border-bottom: 1px solid var(--hairline-strong); }
+.contacts { margin: auto 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line-strong); }
+.contacts li { border-bottom: 1px solid var(--line-strong); }
 
 .contact {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 14px var(--space-1);
-  color: var(--ink);
+  color: var(--fg);
   text-decoration: none;
   border-radius: var(--radius-xs);
   transition: padding var(--mf-dur-3) var(--mf-ease-out);
@@ -81,16 +81,16 @@
   width: 32px;
   height: 32px;
   border-radius: var(--radius-xs);
-  background: var(--paper);
-  color: var(--ink-2);
+  background: var(--surface);
+  color: var(--fg-2);
   transition: background-color var(--mf-dur-2), color var(--mf-dur-2);
 }
-.contact:hover .contactIcon { background: var(--terracota-soft); color: var(--terracota-ink); }
+.contact:hover .contactIcon { background: var(--accent-soft); color: var(--mark-text); }
 
 .contactText { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.contactLabel { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); }
+.contactLabel { font: 500 10px/14px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-muted); }
 .contactValue { font: 500 14px/20px var(--font-sans); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.contactArrow { color: var(--terracota-strong); }
+.contactArrow { color: var(--mark); }
 
 /* ---------- form ---------- */
 .main { padding: var(--space-8) var(--space-8) 28px; }
@@ -104,7 +104,7 @@
   margin: 0;
   padding: var(--space-3) 14px;
   border-radius: var(--radius-sm);
-  background: rgba(155, 44, 44, .07);
+  background: color-mix(in srgb, var(--danger) 7%, transparent);
   color: var(--danger);
   font: 400 14px/20px var(--font-sans);
 }
@@ -128,12 +128,12 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(63, 107, 92, .12);
+  background: color-mix(in srgb, var(--success) 8%, transparent);
   color: var(--success);
   margin-bottom: var(--space-2);
 }
-.doneTitle { margin: 0; font: 500 24px/30px var(--font-sans); letter-spacing: -0.02em; color: var(--ink); }
-.doneBody { margin: 0 0 var(--space-3); font: 400 15px/24px var(--font-sans); color: var(--ink-2); max-width: 36ch; }
+.doneTitle { margin: 0; font: 500 24px/30px var(--font-sans); letter-spacing: -0.02em; color: var(--fg); }
+.doneBody { margin: 0 0 var(--space-3); font: 400 15px/24px var(--font-sans); color: var(--fg-2); max-width: 36ch; }
 
 @keyframes swap { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 

@@ -39,26 +39,26 @@
 /* ---------- dimmed: thick, thin and the twigs, thinner at every level, with the About bolt's soft glow ----------
    At rest the terracota is muted towards caramel, so the lines sit in the sand instead of on it; the
    hover still lights them in full ember. */
-.off { --bolt: color-mix(in srgb, var(--terracota-strong) 55%, var(--caramel)); }
-.off .svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bolt) 22%, transparent)); }
-.edgeThin, .edgeThick, .edgeTwig { stroke: var(--paper); stroke-opacity: .55; }
+.off { --tone: var(--fg-muted); }
+.off .svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--tone) 22%, transparent)); }
+.edgeThin, .edgeThick, .edgeTwig { stroke: var(--surface); stroke-opacity: .55; }
 .edgeTwig { stroke-width: 1.2px; }
 .edgeThin { stroke-width: 1.6px; }
 .edgeThick { stroke-width: 3px; }
-.thin, .thick, .twig { stroke: var(--bolt); }
+.thin, .thick, .twig { stroke: var(--tone); }
 .twig { stroke-opacity: .28; stroke-width: .8px; }
 .thin { stroke-opacity: .34; stroke-width: 1px; }
 .thick { stroke-opacity: .55; stroke-width: 2.2px; }
 
 /* ---------- lit: halo, core, hot centre ---------- */
-.haloThin, .haloThick, .haloTwig, .coreThin, .coreThick, .coreTwig { stroke: var(--ember); }
+.haloThin, .haloThick, .haloTwig, .coreThin, .coreThick, .coreTwig { stroke: var(--bolt-lit); }
 .haloTwig { stroke-opacity: .35; stroke-width: 4px; }
 .haloThin { stroke-opacity: .5; stroke-width: 6px; }
 .haloThick { stroke-opacity: .7; stroke-width: 12px; }
 .coreTwig { stroke-width: 1px; }
 .coreThin { stroke-width: 1.6px; }
 .coreThick { stroke-width: 3.2px; }
-.hotThin, .hotThick, .hotTwig { stroke: var(--ember-hot); }
+.hotThin, .hotThick, .hotTwig { stroke: var(--bolt-hot); }
 .hotTwig { stroke-opacity: .6; stroke-width: .4px; }
 .hotThin { stroke-opacity: .7; stroke-width: .6px; }
 .hotThick { stroke-width: 1.3px; }
@@ -73,7 +73,7 @@
   animation: draw var(--draw) var(--mf-ease-inout) var(--delay) backwards;
 }
 .backdrop[data-intro] .tip {
-  stroke: var(--ember);
+  stroke: var(--bolt-lit);
   stroke-dasharray: .035 2;
   animation: travel var(--draw) var(--mf-ease-inout) var(--delay) both;
 }

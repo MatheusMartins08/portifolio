@@ -44,23 +44,23 @@
   margin: 0 0 var(--space-3);
   font: 500 18px/24px var(--font-sans);
   letter-spacing: -0.01em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
 }
 
-.name { margin: 0; color: var(--ink); }
+.name { margin: 0; color: var(--fg); }
 
 /* t-name: 120px at most, fluid below. "Matheus" (≈3.6em) has to fit beside the photo (up to 40cqi) and
    the links, down to the narrowest desktop (820px), and on short screens the name shrinks with the
    photo (14svh); on its own row (≤820px) it gets the full width. */
 .nameArt {
   display: block;
-  font: 800 min(120px, 16cqi - 56px, 14svh)/0.9 var(--font-display);
-  letter-spacing: -0.045em;
+  font: 400 min(120px, 16cqi - 56px, 14svh)/0.9 var(--font-display);
+  letter-spacing: -0.01em;
 }
 
 .first, .last { display: block; white-space: nowrap; }
 
-/* First name: one gradient across the whole word (caramel at the M, terracota at the s),
+/* First name: one gradient across the whole word (gray at the M, white at the s),
    a faint grain on top for a painted feel, and a light sheen that crosses it on hover. */
 .first {
   width: fit-content;
@@ -69,9 +69,9 @@
   padding: 0.12em 0.06em 0.08em 0;
   margin: -0.12em -0.06em -0.08em 0;
   background-image:
-    linear-gradient(100deg, transparent 42%, rgba(255, 255, 255, .42) 50%, transparent 58%),
+    linear-gradient(100deg, transparent 42%, color-mix(in srgb, var(--highlight) 42%, transparent) 50%, transparent 58%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    linear-gradient(90deg, var(--caramel), var(--terracota-strong) 58%, var(--terracota));
+    linear-gradient(90deg, var(--fg-faint), var(--mark) 58%, var(--accent));
   background-size: 250% 100%, 160px 160px, 100% 100%;
   background-position: 100% 0, 0 0, 0 0;
   background-repeat: no-repeat, repeat, no-repeat;
@@ -101,7 +101,7 @@
     transition: background-position var(--mf-dur-4) var(--mf-ease-inout);
   }
   .letter:is(:hover, [data-energized]) .glyph {
-    color: var(--terracota-strong);
+    color: var(--mark);
     transition:
       translate var(--mf-dur-2) var(--mf-ease-spring),
       color var(--mf-dur-1) var(--mf-ease-out);
@@ -143,16 +143,16 @@
   content: "";
   width: 1px;
   height: var(--space-6);
-  background: var(--hairline-strong);
+  background: var(--line-strong);
 }
 
-.rule { display: block; width: 48px; height: 1px; margin: 28px 0 18px; background: var(--terracota-strong); transform-origin: left; }
+.rule { display: block; width: 48px; height: 1px; margin: 28px 0 18px; background: var(--mark); transform-origin: left; }
 
 /* 32px, a little smaller on narrow desktops so the longest phrase still fits its column. */
 .text .morph {
-  font: italic 400 min(32px, 3.4cqi)/40px var(--font-serif);
+  font: italic 400 min(32px, 3.4cqi)/40px var(--font-display);
   letter-spacing: -0.005em;
-  color: var(--ink-2);
+  color: var(--fg-2);
 }
 
 .cue { display: flex; justify-content: center; }

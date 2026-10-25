@@ -3,16 +3,16 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 1px solid var(--hairline-strong);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  color: var(--ink);
+  color: var(--fg);
   text-decoration: none;
   transition:
     border-color var(--mf-dur-2) var(--mf-ease-out),
     background-color var(--mf-dur-2) var(--mf-ease-out),
     color var(--mf-dur-2) var(--mf-ease-out);
 }
-.link:hover { border-color: var(--ink); background: var(--paper); color: var(--terracota-ink); }
+.link:hover { border-color: var(--fg); background: var(--surface); color: var(--mark-text); }
 .link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
 /* Hero size: bigger box on a light frosted glass (it sits over the backdrop lines), and on hover it
@@ -20,7 +20,7 @@
 .lg {
   width: var(--space-12);
   height: var(--space-12);
-  background: color-mix(in srgb, var(--paper) 62%, transparent);
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition:

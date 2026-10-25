@@ -1,12 +1,11 @@
 @import "./styles/tokens.css";
 @import "./styles/motion.css";
 
-/* Fonts come from next/font (geist package + next/font/google for the Hero); the classes on <html> define these variables. */
+/* Fonts come from next/font (geist package + next/font/google for the editorial serif); the classes on <html> define these variables. */
 :root {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
 }
 
 /* Gutter: --gutter on desktop, --space-4 on phones (tokens.json > layout). */
@@ -33,18 +32,21 @@ html {
 
 body {
   margin: 0;
-  background: var(--sand);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+/* Selected text inverts (dark on light), never the browser's blue. */
+::selection { background: var(--fg); color: var(--on-fg); }
+
 img, svg, video { display: block; max-width: 100%; }
 
 button, input, textarea, select { font: inherit; color: inherit; }
 
-/* Keyboard focus: 2px of background + 2px terracota-strong, on every control.
+/* Keyboard focus: 2px of background + 2px white, on every control.
    Zero specificity so components can restate it next to their own box-shadows. */
 :where(:focus-visible) { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 

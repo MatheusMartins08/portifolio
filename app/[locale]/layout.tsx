@@ -2,23 +2,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Bricolage_Grotesque, Instrument_Serif } from "next/font/google";
+import { Instrument_Serif } from "next/font/google";
 import { htmlLang, isLocale, locales } from "@/lib/i18n/config";
 import { getDictionary, getLocale } from "@/lib/i18n/dictionary";
 import { site } from "@/lib/content/site";
 import { absoluteUrl, homeTitle, openGraphFor, siteUrl } from "@/lib/seo";
 import "../globals.css";
 
-/** Hero only: the name (display cut via opsz) and the morphing tagline. Re-pointed in app/globals.css. */
-const display = Bricolage_Grotesque({
-  subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--font-bricolage",
-  display: "swap",
-});
+/** The editorial serif: the name, section titles and the morphing tagline (upright + italic). Re-pointed in app/globals.css. */
 const serif = Instrument_Serif({
   weight: "400",
-  style: "italic",
+  style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-instrument-serif",
   display: "swap",
@@ -68,7 +62,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   return (
     <html
       lang={htmlLang[locale]}
-      className={`${GeistSans.variable} ${GeistMono.variable} ${display.variable} ${serif.variable}`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${serif.variable}`}
       data-scroll-behavior="smooth"
     >
       <body>{children}</body>

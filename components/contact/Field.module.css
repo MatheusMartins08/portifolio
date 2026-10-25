@@ -4,7 +4,7 @@
   font: 500 11px/16px var(--font-mono);
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
   transition: color var(--mf-dur-2);
 }
 
@@ -14,19 +14,19 @@
   padding: 10px 0 11px;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--control);
   border-radius: 0;
   font: 400 16px/24px var(--font-sans);
-  color: var(--ink);
+  color: var(--fg);
   outline: none;
   resize: vertical;
   transition: border-color var(--mf-dur-2) var(--mf-ease-out);
 }
-/* The focus cue is the terracota bar below, not the global ring. */
+/* The focus cue is the white bar below, not the global ring. */
 .input:focus-visible { box-shadow: none; }
 textarea.input { min-height: 104px; }
-.input::placeholder { color: var(--ink-muted); }
-.input:hover { border-bottom-color: var(--ink-2); }
+.input::placeholder { color: var(--fg-muted); }
+.input:hover { border-bottom-color: var(--fg-2); }
 
 .bar {
   position: relative;
@@ -34,20 +34,20 @@ textarea.input { min-height: 104px; }
   right: 0;
   height: 2px;
   margin-top: -8px;
-  background: var(--terracota-strong);
+  background: var(--mark);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--mf-dur-3) var(--mf-ease-out);
   pointer-events: none;
 }
 .field:focus-within .bar { transform: scaleX(1); }
-.field:focus-within .label { color: var(--terracota-ink); }
+.field:focus-within .label { color: var(--mark-text); }
 
 .error .input { border-bottom-color: var(--danger); }
 .error .bar { background: var(--danger); }
 .error .label { color: var(--danger); }
 
 .msg { display: flex; align-items: center; gap: 6px; margin: 2px 0 0; font: 400 13px/18px var(--font-sans); color: var(--danger); }
-.hint { margin: 2px 0 0; font: 400 13px/18px var(--font-sans); color: var(--ink-muted); }
+.hint { margin: 2px 0 0; font: 400 13px/18px var(--font-sans); color: var(--fg-muted); }
 
 .disabled { opacity: .55; }

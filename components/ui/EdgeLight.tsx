@@ -11,7 +11,7 @@ interface EdgeLightProps {
 }
 
 /**
- * A card's border lit in terracota around the pointer: only the stretch of the edge near it shows, and
+ * A card's border lit in white around the pointer: only the stretch of the edge near it shows, and
  * it follows the pointer while the card is hovered (centred when the card takes keyboard focus). Drop it
  * in as a child of any positioned card: it takes the card's radius and listens to the card's pointer.
  * Decorative: hidden from assistive tech, no pointer events, nothing on touch.

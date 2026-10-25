@@ -7,13 +7,13 @@
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background: var(--sand-2);
+  background: var(--bg-2);
   cursor: pointer;
 }
 .feature .media { aspect-ratio: 16 / 9.5; }
 .tall .media { aspect-ratio: 4 / 5; }
 
-.img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1s var(--mf-ease-out); }
+.img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: var(--photo-filter); transition: transform 1s var(--mf-ease-out); }
 .proj:hover .img { transform: scale(1.03); }
 
 /* The second screenshot comes in through a lightning crack sweeping left to right (and back out), its
@@ -31,10 +31,10 @@
   overflow: visible;
   pointer-events: none;
   fill: none;
-  stroke: var(--ember-hot);
+  stroke: var(--bolt-hot);
   stroke-width: 1.4px;
   stroke-linejoin: miter;
-  filter: drop-shadow(0 0 3px var(--ember));
+  filter: drop-shadow(0 0 3px var(--bolt-lit));
   transform: translateX(var(--spark-off));
   transition: transform var(--mf-dur-4) var(--mf-ease-inout);
 }
@@ -52,13 +52,13 @@
   height: 24px;
   padding: 0 9px;
   border-radius: var(--radius-xs);
-  background: var(--paper);
+  background: var(--surface);
   font: 500 10px/1 var(--font-mono);
   letter-spacing: .12em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
   white-space: pre;
 }
-.count b, .count i { font: inherit; font-style: normal; color: var(--terracota-ink); }
+.count b, .count i { font: inherit; font-style: normal; color: var(--mark-text); }
 .count i, .media:hover .count b { display: none; }
 .media:hover .count i { display: inline; }
 
@@ -74,8 +74,8 @@
   height: 30px;
   padding: 0 var(--space-3);
   border-radius: var(--radius-pill);
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--fg);
+  color: var(--on-fg);
   font: 500 11px/1 var(--font-mono);
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -84,7 +84,7 @@
   opacity: 0;
   transition: opacity var(--mf-dur-2) var(--mf-ease-out), transform 120ms linear;
 }
-.bubble svg { color: var(--terracota); }
+.bubble svg { color: var(--accent); }
 .media:hover .bubble { opacity: 1; transform: translate(calc(var(--bx, 50%) + 14px), calc(var(--by, 50%) + 14px)) scale(1); }
 @media (hover: none) { .bubble { display: none; } }
 
@@ -95,17 +95,17 @@
   margin: 18px 0 var(--space-2);
   font: 400 12px/18px var(--font-mono);
   letter-spacing: .04em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
   text-transform: uppercase;
 }
-.idx { color: var(--terracota-ink); }
+.idx { color: var(--mark-text); }
 
 .title { margin: 0 0 var(--space-2); font: 500 28px/34px var(--font-sans); letter-spacing: -0.02em; }
-.title a { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; border-radius: var(--radius-xs); }
+.title a { display: inline-flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; border-radius: var(--radius-xs); }
 .title a:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 .title a > span:first-child { transition: transform var(--mf-dur-3) var(--mf-ease-out); }
 .arrow {
-  color: var(--terracota-strong);
+  color: var(--mark);
   opacity: 0;
   transform: translate(-8px, 6px);
   transition: opacity var(--mf-dur-2) var(--mf-ease-out), transform var(--mf-dur-3) var(--mf-ease-out);
@@ -113,13 +113,13 @@
 .proj:hover .title a > span:first-child { transform: translateX(4px); }
 .proj:hover .arrow, .title a:focus-visible .arrow { opacity: 1; transform: translate(4px, 0); }
 
-.desc { margin: 0 0 var(--space-4); max-width: 54ch; font: 400 15px/24px var(--font-sans); color: var(--ink-2); }
+.desc { margin: 0 0 var(--space-4); max-width: 54ch; font: 400 15px/24px var(--font-sans); color: var(--fg-2); }
 .tags { margin-bottom: 18px; }
 .links { display: flex; flex-wrap: wrap; gap: 20px; }
 
 /* The bottom rule takes a charge: a faint broken line drawn left to right in terracota, a hot head
    running just ahead of it and out at the far end. Also on keyboard focus. */
-.rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--hairline); }
+.rule { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); }
 .rule svg {
   position: absolute;
   left: 0;
@@ -131,7 +131,7 @@
 }
 .rule path { vector-effect: non-scaling-stroke; }
 .charge {
-  stroke: var(--terracota-strong);
+  stroke: var(--mark);
   stroke-width: 1px;
   stroke-dasharray: 1 2;
   stroke-dashoffset: 1;
@@ -139,11 +139,11 @@
 }
 /* Starts just before the line, ends just past it: lit only while it runs. */
 .head {
-  stroke: var(--ember-hot);
+  stroke: var(--bolt-hot);
   stroke-width: 1.6px;
   stroke-dasharray: .08 2;
   stroke-dashoffset: .08;
-  filter: drop-shadow(0 0 2px var(--ember));
+  filter: drop-shadow(0 0 2px var(--bolt-lit));
   transition: stroke-dashoffset var(--mf-dur-4) var(--mf-ease-out);
 }
 .proj:is(:hover, :has(:focus-visible)) .charge { stroke-dashoffset: 0; }

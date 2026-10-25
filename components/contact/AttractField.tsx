@@ -46,7 +46,7 @@ function noise(i: number, k: number): number {
   return s - Math.floor(s);
 }
 
-/** A colour token's value ("#bc5a36") as RGB. */
+/** A colour token's value ("#ffffff") as RGB. */
 function rgb(value: string): Rgb | null {
   const hex = value.trim().replace(/^#/, "");
   if (/^[0-9a-f]{6}$/i.test(hex)) return [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16)) as Rgb;
@@ -126,8 +126,8 @@ export function AttractField({ target, holes = "h2, p", className }: AttractFiel
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const style = getComputedStyle(canvas!);
-      const ink = rgb(style.getPropertyValue("--ink")) ?? [28, 25, 21];
-      const hot = rgb(style.getPropertyValue("--terracota-strong")) ?? [188, 90, 54];
+      const ink = rgb(style.getPropertyValue("--fg")) ?? [242, 242, 242];
+      const hot = rgb(style.getPropertyValue("--mark")) ?? [255, 255, 255];
       colors = Array.from({ length: STEPS }, (_, k) => {
         const w = k / (STEPS - 1);
         const [r, g, b] = ink.map((c, i) => Math.round(c + (hot[i] - c) * w));

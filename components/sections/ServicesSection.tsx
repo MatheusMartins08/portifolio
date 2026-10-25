@@ -7,7 +7,7 @@ import { getDictionary } from "@/lib/i18n/dictionary";
 export async function ServicesSection() {
   const t = await getDictionary();
   return (
-    <Section id="servicos" tone="sand-2" labelledBy="servicos-title">
+    <Section id="servicos" labelledBy="servicos-title">
       <Statement
         label={t.services.label}
         index={sectionIndex("servicos")}

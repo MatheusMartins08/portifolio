@@ -24,26 +24,26 @@
 
 .end .cv {
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-color: var(--hairline);
+  border-color: var(--line);
 }
-.end .cv:hover { border-color: var(--hairline-strong); }
+.end .cv:hover { border-color: var(--line-strong); }
 
 /* ---------- navigation pill ---------- */
 .pill {
   position: relative;
   padding: var(--space-1);
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
   backdrop-filter: blur(12px) saturate(1.1);
   -webkit-backdrop-filter: blur(12px) saturate(1.1);
-  border: 1px solid var(--hairline);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--highlight) 60%, transparent) inset;
   transition: box-shadow var(--mf-dur-3) var(--mf-ease-out);
 }
-.scrolled .pill { box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, var(--shadow-float); }
+.scrolled .pill { box-shadow: 0 1px 0 color-mix(in srgb, var(--highlight) 60%, transparent) inset, var(--shadow-float); }
 
 .list { position: relative; display: flex; margin: 0; padding: 0; list-style: none; }
 
@@ -54,7 +54,7 @@
   height: 32px;
   width: 0;
   border-radius: var(--radius-pill);
-  background: var(--sand-2);
+  background: var(--bg-2);
   opacity: 0;
   transition:
     transform var(--mf-dur-3) var(--mf-ease-out),
@@ -71,11 +71,11 @@
   border-radius: var(--radius-pill);
   font: 500 14px/1 var(--font-sans);
   letter-spacing: -0.005em;
-  color: var(--ink-2);
+  color: var(--fg-2);
   text-decoration: none;
   transition: color var(--mf-dur-2) var(--mf-ease-out);
 }
-.link:hover, .active { color: var(--ink); }
+.link:hover, .active { color: var(--fg); }
 .link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
 .dot {
@@ -86,7 +86,7 @@
   height: 4px;
   margin-left: -2px;
   border-radius: 50%;
-  background: var(--terracota-strong);
+  background: var(--mark);
   transform: scale(0);
   transition: transform var(--mf-dur-3) var(--mf-ease-spring);
 }
@@ -100,12 +100,12 @@
   height: 36px;
   padding: 0 14px 0 var(--space-4);
   border-radius: var(--radius-pill);
-  border: 1px solid var(--hairline);
-  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   font: 500 13px/1 var(--font-sans);
-  color: var(--ink);
+  color: var(--fg);
   cursor: pointer;
 }
 .menuButton:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
@@ -142,8 +142,8 @@
     left: 0;
     right: 0;
     padding: var(--space-2);
-    background: var(--paper);
-    border: 1px solid var(--hairline);
+    background: var(--surface);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-float);
     animation: drop var(--mf-dur-3) var(--mf-ease-out);
@@ -155,15 +155,15 @@
     gap: 14px;
     padding: 14px var(--space-3);
     border-radius: var(--radius-sm);
-    color: var(--ink);
+    color: var(--fg);
     text-decoration: none;
     font: 500 22px/1.1 var(--font-sans);
     letter-spacing: -0.02em;
   }
   .sheet a:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
-  .sheet li + li a { border-top: 1px solid var(--hairline); border-radius: 0; }
-  .sheet a.sheetActive { color: var(--terracota-ink); }
-  .sheetIndex { font: 500 11px/1 var(--font-mono); letter-spacing: .1em; color: var(--ink-muted); }
+  .sheet li + li a { border-top: 1px solid var(--line); border-radius: 0; }
+  .sheet a.sheetActive { color: var(--mark-text); }
+  .sheetIndex { font: 500 11px/1 var(--font-mono); letter-spacing: .1em; color: var(--fg-muted); }
 }
 
 @keyframes drop {

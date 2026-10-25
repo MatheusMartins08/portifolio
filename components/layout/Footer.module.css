@@ -1,7 +1,7 @@
 /* Closing band: sand-2 across the page, so the site ends on a base instead of a loose line. */
 .wrap {
   position: relative;
-  background: var(--sand-2);
+  background: var(--bg-2);
   view-timeline: --footer block;
 }
 
@@ -28,16 +28,16 @@
   margin: 0;
   font: 500 18px/26px var(--font-sans);
   letter-spacing: -0.01em;
-  color: var(--ink);
+  color: var(--fg);
 }
 /* The site's mark (the tab icon), at the name's size. */
 .bolt { width: 1em; height: 1em; flex: none; }
 .bolt path { fill: url(#footer-bolt); stroke: url(#footer-bolt); stroke-width: 1.6; stroke-linejoin: round; }
-.boltTop { stop-color: var(--terracota); }
-.boltBottom { stop-color: var(--terracota-strong); }
+.boltTop { stop-color: var(--accent); }
+.boltBottom { stop-color: var(--mark); }
 
-.role { margin: 0; font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--ink-muted); }
-.line { margin: var(--space-2) 0 0; max-width: 34ch; font: 400 14px/22px var(--font-sans); color: var(--ink-2); }
+.role { margin: 0; font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--fg-muted); }
+.line { margin: var(--space-2) 0 0; max-width: 34ch; font: 400 14px/22px var(--font-sans); color: var(--fg-2); }
 .status { margin-top: var(--space-3); }
 
 /* ---------- columns: section index and contact channels ---------- */
@@ -50,11 +50,11 @@
   gap: var(--space-2);
   padding: var(--space-1) 0;
   font: 500 14px/20px var(--font-sans);
-  color: var(--ink-2);
+  color: var(--fg-2);
   text-decoration: none;
   transition: color var(--mf-dur-2) var(--mf-ease-out);
 }
-.link:hover { color: var(--terracota-ink); }
+.link:hover { color: var(--mark-text); }
 .link:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
 .text { transition: transform var(--mf-dur-2) var(--mf-ease-out); }
@@ -63,11 +63,11 @@
 .index {
   font: 400 12px/18px var(--font-mono);
   letter-spacing: 0.02em;
-  color: var(--ink-muted);
+  color: var(--fg-muted);
   transition: color var(--mf-dur-2) var(--mf-ease-out);
 }
-.link:hover .index { color: var(--terracota-ink); }
-.arrow { color: var(--terracota-strong); }
+.link:hover .index { color: var(--mark-text); }
+.arrow { color: var(--mark); }
 
 /* ---------- bottom bar: © and back to top ---------- */
 .bottom {
@@ -77,15 +77,15 @@
   justify-content: space-between;
   gap: var(--space-2) var(--space-6);
   padding-block: var(--space-6);
-  border-top: 1px solid var(--hairline);
+  border-top: 1px solid var(--line);
 }
-.copy { font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--ink-muted); }
+.copy { font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--fg-muted); }
 
 /* ---------- top edge: a hairline that takes a charge ----------
    At rest (and without scroll-driven animations) the charge is drawn: a fine fractal break in terracota.
    Where the browser can, the last stretch of scroll draws it left to right, a hot head running just
    ahead and out at the far end as the page bottoms out. */
-.rule { position: absolute; inset: 0 0 auto; height: 1px; background: var(--hairline-strong); }
+.rule { position: absolute; inset: 0 0 auto; height: 1px; background: var(--line-strong); }
 .rule svg {
   position: absolute;
   left: 0;
@@ -98,14 +98,14 @@
 /* No non-scaling-stroke here: it would lay the dashes out in screen px while pathLength counts in the
    1200-wide box, so the charge would stop short on wider screens. The line is near-horizontal and the
    box is never scaled vertically, so the stroke keeps its width anyway. */
-.charge { stroke: var(--terracota-strong); stroke-width: 1px; stroke-dasharray: 1 2; stroke-dashoffset: 0; }
+.charge { stroke: var(--mark); stroke-width: 1px; stroke-dasharray: 1 2; stroke-dashoffset: 0; }
 /* Starts just before the line, ends just past it: lit only while it runs. */
 .head {
-  stroke: var(--ember-hot);
+  stroke: var(--bolt-hot);
   stroke-width: 1.6px;
   stroke-dasharray: .05 2;
   stroke-dashoffset: .05;
-  filter: drop-shadow(0 0 2px var(--ember));
+  filter: drop-shadow(0 0 2px var(--bolt-lit));
 }
 
 @keyframes footer-charge { from { stroke-dashoffset: 1; } }

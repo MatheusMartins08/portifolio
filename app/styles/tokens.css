@@ -1,39 +1,47 @@
 /* Matheus Freitas — design tokens as CSS custom properties, mirroring tokens.json next to this file
    (lib/content/tokens.ts reads the JSON for generated images): change a value in both.
-   Fonts come from the `geist` package (see app/[locale]/layout.tsx) and --font-sans / --font-mono
-   are re-pointed in app/globals.css. */
-:root, [data-theme="bege"] {
-  --sand: #f3ebdd;
-  --sand-2: #eae0d2;
-  --sand-3: #ded1c1;
-  --caramel: #a47e5c;
-  --paper: #f8f3eb;
-  --glass-sand: rgba(243, 235, 221, 0.8);
-  --glass-sand-2: rgba(234, 224, 210, 0.84);
-  --glass-sand-3: rgba(222, 209, 193, 0.84);
-  --glass-paper: rgba(248, 243, 235, 0.8);
-  --hairline: rgba(28, 25, 21, 0.1);
-  --hairline-strong: rgba(28, 25, 21, 0.18);
-  --line-strong: #857664;
-  --ink: #1c1915;
-  --ink-2: #4a4239;
-  --ink-muted: #675c50;
-  --ink-faint: #8a7b69;
-  --on-ink: #f3ebdd;
-  --terracota: #d97757;
-  --on-terracota: var(--ink);
-  --terracota-strong: #bc5a36;
-  --terracota-ink: #934428;
-  --terracota-soft: #f2dccb;
-  --ember: #f26a1b;
-  --ember-hot: #ffb347;
-  --focus: var(--terracota-strong);
-  --danger: #9b2c2c;
-  --success: #3f6b5c;
-  --shadow-rest: 0 1px 0 rgba(60, 40, 20, 0.04), 0 1px 2px rgba(60, 40, 20, 0.06);
-  --shadow-float: 0 1px 1px rgba(60, 40, 20, 0.05), 0 10px 28px -10px rgba(60, 40, 20, 0.22);
-  --shadow-depth: 0 2px 4px rgba(60, 40, 20, 0.05), 0 28px 56px -20px rgba(60, 40, 20, 0.28);
-  --focus-ring: 0 0 0 2px #f3ebdd, 0 0 0 4px #bc5a36;
+   Black and white only: depth comes from four near-blacks, emphasis from white. Fonts come from the
+   `geist` package and next/font/google (see app/[locale]/layout.tsx); --font-* are re-pointed in
+   app/globals.css. */
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --bg-2: #111111;
+  --bg-3: #1c1c1c;
+  --surface: #141414;
+  --glass-bg: rgba(10, 10, 10, 0.8);
+  --glass-bg-2: rgba(17, 17, 17, 0.84);
+  --glass-bg-3: rgba(28, 28, 28, 0.84);
+  --glass-surface: rgba(20, 20, 20, 0.8);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --control: #707070;
+  --fg: #f2f2f2;
+  --fg-2: #c9c9c9;
+  --fg-muted: #9b9b9b;
+  --fg-faint: #6b6b6b;
+  --on-fg: #0a0a0a;
+  --accent: #ffffff;
+  --on-accent: #0a0a0a;
+  --accent-soft: rgba(255, 255, 255, 0.07);
+  --mark: #ffffff;
+  --mark-text: #ffffff;
+  --bolt: rgba(255, 255, 255, 0.14);
+  --bolt-lit: #e8e8e8;
+  --bolt-glow: rgba(255, 255, 255, 0.3);
+  --bolt-hot: #ffffff;
+  --flash: #ffffff;
+  --focus: #ffffff;
+  --danger: #e0e0e0;
+  --success: #e0e0e0;
+  --scrim: rgba(0, 0, 0, 0.72);
+  --highlight: rgba(255, 255, 255, 0.2);
+  --shadow-tint: #000000;
+  --photo-filter: grayscale(1) contrast(1.12) brightness(.92);
+  --shadow-rest: 0 1px 0 rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-float: 0 1px 1px rgba(0, 0, 0, 0.5), 0 12px 32px -12px rgba(0, 0, 0, 0.8);
+  --shadow-depth: 0 2px 4px rgba(0, 0, 0, 0.5), 0 32px 64px -24px rgba(0, 0, 0, 0.9);
+  --focus-ring: 0 0 0 2px #0a0a0a, 0 0 0 4px #ffffff;
 }
 :root {
   --space-1: 4px;
@@ -59,19 +67,18 @@
   --bp-mobile: 720px;
   --font-sans: Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
 }
-.t-name { font-family: var(--font-display); font-size: 120px; line-height: 108px; font-weight: 800; letter-spacing: -0.045em; }
-.t-tagline { font-family: var(--font-serif); font-size: 32px; line-height: 40px; font-weight: 400; font-style: italic; letter-spacing: -0.005em; }
-.t-statement { font-family: var(--font-sans); font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em; }
+.t-name { font-family: var(--font-display); font-size: 184px; line-height: 0.88; font-weight: 400; letter-spacing: -0.01em; text-transform: uppercase; }
+.t-display { font-family: var(--font-display); font-size: 72px; line-height: 1.02; font-weight: 400; letter-spacing: -0.015em; }
+.t-cta { font-family: var(--font-display); font-size: 112px; line-height: 0.98; font-weight: 400; letter-spacing: -0.02em; }
+.t-tagline { font-family: var(--font-display); font-size: 32px; line-height: 40px; font-weight: 400; font-style: italic; letter-spacing: -0.005em; }
 .t-title { font-family: var(--font-sans); font-size: 28px; line-height: 34px; font-weight: 500; letter-spacing: -0.02em; }
-.t-lead { font-family: var(--font-sans); font-size: 24px; line-height: 32px; font-weight: 400; letter-spacing: -0.015em; }
+.t-lead { font-family: var(--font-sans); font-size: 22px; line-height: 32px; font-weight: 400; letter-spacing: -0.015em; }
 .t-subtitle { font-family: var(--font-sans); font-size: 18px; line-height: 26px; font-weight: 500; letter-spacing: -0.01em; }
-.t-body { font-family: var(--font-sans); font-size: 16px; line-height: 26px; font-weight: 400; }
+.t-body { font-family: var(--font-sans); font-size: 17px; line-height: 28px; font-weight: 400; }
 .t-body-sm { font-family: var(--font-sans); font-size: 14px; line-height: 22px; font-weight: 400; }
 .t-ui { font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 500; }
-.t-label { font-family: var(--font-mono); font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.12em; }
+.t-label { font-family: var(--font-sans); font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
 .t-meta { font-family: var(--font-mono); font-size: 12px; line-height: 18px; font-weight: 400; letter-spacing: 0.02em; }
-.t-code { font-family: var(--font-mono); font-size: 13px; line-height: 22px; font-weight: 400; }
-.t-numeral { font-family: var(--font-mono); font-size: 40px; line-height: 40px; font-weight: 300; letter-spacing: -0.04em; }
+.t-numeral { font-family: var(--font-display); font-size: 40px; line-height: 40px; font-weight: 400; letter-spacing: -0.01em; }

@@ -20,7 +20,7 @@ export async function SkillsSection() {
   });
 
   return (
-    <Section id="skills" tone="sand-2" labelledBy="skills-title">
+    <Section id="skills" labelledBy="skills-title">
       <div className={styles.stage}>
         {/* The Hero's lightning field, here without its entrance; the lines keep clear of the title. */}
         <HeroBackdrop variant="section" holes="h2" unit={110} />

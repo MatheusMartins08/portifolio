@@ -7,11 +7,11 @@
   padding: 0 var(--space-2);
   font: 400 12px/1 var(--font-mono);
   letter-spacing: 0.01em;
-  color: var(--ink-2);
+  color: var(--fg-2);
   background: transparent;
-  border: 1px solid var(--hairline-strong);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-xs);
   white-space: nowrap;
 }
-.accent { color: var(--terracota-ink); background: var(--terracota-soft); border-color: transparent; }
-.quiet { color: var(--ink-muted); background: var(--sand-2); border-color: transparent; font-weight: 500; letter-spacing: 0.1em; font-size: 11px; }
+.accent { color: var(--mark-text); background: var(--accent-soft); border-color: transparent; }
+.quiet { color: var(--fg-muted); background: var(--bg-2); border-color: transparent; font-weight: 500; letter-spacing: 0.1em; font-size: 11px; }

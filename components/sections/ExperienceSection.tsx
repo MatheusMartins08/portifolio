@@ -39,6 +39,7 @@ export async function ExperienceSection() {
   return (
     <Section id="experiencia" labelledBy="experiencia-title">
       <Statement
+        align="center"
         label={t.experience.label}
         index={sectionIndex("experiencia")}
         highlight={t.experience.statementHighlight}

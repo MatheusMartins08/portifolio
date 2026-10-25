@@ -31,11 +31,11 @@
   to { stroke-dashoffset: -1; }
 }
 
-/* Trail fading back into the border, the body in terracota, a hot head in an ember glow. */
-.tail { --len: var(--tail); stroke: var(--terracota-strong); stroke-width: 1.2px; stroke-opacity: .4; }
-.body { --len: var(--body); stroke: var(--terracota-strong); stroke-width: 2px; }
-.glow { --len: var(--body); stroke: var(--ember); stroke-width: 7px; stroke-opacity: .22; }
-.hot { --len: var(--head); stroke: var(--ember-hot); stroke-width: 2.4px; }
+/* Trail fading back into the border, the body in white, a hot head in a soft glow. */
+.tail { --len: var(--tail); stroke: var(--mark); stroke-width: 1.2px; stroke-opacity: .4; }
+.body { --len: var(--body); stroke: var(--mark); stroke-width: 2px; }
+.glow { --len: var(--body); stroke: var(--bolt-lit); stroke-width: 7px; stroke-opacity: .22; }
+.hot { --len: var(--head); stroke: var(--bolt-hot); stroke-width: 2.4px; }
 
 /* ---------- crackle: the three takes in turn, ~120ms each, exactly one showing ---------- */
 .take {

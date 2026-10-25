@@ -7,22 +7,22 @@
   background: none;
   border: 0;
   border-radius: var(--radius-md);
-  color: var(--ink);
+  color: var(--fg);
   cursor: pointer;
   animation: float 3.2s var(--mf-ease-inout) infinite;
 }
 .cue:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
-.label { font: 500 10px/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-muted); }
+.label { font: 500 10px/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--fg-muted); }
 
-.track { position: relative; width: 1px; height: 28px; background: var(--hairline-strong); overflow: hidden; }
+.track { position: relative; width: 1px; height: 28px; background: var(--line-strong); overflow: hidden; }
 .drop {
   position: absolute;
   left: 0;
   top: -10px;
   width: 1px;
   height: 10px;
-  background: var(--terracota-strong);
+  background: var(--mark);
   animation: drip 2.2s var(--mf-ease-inout) infinite;
 }
 
@@ -32,14 +32,14 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--control);
   transition:
     border-color var(--mf-dur-2),
     background-color var(--mf-dur-2),
     transform var(--mf-dur-2) var(--mf-ease-out);
 }
-.cue:hover .ring { border-color: var(--ink); background: var(--paper); transform: translateY(2px); }
-.cue:hover .arrow { color: var(--terracota-strong); }
+.cue:hover .ring { border-color: var(--fg); background: var(--surface); transform: translateY(2px); }
+.cue:hover .arrow { color: var(--mark); }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }

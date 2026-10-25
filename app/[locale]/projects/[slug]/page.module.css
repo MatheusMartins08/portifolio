@@ -7,5 +7,5 @@
 .sections { margin-top: var(--space-16); }
 
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--space-4); }
-.shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--radius-lg); background: var(--sand-2); }
-.shotImg { object-fit: cover; object-position: top center; }
+.shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--radius-lg); background: var(--bg-2); }
+.shotImg { object-fit: cover; object-position: top center; filter: var(--photo-filter); }

@@ -3,7 +3,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--ink);
+  color: var(--fg);
   text-decoration: none;
   font-weight: 500;
   padding: var(--space-1) 0;
@@ -18,9 +18,9 @@
 .text { position: relative; transition: transform var(--mf-dur-2) var(--mf-ease-out); }
 .text::before,
 .text::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; }
-.text::before { background: var(--hairline-strong); }
+.text::before { background: var(--line-strong); }
 .text::after {
-  background: var(--terracota-strong);
+  background: var(--mark);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform var(--mf-dur-3) var(--mf-ease-out);
@@ -28,8 +28,8 @@
 .lg .text::before,
 .lg .text::after { bottom: -4px; }
 
-.link:hover { color: var(--terracota-ink); }
+.link:hover { color: var(--mark-text); }
 .link:hover .text { transform: translateX(2px); }
 .link:hover .text::after { transform: scaleX(1); transform-origin: left; }
 
-.icon { color: var(--terracota-strong); }
+.icon { color: var(--mark); }

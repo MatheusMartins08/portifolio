@@ -1,14 +1,8 @@
+/* Every section on the same black; the top padding (≥ --header-offset) keeps an anchored heading
+   clear of the fixed header. */
 .section {
   padding-block: var(--space-24);
-}
-
-.sand { background: var(--sand); }
-.sand2 { background: var(--sand-2); }
-
-/* Two sand sections in a row share one gap instead of stacking two. Anchors then need the header offset. */
-.sand + .sand {
-  padding-top: 0;
-  scroll-margin-top: var(--header-offset);
+  background: var(--bg);
 }
 
 .inner {

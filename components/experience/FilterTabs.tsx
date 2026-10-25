@@ -23,7 +23,7 @@ interface FilterTabsProps {
   className?: string;
 }
 
-/** Typographic tabs with a terracota underline that slides; count in mono superscript. Arrows, Home/End. */
+/** Typographic tabs with a white underline that slides; count in mono superscript. Arrows, Home/End. */
 export function FilterTabs({ options, value, onChange, labelledBy, panelId, idPrefix, className }: FilterTabsProps) {
   const root = useRef<HTMLDivElement>(null);
   const indicator = useRef<HTMLSpanElement>(null);
