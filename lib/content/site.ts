@@ -67,6 +67,8 @@ export interface Site {
     name: string;
     fullName: string;
     since: string;
+    /** Where he is based, as shown on the site (structured data: Person.address). */
+    address: { locality: string; region: string; country: string };
     photo: string;
     /** Shown over the portrait on hover. */
     photoHover: string;

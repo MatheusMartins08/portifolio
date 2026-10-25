@@ -35,7 +35,8 @@ export function Portrait({ image, alt, hover, sizes, priority = false, intro = f
           className={styles.img}
         />
         {hover ? (
-          // Loaded up front (not lazily) so it is already there when the pointer arrives.
+          // Loaded up front (not lazily) so it is already there when the pointer arrives; at low priority,
+          // so it never competes with the main photo (the LCP).
           <Image
             src={hover.image.src}
             width={hover.image.width}
@@ -43,6 +44,7 @@ export function Portrait({ image, alt, hover, sizes, priority = false, intro = f
             alt={hover.alt}
             sizes={sizes}
             loading="eager"
+            fetchPriority="low"
             style={{ objectPosition: hover.image.focus }}
             className={cx(styles.img, styles.alt)}
           />

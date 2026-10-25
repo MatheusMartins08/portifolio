@@ -1323,5 +1323,17 @@
       "en": "Main",
       "es": "Principal"
     }
+  },
+  "seo": {
+    "title": {
+      "pt": "Desenvolvedor Full Stack, Automações e IA",
+      "en": "Full Stack Developer, Automation & AI",
+      "es": "Desarrollador Full Stack, Automatización e IA"
+    },
+    "description": {
+      "pt": "Portfólio de Matheus Freitas Martins, desenvolvedor Full Stack em Belo Horizonte: projetos de sites, sistemas web, automações e IA para problemas reais.",
+      "en": "Portfolio of Matheus Freitas Martins, a Full Stack developer in Belo Horizonte, Brazil: websites, web systems, automation and AI projects for real problems.",
+      "es": "Portafolio de Matheus Freitas Martins, desarrollador Full Stack en Belo Horizonte, Brasil: sitios web, sistemas, automatizaciones e IA para problemas reales."
+    }
   }
 }

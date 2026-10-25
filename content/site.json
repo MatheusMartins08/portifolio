@@ -4,6 +4,7 @@
     "name": "Matheus Freitas",
     "fullName": "Matheus Freitas Martins",
     "since": "2024",
+    "address": { "locality": "Belo Horizonte", "region": "MG", "country": "BR" },
     "photo": "/images/photos/matheus-portrait.webp",
     "photoHover": "/images/photos/matheus-coding.webp"
   },

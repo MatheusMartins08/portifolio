@@ -6,7 +6,7 @@ import { colorToken } from "@/lib/content/tokens";
 import { defaultLocale, isLocale } from "@/lib/i18n/config";
 import { getDictionaryFor } from "@/lib/i18n/dictionary";
 
-export const alt = site.person.name;
+export const alt = site.person.fullName;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
