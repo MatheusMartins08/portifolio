@@ -1,27 +1,68 @@
-import { ScrollLightning } from "@/components/lightning/ScrollLightning";
-import { Coordinates } from "@/components/about/Coordinates";
-import { InfoCard, InfoNote, InfoValue } from "@/components/about/InfoCard";
-import { ProfileTerminal } from "@/components/about/ProfileTerminal";
+import { Fragment, type ReactNode } from "react";
+import { AboutTrace } from "@/components/about/AboutTrace";
 import { Section } from "@/components/layout/Section";
-import { Button } from "@/components/ui/Button";
-import { Reveal } from "@/components/ui/Reveal";
 import { Statement } from "@/components/ui/Statement";
 import { StatusDot } from "@/components/ui/StatusDot";
+import { cssVars } from "@/lib/cx";
 import { sectionIndex, site } from "@/lib/content/site";
 import { getDictionary } from "@/lib/i18n/dictionary";
 import styles from "./AboutSection.module.css";
 
+/** Wraps the earliest occurrence of any highlight phrase, repeatedly; `--i` counts them for the glint's stagger. */
+function markText(text: string, highlight: string[], counter: { i: number }): ReactNode {
+  const out: ReactNode[] = [];
+  let rest = text;
+  while (rest) {
+    let at = -1;
+    let phrase = "";
+    for (const candidate of highlight) {
+      const i = candidate ? rest.indexOf(candidate) : -1;
+      if (i >= 0 && (at < 0 || i < at)) {
+        at = i;
+        phrase = candidate;
+      }
+    }
+    if (at < 0) {
+      out.push(rest);
+      break;
+    }
+    if (at > 0) out.push(rest.slice(0, at));
+    out.push(
+      <strong key={out.length} className={styles.hl} style={cssVars({ "--i": counter.i++ })}>
+        {phrase}
+      </strong>,
+    );
+    rest = rest.slice(at + phrase.length);
+  }
+  return out.map((part, i) => <Fragment key={i}>{part}</Fragment>);
+}
+
+/**
+ * About, laid out like a magazine page: the centred title; notes in the margin (Location, Available
+ * for, Status) beside the text in two columns, opened by a drop cap; the closing sentence as a pull
+ * quote between two rules. A fine line (AboutTrace, A05) is drawn by the scroll down the margin's rule,
+ * lighting each note as it passes, then along the quote's top rule: the text gains contrast, the quote
+ * lights up.
+ */
 export async function AboutSection() {
   const t = await getDictionary();
-  const { terminal, cards } = t.about;
+  const { paragraphs, highlight, cards } = t.about;
+  const counter = { i: 0 };
+  const body = paragraphs.slice(0, -1);
+  const closing = paragraphs[paragraphs.length - 1];
+
+  const notes = [
+    { label: cards.labels.location, value: cards.locationCity, note: cards.locationRegion },
+    { label: cards.labels.availableFor, value: cards.availableFor, note: cards.availableWhere },
+  ];
 
   return (
     <Section id="sobre" labelledBy="sobre-title">
-      {/* The lightning runs behind the stage's content, down the middle of the section. */}
       <div className={styles.stage}>
-        <ScrollLightning />
+        <AboutTrace />
 
         <Statement
+          align="center"
           label={t.about.label}
           index={sectionIndex("sobre")}
           highlight={t.about.statementHighlight}
@@ -30,61 +71,36 @@ export async function AboutSection() {
           {t.about.statement}
         </Statement>
 
-        <div className={styles.grid}>
-          <ProfileTerminal
-            className={styles.terminal}
-            title={site.terminal.title}
-            path={site.terminal.path}
-            prompt={site.terminal.prompt}
-            command={terminal.command}
-            entries={[
-              { key: terminal.keys.name, value: site.person.fullName },
-              { key: terminal.keys.role, value: terminal.role },
-              { key: terminal.keys.since, value: site.person.since },
-              { key: terminal.keys.study, value: terminal.study },
-            ]}
-            paragraphs={terminal.paragraphs}
-            highlight={terminal.highlight}
-            status={terminal.status.replace("{count}", String(terminal.paragraphs.length))}
-          />
-
-          <div className={styles.cards}>
-            <Reveal className={styles.status}>
-              <InfoCard label={cards.labels.status} aside={cards.statusAside} layout="row" className={styles.fill}>
+        <div className={styles.page}>
+          <dl className={styles.margin} data-trace="rail">
+            {notes.map((item) => (
+              <div key={item.label} className={styles.note} data-trace="note">
+                <span className={styles.node} aria-hidden="true" />
+                <dt className={styles.label}>{item.label}</dt>
+                <dd className={styles.value}>{item.value}</dd>
+                <dd className={styles.small}>{item.note}</dd>
+              </div>
+            ))}
+            <div className={styles.note} data-trace="note">
+              <span className={styles.node} aria-hidden="true" />
+              <dt className={styles.label}>{cards.labels.status}</dt>
+              <dd className={styles.status}>
                 <StatusDot tone={site.status}>{cards.status}</StatusDot>
-              </InfoCard>
-            </Reveal>
-            <Reveal delay={90}>
-              <InfoCard
-                label={cards.labels.resume}
-                tone="sand"
-                className={styles.fill}
-                footer={
-                  <Button variant="ghost" size="sm" icon="arrow-down" href={site.cv.href} download="">
-                    {t.nav.cv}
-                  </Button>
-                }
-              >
-                <p>{cards.resume}</p>
-              </InfoCard>
-            </Reveal>
-            <Reveal delay={180} className={styles.location}>
-              <InfoCard
-                label={cards.labels.location}
-                className={styles.fill}
-                footer={<Coordinates lat={site.location.lat} lon={site.location.lon} />}
-              >
-                <InfoValue>{cards.locationCity}</InfoValue>
-                <InfoNote>{cards.locationRegion}</InfoNote>
-              </InfoCard>
-            </Reveal>
-            <Reveal delay={270}>
-              <InfoCard label={cards.labels.availableFor} tone="deep" className={styles.fill}>
-                <InfoValue>{cards.availableFor}</InfoValue>
-                <InfoNote>{cards.availableWhere}</InfoNote>
-              </InfoCard>
-            </Reveal>
+              </dd>
+            </div>
+          </dl>
+
+          <div className={styles.text} data-trace="text">
+            {body.map((paragraph, i) => (
+              <p key={i} className={i === 0 ? styles.drop : undefined}>
+                {markText(paragraph, highlight, counter)}
+              </p>
+            ))}
           </div>
+
+          <blockquote className={styles.quote} data-trace="quote">
+            <p>{closing}</p>
+          </blockquote>
         </div>
       </div>
     </Section>

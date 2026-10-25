@@ -54,7 +54,8 @@
   height: 32px;
   width: 0;
   border-radius: var(--radius-pill);
-  background: var(--bg-2);
+  /* A light tint of white: just visible over the pill on black. */
+  background: color-mix(in srgb, var(--fg) 10%, transparent);
   opacity: 0;
   transition:
     transform var(--mf-dur-3) var(--mf-ease-out),

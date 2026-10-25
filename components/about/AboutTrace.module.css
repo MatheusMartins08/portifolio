@@ -1,0 +1,47 @@
+/* Over the stage's top-left corner, behind its content; reaches above and below it (overflow). Never
+   catches the pointer. --k (0 → 1, from the script) is how much of the trunk is drawn. */
+.trace {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- trunk: the heaviest stroke, drawn as far as the head has gone ---------- */
+.trunk path { stroke-dasharray: 1 2; stroke-dashoffset: calc(1 - var(--k, 0)); }
+.trunk .glow { stroke: var(--bolt-glow); stroke-width: 10px; stroke-opacity: .32; }
+.trunk .core { stroke: var(--bolt-hot); stroke-width: 2.9px; }
+
+/* The head: a short bright dash at the drawing edge, there only while the bolt is on its way. */
+.trunk .head {
+  stroke: var(--bolt-hot);
+  stroke-width: 4px;
+  stroke-dasharray: .016 2;
+  stroke-dashoffset: calc(.016 - var(--k, 0));
+  opacity: clamp(0, min(var(--k, 0) * 40, (1 - var(--k, 0)) * 40), 1);
+  filter: drop-shadow(0 0 5px var(--bolt-glow));
+}
+
+/* ---------- branches: each grows once the head passes its fork (--f), over --s of the trunk's length.
+   Thinner than the trunk, and thinner again towards their tips (major → minor) and on their own
+   forks and spurs (fine). ---------- */
+.branch { --r: clamp(0, (var(--k, 0) - var(--f)) / var(--s), 1); }
+.branch path { stroke-dasharray: 1 2; stroke-dashoffset: calc(1 - var(--r)); opacity: clamp(0, var(--r) * 400, 1); }
+.branch .glow { stroke: var(--bolt-glow); stroke-opacity: .22; }
+.branch .core { stroke: var(--bolt-lit); }
+.major .core { stroke-width: 1.3px; }
+.major .glow { stroke-width: 4.5px; }
+.minor .core { stroke-width: .85px; stroke-opacity: .9; }
+.minor .glow { stroke-width: 3px; }
+.fine .core { stroke-width: .55px; stroke-opacity: .7; }
+.fine .glow { stroke-width: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .trace { --k: 1; }
+  .trunk .head { display: none; }
+}

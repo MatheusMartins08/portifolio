@@ -75,7 +75,7 @@ export function homeJsonLd(locale: Locale, t: Dictionary) {
         url: home,
         image,
         jobTitle: t.footer.role,
-        description: t.about.terminal.paragraphs[0],
+        description: t.about.paragraphs[0],
         address: {
           "@type": "PostalAddress",
           addressLocality: site.person.address.locality,

@@ -140,98 +140,54 @@
         "antes"
       ]
     },
-    "terminal": {
-      "command": {
-        "pt": "cat sobre.md",
-        "en": "cat about.md",
-        "es": "cat sobre-mi.md"
-      },
-      "keys": {
-        "name": {
-          "pt": "nome",
-          "en": "name",
-          "es": "nombre"
-        },
-        "role": {
-          "pt": "cargo",
-          "en": "role",
-          "es": "rol"
-        },
-        "since": {
-          "pt": "desde",
-          "en": "since",
-          "es": "desde"
-        },
-        "study": {
-          "pt": "formação",
-          "en": "study",
-          "es": "estudios"
-        }
-      },
-      "role": {
-        "pt": "Desenvolvedor Full Stack",
-        "en": "Full Stack Developer",
-        "es": "Desarrollador Full Stack"
-      },
-      "study": {
-        "pt": "Desenvolvimento Web & Mobile — COTEMIG",
-        "en": "Web & Mobile Development — COTEMIG",
-        "es": "Desarrollo Web & Móvil — COTEMIG"
-      },
-      "status": {
-        "pt": "{count} parágrafos · UTF-8 · pt-BR",
-        "en": "{count} paragraphs · UTF-8 · en",
-        "es": "{count} párrafos · UTF-8 · es"
-      },
-      "paragraphs": {
-        "pt": [
-          "Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos, participando de todo o ciclo de desenvolvimento — da compreensão do problema e definição da arquitetura ao frontend, backend, banco de dados, integrações, infraestrutura e deploy.",
-          "Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática. Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, enquanto desenvolvo soluções e projetos voltados a problemas reais.",
-          "Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por entender o que existe por trás de uma interface: como cada parte de um sistema se conecta e como uma ideia pode se transformar em um produto funcional.",
-          "Por isso, procuro entender o problema antes de escolher a tecnologia. Para mim, uma boa solução não precisa ser desnecessariamente complexa — precisa ser clara, confiável, bem construída e preparada para evoluir.",
-          "Tecnologia, para mim, é meio. O objetivo é transformar necessidades em produtos sólidos, simples de manter e, principalmente, úteis no mundo real."
-        ],
-        "en": [
-          "My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products, taking part in the entire development cycle — from understanding the problem and defining the architecture to frontend, backend, databases, integrations, infrastructure and deployment.",
-          "My path in tech began in 2024, and since then I've been turning study into practice. I'm currently studying Web and Mobile Development at COTEMIG, while building solutions and projects aimed at real problems.",
-          "Even before working in the field, I was always curious about what lies behind an interface: how each part of a system connects and how an idea can become a working product.",
-          "That's why I try to understand the problem before choosing the technology. To me, a good solution doesn't need to be needlessly complex — it needs to be clear, reliable, well built and ready to evolve.",
-          "To me, technology is a means. The goal is to turn needs into solid products that are simple to maintain and, above all, useful in the real world."
-        ],
-        "es": [
-          "Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos, participando en todo el ciclo de desarrollo — desde la comprensión del problema y la definición de la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue.",
-          "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica. Actualmente curso Desarrollo Web y Móvil en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales.",
-          "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional.",
-          "Por eso, busco entender el problema antes de elegir la tecnología. Para mí, una buena solución no tiene por qué ser innecesariamente compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar.",
-          "Para mí, la tecnología es un medio. El objetivo es transformar necesidades en productos sólidos, fáciles de mantener y, sobre todo, útiles en el mundo real."
-        ]
-      },
-      "highlight": {
-        "pt": [
-          "Matheus Freitas Martins",
-          "2024",
-          "COTEMIG",
-          "entender o problema antes de escolher a tecnologia",
-          "Tecnologia, para mim, é meio.",
-          "úteis no mundo real"
-        ],
-        "en": [
-          "Matheus Freitas Martins",
-          "2024",
-          "COTEMIG",
-          "understand the problem before choosing the technology",
-          "To me, technology is a means.",
-          "useful in the real world"
-        ],
-        "es": [
-          "Matheus Freitas Martins",
-          "2024",
-          "COTEMIG",
-          "entender el problema antes de elegir la tecnología",
-          "Para mí, la tecnología es un medio.",
-          "útiles en el mundo real"
-        ]
-      }
+    "paragraphs": {
+      "pt": [
+        "Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos, participando de todo o ciclo de desenvolvimento — da compreensão do problema e definição da arquitetura ao frontend, backend, banco de dados, integrações, infraestrutura e deploy.",
+        "Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática. Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, enquanto desenvolvo soluções e projetos voltados a problemas reais.",
+        "Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por entender o que existe por trás de uma interface: como cada parte de um sistema se conecta e como uma ideia pode se transformar em um produto funcional.",
+        "Por isso, procuro entender o problema antes de escolher a tecnologia. Para mim, uma boa solução não precisa ser desnecessariamente complexa — precisa ser clara, confiável, bem construída e preparada para evoluir.",
+        "Tecnologia, para mim, é meio. O objetivo é transformar necessidades em produtos sólidos e, principalmente, úteis no mundo real."
+      ],
+      "en": [
+        "My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products, taking part in the entire development cycle — from understanding the problem and defining the architecture to frontend, backend, databases, integrations, infrastructure and deployment.",
+        "My path in tech began in 2024, and since then I've been turning study into practice. I'm currently studying Web and Mobile Development at COTEMIG, while building solutions and projects aimed at real problems.",
+        "Even before working in the field, I was always curious about what lies behind an interface: how each part of a system connects and how an idea can become a working product.",
+        "That's why I try to understand the problem before choosing the technology. To me, a good solution doesn't need to be needlessly complex — it needs to be clear, reliable, well built and ready to evolve.",
+        "To me, technology is a means. The goal is to turn needs into solid products that are, above all, useful in the real world."
+      ],
+      "es": [
+        "Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos, participando en todo el ciclo de desarrollo — desde la comprensión del problema y la definición de la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue.",
+        "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica. Actualmente curso Desarrollo Web y Móvil en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales.",
+        "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional.",
+        "Por eso, busco entender el problema antes de elegir la tecnología. Para mí, una buena solución no tiene por qué ser innecesariamente compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar.",
+        "Para mí, la tecnología es un medio. El objetivo es transformar necesidades en productos sólidos y, sobre todo, útiles en el mundo real."
+      ]
+    },
+    "highlight": {
+      "pt": [
+        "Matheus Freitas Martins",
+        "2024",
+        "COTEMIG",
+        "entender o problema antes de escolher a tecnologia",
+        "Tecnologia, para mim, é meio.",
+        "úteis no mundo real"
+      ],
+      "en": [
+        "Matheus Freitas Martins",
+        "2024",
+        "COTEMIG",
+        "understand the problem before choosing the technology",
+        "To me, technology is a means.",
+        "useful in the real world"
+      ],
+      "es": [
+        "Matheus Freitas Martins",
+        "2024",
+        "COTEMIG",
+        "entender el problema antes de elegir la tecnología",
+        "Para mí, la tecnología es un medio.",
+        "útiles en el mundo real"
+      ]
     },
     "cards": {
       "labels": {
@@ -239,11 +195,6 @@
           "pt": "Status",
           "en": "Status",
           "es": "Estado"
-        },
-        "resume": {
-          "pt": "Currículo",
-          "en": "Resume",
-          "es": "Currículum"
         },
         "location": {
           "pt": "Localização",
@@ -260,16 +211,6 @@
         "pt": "Aberto a novos projetos",
         "en": "Open to new projects",
         "es": "Disponible para nuevos proyectos"
-      },
-      "statusAside": {
-        "pt": "atualizado · out 2026",
-        "en": "updated · Oct 2026",
-        "es": "actualizado · oct 2026"
-      },
-      "resume": {
-        "pt": "Minha trajetória profissional e acadêmica.",
-        "en": "My professional and academic background.",
-        "es": "Mi trayectoria profesional y académica."
       },
       "locationCity": {
         "pt": "Belo Horizonte",

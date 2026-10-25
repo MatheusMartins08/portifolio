@@ -21,13 +21,6 @@
     "href": "/cv.pdf",
     "status": "Arquivo ainda não existe — o botão fica no layout e o PDF entra depois."
   },
-  "location": { "lat": -19.9167, "lon": -43.9345 },
-  "terminal": {
-    "_note": "Identificadores do ProfileTerminal (nome de arquivo, caminho, prompt): iguais em todos os idiomas.",
-    "title": "matheus.profile",
-    "path": "~/portfolio/about",
-    "prompt": "~/matheus"
-  },
   "status": "open",
   "sections": [
     { "id": "sobre", "i18n": "nav.sobre", "index": "01" },

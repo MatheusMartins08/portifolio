@@ -69,7 +69,7 @@ export function Header({ items, locale, labels, cvHref, homeHref = "" }: HeaderP
     };
   }, [menu]);
 
-  /** Slides the bg-2 background under the hovered/focused item. */
+  /** Slides the light tint under the hovered/focused item. */
   function moveIndicator(target: HTMLElement | null) {
     const el = indicator.current;
     if (!el) return;
