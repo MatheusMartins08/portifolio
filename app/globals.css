@@ -39,6 +39,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Hero intro (components/hero/HeroIntro): everything below the Hero waits in the dark until the Hero
+   assembles (it is off screen anyway; this only covers tall viewports). */
+html[data-intro]:not([data-intro="assemble"]) main > :not(:first-child),
+html[data-intro]:not([data-intro="assemble"]) footer { visibility: hidden; }
+
 /* Selected text inverts (dark on light), never the browser's blue. */
 ::selection { background: var(--fg); color: var(--on-fg); }
 

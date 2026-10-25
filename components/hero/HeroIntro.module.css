@@ -1,0 +1,52 @@
+/* Fixed over the whole viewport (above the header), never catches the pointer. Everything in it is
+   invisible unless <html data-intro> says otherwise, so a skipped or finished intro leaves nothing. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* ---------- A02: the strike ---------- */
+.strike {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+  stroke-miterlimit: 4;
+  opacity: 0;
+}
+.glow { stroke: var(--bolt-glow); stroke-width: 7px; }
+.core { stroke: var(--bolt-hot); stroke-width: 1.8px; }
+.twig .glow { stroke-width: 4px; }
+.twig .core { stroke-width: 1px; }
+
+/* Falls in ~140ms (the branches a beat after the trunk), then fades as the Hero assembles. Same
+   animation in both states, so it runs on across the switch instead of restarting. */
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .strike { opacity: 1; }
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .strike path {
+  stroke-dasharray: 1 2;
+  animation: fall 140ms cubic-bezier(.5, 0, .9, .4) backwards;
+}
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .twig path { animation-duration: 120ms; animation-delay: 70ms; }
+:global(html[data-intro="assemble"]) .strike { opacity: 0; transition: opacity 420ms var(--mf-ease-out) 80ms; }
+@keyframes fall {
+  from { stroke-dashoffset: 1; }
+}
+
+/* ---------- impact: a short, low flash ---------- */
+.flash {
+  position: absolute;
+  inset: 0;
+  background: var(--flash);
+  opacity: 0;
+}
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .flash { animation: flash 300ms var(--mf-ease-out) 130ms; }
+@keyframes flash {
+  0% { opacity: 0; }
+  18% { opacity: .13; }
+  100% { opacity: 0; }
+}

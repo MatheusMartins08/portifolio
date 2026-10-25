@@ -1,0 +1,45 @@
+/* The parent sets the scale through font-size (1em = the letters' em). */
+.art { display: block; width: fit-content; color: var(--fg); }
+.line { display: block; width: fit-content; }
+/* The second line tucks under the first and steps in a little, like a signature. */
+.line + .line { margin: -0.16em 0 0 0.62em; }
+.svg { display: block; width: var(--w); height: var(--h); overflow: visible; }
+
+.glyph {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 0;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- intro (components/hero/HeroIntro) ----------
+   play: dark. draw: the pen traces each outline (pathLength 1: one dash covers any letter), the ink
+   fills in behind it, a soft glow on the drawing. Then the plain filled letters. */
+:global(html[data-intro="play"]) .art { opacity: 0; }
+/* Written centred on the viewport (HeroIntro measures the offset), then slides home as the Hero
+   assembles, with the impact's bloom fading off it. */
+:global(html[data-intro]:not([data-intro="assemble"])) .art { transform: translate(var(--intro-x, 0px), var(--intro-y, 0px)); }
+:global(html[data-intro="assemble"]) .art {
+  transition: transform 820ms var(--mf-ease-out);
+  animation: bloom 1000ms var(--mf-ease-out);
+}
+@keyframes bloom {
+  from { filter: drop-shadow(0 0 18px var(--bolt-glow)); }
+  to { filter: drop-shadow(0 0 0 transparent); }
+}
+:global(html[data-intro="draw"]) .svg { filter: drop-shadow(0 0 6px var(--bolt-glow)); }
+:global(html[data-intro="draw"]) .glyph {
+  stroke-width: 1.3px;
+  stroke-dasharray: 1 2;
+  animation:
+    pen var(--t) var(--mf-ease-inout) var(--d) backwards,
+    ink var(--mf-dur-3) var(--mf-ease-out) var(--f) backwards;
+}
+@keyframes pen {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ink {
+  from { fill-opacity: 0; }
+  to { fill-opacity: 1; }
+}

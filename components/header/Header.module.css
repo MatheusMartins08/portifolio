@@ -181,3 +181,11 @@
 @keyframes header-in {
   from { opacity: 0; transform: translateY(calc(-1 * var(--space-2))); }
 }
+
+/* Intro (components/hero/HeroIntro): hidden in the dark, then it settles down as the Hero assembles. */
+:global(html[data-intro]:not([data-intro="assemble"])) .inner { opacity: 0; transform: translateY(calc(-1 * var(--space-2))); }
+:global(html[data-intro="assemble"]) .inner {
+  transition:
+    opacity var(--mf-dur-3) var(--mf-ease-out) 560ms,
+    transform var(--mf-dur-3) var(--mf-ease-out) 560ms;
+}

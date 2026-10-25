@@ -1,51 +1,35 @@
 .cue {
   display: inline-flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
-  padding: 6px;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2);
+  margin-left: calc(-1 * var(--space-2));
   background: none;
   border: 0;
-  border-radius: var(--radius-md);
-  color: var(--fg);
+  border-radius: var(--radius-sm);
+  color: var(--fg-muted);
   cursor: pointer;
-  animation: float 3.2s var(--mf-ease-inout) infinite;
+  transition: color var(--mf-dur-2) var(--mf-ease-out);
 }
+.cue:hover { color: var(--fg); }
 .cue:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
-.label { font: 500 10px/1 var(--font-mono); letter-spacing: .18em; text-transform: uppercase; color: var(--fg-muted); }
+.label { font: 500 11px/1 var(--font-sans); letter-spacing: .16em; text-transform: uppercase; }
 
-.track { position: relative; width: 1px; height: 28px; background: var(--line-strong); overflow: hidden; }
+.track { position: relative; width: 1px; height: var(--space-12); background: var(--line-strong); overflow: hidden; }
 .drop {
   position: absolute;
   left: 0;
-  top: -10px;
+  top: calc(-1 * var(--space-3));
   width: 1px;
-  height: 10px;
-  background: var(--mark);
-  animation: drip 2.2s var(--mf-ease-inout) infinite;
+  height: var(--space-3);
+  background: var(--bolt-hot);
+  animation: drip 2.4s var(--mf-ease-inout) infinite;
 }
+.still .drop { animation: none; opacity: 0; }
 
-.ring {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--control);
-  transition:
-    border-color var(--mf-dur-2),
-    background-color var(--mf-dur-2),
-    transform var(--mf-dur-2) var(--mf-ease-out);
-}
-.cue:hover .ring { border-color: var(--fg); background: var(--surface); transform: translateY(2px); }
-.cue:hover .arrow { color: var(--mark); }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
-}
 @keyframes drip {
   0% { transform: translateY(0); }
-  70%, 100% { transform: translateY(40px); }
+  70%, 100% { transform: translateY(calc(var(--space-12) + var(--space-3))); }
 }

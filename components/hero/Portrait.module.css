@@ -1,14 +1,14 @@
-.portrait { position: relative; margin: 0; container-type: inline-size; }
+/* The page gives the figure its size; the photo fills it. */
+.portrait { margin: 0; }
 
-/* Square by default; the page can set --frame-h (in cqi of the figure, or any length) for a taller crop. */
+/* The whole photo, almost square-cornered, with a hairline frame standing a little off its edge. */
 .frame {
   position: relative;
-  height: var(--frame-h, 100cqi);
+  height: 100%;
   overflow: hidden;
   border-radius: var(--radius-xs);
-  /* Two diagonal cuts, unequal: a larger one top-right, a smaller one bottom-left (in cqi: the figure's
-     width, so they scale with the photo). They only take sky and pavement, never the subject. */
-  clip-path: polygon(0 0, calc(100% - 15cqi) 0, 100% 15cqi, 100% 100%, 9cqi 100%, 0 calc(100% - 9cqi));
+  outline: 1px solid var(--line-strong);
+  outline-offset: var(--space-2);
   background: var(--bg-3);
 }
 
@@ -20,31 +20,18 @@
   filter: var(--photo-filter);
 }
 
-/* Hover photo: stacked over the first, hidden until the pointer arrives; it comes in through a soft focus. */
+/* Hover photo: stacked over the first, hidden until the pointer arrives; it comes in as light — over-
+   exposed first, then settling to the same tone. */
 .alt {
   position: absolute;
   inset: 0;
   opacity: 0;
-  filter: var(--photo-filter) blur(4px);
+  filter: var(--photo-filter) brightness(1.8);
   transition:
-    opacity 700ms var(--mf-ease-inout),
-    filter 700ms var(--mf-ease-inout);
+    opacity 700ms var(--mf-ease-out),
+    filter 900ms var(--mf-ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .swap:hover .alt { opacity: 1; filter: var(--photo-filter) blur(0); }
-}
-
-/* Entrance: the chamfered frame opens bottom-up while the photo settles. */
-@media (prefers-reduced-motion: no-preference) {
-  .intro .frame { animation: curtain 1000ms var(--mf-ease-inout) 100ms backwards; }
-  .intro .img { animation: settle 1400ms var(--mf-ease-out) 100ms backwards; }
-}
-
-/* Same six points as the frame, all starting on the bottom edge. */
-@keyframes curtain {
-  from { clip-path: polygon(0 100%, calc(100% - 15cqi) 100%, 100% 100%, 100% 100%, 9cqi 100%, 0 100%); }
-}
-@keyframes settle {
-  from { transform: scale(1.08); }
+  .swap:hover .alt { opacity: 1; filter: var(--photo-filter); }
 }

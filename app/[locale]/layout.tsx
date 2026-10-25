@@ -6,10 +6,11 @@ import { Instrument_Serif } from "next/font/google";
 import { htmlLang, isLocale, locales } from "@/lib/i18n/config";
 import { getDictionary, getLocale } from "@/lib/i18n/dictionary";
 import { site } from "@/lib/content/site";
+import { introGateScript } from "@/lib/intro";
 import { absoluteUrl, homeTitle, openGraphFor, siteUrl } from "@/lib/seo";
 import "../globals.css";
 
-/** The editorial serif: the name, section titles and the morphing tagline (upright + italic). Re-pointed in app/globals.css. */
+/** The editorial serif: section titles, the closing call to action and the morphing tagline (upright + italic). Re-pointed in app/globals.css. */
 const serif = Instrument_Serif({
   weight: "400",
   style: ["normal", "italic"],
@@ -60,11 +61,16 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!isLocale(locale)) notFound();
 
   return (
+    // suppressHydrationWarning: the intro gate below may set data-intro on <html> before React hydrates.
     <html
       lang={htmlLang[locale]}
       className={`${GeistSans.variable} ${GeistMono.variable} ${serif.variable}`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introGateScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );

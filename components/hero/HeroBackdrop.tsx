@@ -1,24 +1,29 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { prefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cssVars, cx } from "@/lib/cx";
 import { drawContours, type Box, type ContourLine } from "./contours";
 import styles from "./HeroBackdrop.module.css";
 
-/** Only a hovering fine pointer gets the lit layer, and only when motion is welcome. */
-const GLOW_QUERY = "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
+const MOTION_QUERY = "(prefers-reduced-motion: no-preference)";
+/** A hovering fine pointer: the light follows it. Anything else (touch) gets pulses instead. */
+const HOVER_QUERY = "(hover: hover) and (pointer: fine)";
 
-function subscribe(onChange: () => void) {
-  const media = window.matchMedia(GLOW_QUERY);
+const subscribeTo = (query: string) => (onChange: () => void) => {
+  const media = window.matchMedia(query);
   media.addEventListener("change", onChange);
   return () => media.removeEventListener("change", onChange);
-}
-
-const canGlow = () => window.matchMedia(GLOW_QUERY).matches;
+};
+const subscribeMotion = subscribeTo(MOTION_QUERY);
+const subscribeHover = subscribeTo(HOVER_QUERY);
+const motionOk = () => window.matchMedia(MOTION_QUERY).matches;
+const fineHover = () => window.matchMedia(HOVER_QUERY).matches;
 
 /** Share of the remaining distance the glow covers each frame: a soft trail behind the cursor. */
 const EASE = 0.22;
+/** Touch: how long a pulse stays lit (where the finger landed, or an ambient one), and how often an ambient one comes. */
+const PULSE = { hold: 650, every: 7000, spread: 4000 };
 /** Section variant: wait for the stage to settle before redrawing (a folder opening resizes it on every frame). */
 const SETTLE = 200;
 /** Section variant: the drawing's scale never passes this share of the stage's width. */
@@ -31,35 +36,11 @@ const UNIT_SHARE = 0.12;
 const ROOM = 1400;
 
 /**
- * Entrance, in ms. The lines start drawing once the rest of the Hero is nearly in (counted from the
- * start of the page load), then: circuit closes → short pulse → the "Matheus" sweep → the "Freitas" wave.
+ * Entrance, in ms from the moment the Hero assembles (HeroIntro): the energy of the strike spreads
+ * out from the name. Lines are drawn from where they meet the name back out to the edges, the ones
+ * wrapping the name first; twigs grow outwards once their line's head passes the fork.
  */
-const INTRO = {
-  /** Lines start drawing (from navigation start). */
-  linesAt: 1200,
-  /** Outer lines first, the ones wrapping the name last. */
-  spread: 700,
-  /** Lines entering from the sides and the bottom follow those from the top. */
-  sideLag: 120,
-  bottomLag: 240,
-  jitter: 120,
-  minDraw: 650,
-  maxDraw: 1050,
-  /** Twigs draw at their line's pace, but never quicker than this. */
-  minTwig: 220,
-  /** After the last connection. */
-  pulseAfter: 150,
-  pulse: 360,
-  /** From the pulse to the sweep across "Matheus" (the hover's own transition, --mf-dur-4). */
-  sweepAfter: 250,
-  sweep: 820,
-  /** The wave over "Freitas" starts near the end of the sweep; one letter every `step`, each held `hold`. */
-  waveAfter: 560,
-  step: 80,
-  hold: 260,
-  /** Letting the last letter settle (its return transition, --mf-dur-3). */
-  settle: 520,
-};
+const INTRO = { spread: 600, jitter: 120, minDraw: 520, maxDraw: 950, minTwig: 220 };
 
 interface Drawing {
   width: number;
@@ -70,7 +51,7 @@ interface Drawing {
 /** Per line: when it starts drawing and how long it takes (ms, from the render that adds it). */
 interface Intro {
   timing: Array<{ delay: number; draw: number }>;
-  /** When the last line connects. */
+  /** When the last stroke is in. */
   closed: number;
 }
 
@@ -80,24 +61,22 @@ const jitterOf = (pair: number) => (Math.imul(pair + 1, 0x9e3779b1) >>> 0) / 429
 /** Inverse of the draw's ease-in-out (taken as smoothstep): the share of the time at which a share of the line is drawn. */
 const easedAt = (share: number) => 0.5 - Math.sin(Math.asin(1 - 2 * share) / 3);
 
-function planIntro({ height, lines }: Drawing, offset: number): Intro {
+function planIntro({ lines }: Drawing): Intro {
   const main = lines.filter((line) => !line.branch);
   const farthest = Math.max(1, ...main.map((line) => line.reach));
-  // Both halves of a line share a start and a duration, so they meet at the same instant.
+  // Both halves of a line share a start and a duration, so they leave the name at the same instant.
   const pairs = new Map<number, { delay: number; draw: number }>();
   for (const line of main) {
     const known = pairs.get(line.pair);
-    const y = line.start[1];
-    const lag = y <= 2 ? 0 : y >= height - 2 ? INTRO.bottomLag : INTRO.sideLag;
-    const delay =
-      offset + (1 - line.reach / farthest) * INTRO.spread + lag + (jitterOf(line.pair) - 0.5) * INTRO.jitter;
-    const draw = Math.min(INTRO.maxDraw, Math.max(INTRO.minDraw, 450 + line.length * 0.35));
+    const delay = (line.reach / farthest) * INTRO.spread + (jitterOf(line.pair) - 0.5) * INTRO.jitter;
+    const draw = Math.min(INTRO.maxDraw, Math.max(INTRO.minDraw, 380 + line.length * 0.3));
     pairs.set(line.pair, {
-      delay: Math.max(offset, known ? Math.min(known.delay, delay) : delay),
+      delay: Math.max(0, known ? Math.min(known.delay, delay) : delay),
       draw: known ? Math.max(known.draw, draw) : draw,
     });
   }
-  // Twigs come after the line they break off: they start as its head passes the fork, at its pace.
+  // A line is drawn from its end (by the name) back to its start: its head passes a fork at `at` (a
+  // share from the start) at 1 − at of its time. The twig grows outwards from there, at its pace.
   const timing: Intro["timing"] = [];
   lines.forEach((line, i) => {
     if (!line.branch) {
@@ -106,12 +85,11 @@ function planIntro({ height, lines }: Drawing, offset: number): Intro {
     }
     const parent = timing[line.branch.parent];
     timing[i] = {
-      delay: parent.delay + parent.draw * easedAt(line.branch.at),
+      delay: parent.delay + parent.draw * easedAt(1 - line.branch.at),
       draw: Math.max(INTRO.minTwig, (parent.draw * line.length) / lines[line.branch.parent].length),
     };
   });
-  // The circuit closes with the main lines; twigs finishing a beat later do not hold the name back.
-  const closed = Math.max(0, ...main.map((line) => pairs.get(line.pair)!).map((t) => t.delay + t.draw));
+  const closed = Math.max(0, ...timing.map((t) => t.delay + t.draw));
   return { timing, closed };
 }
 
@@ -121,8 +99,7 @@ function widestPhrase(el: HTMLElement, phrases: string[]): number {
   const context = document.createElement("canvas").getContext("2d");
   if (!context) return el.offsetWidth;
   context.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-  // + the caret after the text.
-  return Math.max(...phrases.map((phrase) => context.measureText(phrase).width)) + parseFloat(style.fontSize) * 0.3;
+  return Math.max(...phrases.map((phrase) => context.measureText(phrase).width));
 }
 
 /** Width of the element's text as laid out (a block is wider than its words). */
@@ -134,7 +111,7 @@ function textWidth(el: HTMLElement): number {
 
 /**
  * The element's text box in stage pixels. Position from layout offsets, so the Hero's entrance
- * transforms (text rising in) do not shift it; centred lines are centred in their element.
+ * transforms (the name sliding in) do not shift it; centred lines are centred in their element.
  */
 function layoutBox(el: HTMLElement, stage: HTMLElement, width: number): Box {
   let x = 0;
@@ -151,44 +128,34 @@ interface LinesProps {
   drawing: Drawing;
   intro: Intro | null;
   lit: boolean;
-  glowId: string;
 }
 
 /** Class suffix per stroke weight: thick, thin, and the twigs that break off them. */
 const WEIGHT_CLASS = { thick: "Thick", thin: "Thin", twig: "Twig" } as const;
 
 /** Every path has pathLength 1, so the entrance can draw it with the dash offset, whatever its length. */
-function Lines({ drawing, intro, lit, glowId }: LinesProps) {
+function Lines({ drawing, intro, lit }: LinesProps) {
   const { width, height, lines } = drawing;
   return (
     <svg className={styles.svg} width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-      {lit ? (
-        <defs>
-          <filter id={glowId} x="-5%" y="-5%" width="110%" height="110%">
-            <feGaussianBlur stdDeviation="3.5" />
-          </filter>
-        </defs>
-      ) : null}
       {lines.map((line, i) => {
         const timing = intro?.timing[i];
         const size = WEIGHT_CLASS[line.weight];
         return (
-          <g key={i} style={timing ? cssVars({ "--delay": `${timing.delay}ms`, "--draw": `${timing.draw}ms` }) : undefined}>
+          <g
+            key={i}
+            data-twig={line.branch ? "" : undefined}
+            style={timing ? cssVars({ "--delay": `${timing.delay}ms`, "--draw": `${timing.draw}ms` }) : undefined}
+          >
             {lit ? (
               <>
-                <path className={styles[`halo${size}`]} d={line.d} pathLength={1} filter={`url(#${glowId})`} />
+                {/* A wide, faint stroke under the core: the glow, without a blur filter. */}
+                <path className={styles[`halo${size}`]} d={line.d} pathLength={1} />
                 <path className={styles[`core${size}`]} d={line.d} pathLength={1} />
                 <path className={styles[`hot${size}`]} d={line.d} pathLength={1} />
               </>
             ) : (
               <>
-                {/* A light edge just below each line: the slight carved, 3D feel. */}
-                <path
-                  className={styles[`edge${size}`]}
-                  d={line.d}
-                  pathLength={1}
-                  transform={line.weight === "thick" ? "translate(.8 1.3)" : "translate(.6 1)"}
-                />
                 <path className={styles[line.weight]} d={line.d} pathLength={1} />
                 {/* The brighter head that travels with the line while it is being drawn. */}
                 {timing ? <path className={cx(styles.tip, styles[`tip${size}`])} d={line.d} pathLength={1} /> : null}
@@ -217,34 +184,43 @@ interface HeroBackdropProps {
 }
 
 /**
- * Lines behind the Hero, drawn around its text: the greeting, name and phrase (marked `data-hole` in the
- * stage) sit in a clear space the lines bend around. Dimmed lines always; a lit copy revealed through a
- * small radial mask that follows the mouse. Redrawn when the stage resizes or the fonts arrive, never on
- * mouse moves: the pointer goes straight to CSS custom properties from one requestAnimationFrame.
+ * A04 — Reactive Lightning Field. Fine, low-contrast lines behind the Hero, drawn around its text: the
+ * greeting, name and phrase (marked `data-hole` in the stage) sit in a clear space the lines bend
+ * around. A lit copy shows only through a small radial mask: it follows a mouse softly; on touch
+ * screens it lights where the finger lands, and now and then on its own (only while the Hero is on
+ * screen). Redrawn when the stage resizes or the fonts arrive, never on pointer moves.
  *
- * Entrance (once, with motion allowed): the lines are drawn from the edges towards the name and meet
- * there; then a short pulse, and the name's own hover effects play once, set off through
- * `data-energized` on the elements marked `data-energy` (sweep on "Matheus", wave on the "Freitas" letters).
+ * With the intro (HeroIntro), the field waits in the dark and spreads out from the name when the Hero
+ * assembles (`hero:assemble` on the stage; `{ instant: true }` when skipped: shown at once). Without
+ * it, the field just fades in.
  *
  * The "section" variant puts the same field behind another section's stage (Skills), without the entrance.
  */
 export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-hole]", unit = 110, className }: HeroBackdropProps) {
-  const glow = useSyncExternalStore(subscribe, canGlow, () => false);
+  const motion = useSyncExternalStore(subscribeMotion, motionOk, () => false);
+  const hover = useSyncExternalStore(subscribeHover, fineHover, () => false);
   const [drawing, setDrawing] = useState<Drawing | null>(null);
   const [intro, setIntro] = useState<Intro | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const litRef = useRef<HTMLDivElement>(null);
-  const glowId = `hero-glow-${useId().replace(/[^\w-]/g, "")}`;
+  /** The clear spaces as last measured: ambient pulses keep off the text. */
+  const boxesRef = useRef<Box[]>([]);
   const phrasesKey = phrases.join("\n");
 
-  // ---- drawing: measure the text, lay the lines around it; the first drawing also plans the entrance ----
+  // ---- drawing: measure the text, lay the lines around it; the intro decides when it shows ----
   useEffect(() => {
-    const stage = rootRef.current?.parentElement;
-    if (!stage) return;
+    const root = rootRef.current;
+    const stage = root?.parentElement;
+    if (!root || !stage) return;
     const list = phrasesKey.split("\n");
     const section = variant === "section";
-    /** The entrance plays once: before the first drawing, while playing, then never again. */
-    let phase: "pending" | "playing" | "done" = section || prefersReducedMotion() ? "done" : "pending";
+    /**
+     * waiting: the intro is on, the field stays dark until the Hero assembles. pending: it assembled
+     * before the first drawing was ready. playing: lines spreading. done: shown as is.
+     */
+    let phase: "waiting" | "pending" | "playing" | "done" =
+      !section && !prefersReducedMotion() && document.documentElement.dataset.intro ? "waiting" : "done";
+    let latest: Drawing | null = null;
     let size = "";
     let fontsReady = false;
     let active = true;
@@ -257,11 +233,10 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
       // Measure the final text only (web fonts in), so the entrance is not redrawn under itself.
       if (!fontsReady || !active) return;
       const marked = Array.from(stage.querySelectorAll<HTMLElement>(holes));
-      const root = rootRef.current;
       // Behind a section, the field runs edge to edge of the viewport, not just the stage's container.
       // Rounded up, so the right edge never passes the viewport (no sideways scroll).
       const shift = section ? Math.ceil(stage.getBoundingClientRect().left) : 0;
-      if (section && root) {
+      if (section) {
         root.style.left = `${-shift}px`;
         root.style.width = `${document.documentElement.clientWidth}px`;
       }
@@ -280,18 +255,24 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
         const box = layoutBox(el, stage, el.dataset.hole === "phrase" ? widestPhrase(el, list) : textWidth(el));
         return { ...box, x: box.x + shift };
       });
+      boxesRef.current = boxes;
       const next: Drawing = { width, height, lines: drawContours({ width, height, boxes, unit: scale }) };
       const nextSize = `${width}x${height}`;
+      drawn = { width, height };
+      if (phase === "waiting") {
+        latest = next;
+        size = nextSize;
+        return;
+      }
       if (phase === "pending") {
         phase = "playing";
-        setIntro(planIntro(next, Math.max(0, INTRO.linesAt - performance.now())));
+        setIntro(planIntro(next));
       } else if (phase === "playing" && nextSize !== size) {
         // Resized mid-entrance: show the finished lines instead.
         phase = "done";
         setIntro(null);
       }
       size = nextSize;
-      drawn = { width, height };
       setDrawing(next);
     };
     const schedule = () => {
@@ -306,8 +287,21 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
       }
       if (!frame) frame = requestAnimationFrame(draw);
     };
+    const onAssemble = (event: Event) => {
+      if (phase !== "waiting") return;
+      const instant = (event as CustomEvent<{ instant?: boolean }>).detail?.instant;
+      if (!latest) {
+        // Not drawn yet: the first drawing will follow up.
+        phase = instant ? "done" : "pending";
+        return;
+      }
+      phase = instant ? "done" : "playing";
+      if (!instant) setIntro(planIntro(latest));
+      setDrawing(latest);
+    };
     const observer = new ResizeObserver(schedule);
     observer.observe(stage);
+    stage.addEventListener("hero:assemble", onAssemble);
     // Edge to edge: the viewport can change width while the stage (a capped container) does not.
     if (section) window.addEventListener("resize", schedule);
     document.fonts.ready.then(() => {
@@ -319,50 +313,78 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
       observer.disconnect();
       cancelAnimationFrame(frame);
       window.clearTimeout(settle);
+      stage.removeEventListener("hero:assemble", onAssemble);
       window.removeEventListener("resize", schedule);
     };
   }, [phrasesKey, variant, holes, unit]);
 
-  // ---- entrance, after the lines connect: pulse → "Matheus" sweep → "Freitas" wave ----
+  // ---- entrance: once every stroke is in, the drawing settles to its plain state ----
   useEffect(() => {
-    const root = rootRef.current;
-    const stage = root?.parentElement;
-    if (!intro || !root || !stage) return;
-    const timers: number[] = [];
-    const at = (ms: number, run: () => void) => timers.push(window.setTimeout(run, ms));
-    const sweep = Array.from(stage.querySelectorAll<HTMLElement>('[data-energy="sweep"]'));
-    const wave = Array.from(stage.querySelectorAll<HTMLElement>('[data-energy="wave"]'));
-
-    const pulseAt = intro.closed + INTRO.pulseAfter;
-    const sweepAt = pulseAt + INTRO.sweepAfter;
-    const waveAt = sweepAt + INTRO.waveAfter;
-    const doneAt = waveAt + wave.length * INTRO.step + INTRO.hold + INTRO.settle;
-
-    at(pulseAt, () => (root.dataset.pulse = ""));
-    at(pulseAt + INTRO.pulse, () => delete root.dataset.pulse);
-    at(sweepAt, () => sweep.forEach((el) => (el.dataset.energized = "")));
-    // Off again once across: like the mouse leaving, the sheen snaps back unseen.
-    at(sweepAt + INTRO.sweep + 40, () => sweep.forEach((el) => delete el.dataset.energized));
-    wave.forEach((el, i) => {
-      at(waveAt + i * INTRO.step, () => (el.dataset.energized = ""));
-      at(waveAt + i * INTRO.step + INTRO.hold, () => delete el.dataset.energized);
-    });
-    at(doneAt, () => setIntro(null));
-
-    return () => {
-      timers.forEach((timer) => window.clearTimeout(timer));
-      delete root.dataset.pulse;
-      [...sweep, ...wave].forEach((el) => delete el.dataset.energized);
-    };
+    if (!intro) return;
+    const timer = window.setTimeout(() => setIntro(null), intro.closed + 100);
+    return () => window.clearTimeout(timer);
   }, [intro]);
 
-  // ---- glow: follows the mouse over the whole stage ----
+  // ---- light: follows a mouse; on touch, pulses where the finger lands and now and then on its own ----
   useEffect(() => {
     const root = rootRef.current;
     const layer = litRef.current;
-    // Behind a section, the whole section (edge to edge, like the field) catches the mouse.
+    // Behind a section, the whole section (edge to edge, like the field) catches the pointer.
     const stage = variant === "section" ? (root?.closest("section") ?? root?.parentElement) : root?.parentElement;
-    if (!glow || !root || !layer || !stage) return;
+    if (!motion || !root || !layer || !stage) return;
+
+    const place = (x: number, y: number) => {
+      layer.style.setProperty("--mx", `${x.toFixed(1)}px`);
+      layer.style.setProperty("--my", `${y.toFixed(1)}px`);
+    };
+
+    if (!hover) {
+      let off = 0;
+      let ambient = 0;
+      let visible = false;
+      const pulse = (x: number, y: number) => {
+        place(x, y);
+        layer.dataset.on = "";
+        window.clearTimeout(off);
+        off = window.setTimeout(() => delete layer.dataset.on, PULSE.hold);
+      };
+      const onDown = (event: PointerEvent) => {
+        if (event.pointerType === "mouse") return;
+        const rect = root.getBoundingClientRect();
+        pulse(event.clientX - rect.left, event.clientY - rect.top);
+      };
+      // Somewhere on the field, off the text (a few tries, then anywhere).
+      const wander = () => {
+        const { width, height } = root.getBoundingClientRect();
+        let x = 0;
+        let y = 0;
+        for (let i = 0; i < 8; i++) {
+          x = width * (0.08 + 0.84 * Math.random());
+          y = height * (0.1 + 0.8 * Math.random());
+          if (!boxesRef.current.some((b) => x > b.x - 40 && x < b.x + b.w + 40 && y > b.y - 40 && y < b.y + b.h + 40)) break;
+        }
+        pulse(x, y);
+      };
+      const plan = () => {
+        ambient = window.setTimeout(() => {
+          if (visible && !document.hidden) wander();
+          plan();
+        }, PULSE.every + Math.random() * PULSE.spread);
+      };
+      const watch = new IntersectionObserver(([entry]) => (visible = entry.isIntersecting));
+      stage.addEventListener("pointerdown", onDown);
+      if (variant === "hero") {
+        watch.observe(stage);
+        plan();
+      }
+      return () => {
+        stage.removeEventListener("pointerdown", onDown);
+        watch.disconnect();
+        window.clearTimeout(off);
+        window.clearTimeout(ambient);
+        delete layer.dataset.on;
+      };
+    }
 
     let frame = 0;
     /** Last mouse position (client coordinates); null while the mouse is outside the stage. */
@@ -385,8 +407,7 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
         pos.x += (x - pos.x) * EASE;
         pos.y += (y - pos.y) * EASE;
       }
-      layer.style.setProperty("--mx", `${pos.x.toFixed(1)}px`);
-      layer.style.setProperty("--my", `${pos.y.toFixed(1)}px`);
+      place(pos.x, pos.y);
       if (Math.abs(x - pos.x) > 0.5 || Math.abs(y - pos.y) > 0.5) frame = requestAnimationFrame(tick);
     };
     const request = () => {
@@ -424,7 +445,7 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
       cancelAnimationFrame(frame);
       delete layer.dataset.on;
     };
-  }, [glow, variant]);
+  }, [motion, hover, variant]);
 
   return (
     <div
@@ -434,12 +455,10 @@ export function HeroBackdrop({ phrases = [], variant = "hero", holes = "[data-ho
       data-intro={intro ? "" : undefined}
       aria-hidden="true"
     >
-      <div className={cx(styles.layer, styles.off)}>
-        {drawing ? <Lines drawing={drawing} intro={intro} lit={false} glowId={glowId} /> : null}
-      </div>
-      {glow ? (
+      <div className={cx(styles.layer, styles.off)}>{drawing ? <Lines drawing={drawing} intro={intro} lit={false} /> : null}</div>
+      {motion ? (
         <div ref={litRef} className={cx(styles.layer, styles.lit)}>
-          {drawing ? <Lines drawing={drawing} intro={intro} lit glowId={glowId} /> : null}
+          {drawing ? <Lines drawing={drawing} intro={intro} lit /> : null}
         </div>
       ) : null}
     </div>

@@ -1,18 +1,18 @@
 /* Fills the Hero stage behind its content and never catches the pointer. Fades in once the lines are
    drawn (they need the text measured), and fades out before the stage ends, so the next section
-   starts on plain sand. */
+   starts on plain black. */
 .backdrop {
   position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--mf-dur-4) var(--mf-ease-out);
-  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
-  mask-image: linear-gradient(to bottom, #000 80%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent);
 }
 .backdrop[data-ready] { opacity: 1; }
 /* Behind another section's stage (variant "section"): under its content (the stage isolates it, so -1
-   stays above the section's sand), fading in at the top and out at the foot. */
+   stays above the section's background), fading in at the top and out at the foot. */
 .section {
   z-index: -1;
   /* The field is drawn taller than the stage: what lies below shows as the stage grows. */
@@ -36,73 +36,72 @@
   stroke-miterlimit: 6;
 }
 
-/* ---------- dimmed: thick, thin and the twigs, thinner at every level, with the About bolt's soft glow ----------
-   At rest the terracota is muted towards caramel, so the lines sit in the sand instead of on it; the
-   hover still lights them in full ember. */
-.off { --tone: var(--fg-muted); }
-.off .svg { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--tone) 22%, transparent)); }
-.edgeThin, .edgeThick, .edgeTwig { stroke: var(--surface); stroke-opacity: .55; }
-.edgeTwig { stroke-width: 1.2px; }
-.edgeThin { stroke-width: 1.6px; }
-.edgeThick { stroke-width: 3px; }
-.thin, .thick, .twig { stroke: var(--tone); }
-.twig { stroke-opacity: .28; stroke-width: .8px; }
-.thin { stroke-opacity: .34; stroke-width: 1px; }
-.thick { stroke-opacity: .55; stroke-width: 2.2px; }
+/* ---------- at rest: hairlines, barely there (no filter: the field costs nothing to paint) ---------- */
+.thin, .thick, .twig { stroke: var(--bolt); }
+.twig { stroke-width: .5px; stroke-opacity: .7; }
+.thin { stroke-width: .75px; }
+.thick { stroke-width: 1.1px; }
 
-/* ---------- lit: halo, core, hot centre ---------- */
-.haloThin, .haloThick, .haloTwig, .coreThin, .coreThick, .coreTwig { stroke: var(--bolt-lit); }
-.haloTwig { stroke-opacity: .35; stroke-width: 4px; }
-.haloThin { stroke-opacity: .5; stroke-width: 6px; }
-.haloThick { stroke-opacity: .7; stroke-width: 12px; }
-.coreTwig { stroke-width: 1px; }
-.coreThin { stroke-width: 1.6px; }
-.coreThick { stroke-width: 3.2px; }
+/* ---------- lit: a faint wide halo, the core, a hot centre ---------- */
+.haloThin, .haloThick, .haloTwig { stroke: var(--bolt-glow); stroke-opacity: .45; }
+.haloTwig { stroke-width: 2.5px; }
+.haloThin { stroke-width: 3.5px; }
+.haloThick { stroke-width: 5px; }
+.coreThin, .coreThick, .coreTwig { stroke: var(--bolt-lit); }
+.coreTwig { stroke-width: .6px; }
+.coreThin { stroke-width: .9px; }
+.coreThick { stroke-width: 1.3px; }
 .hotThin, .hotThick, .hotTwig { stroke: var(--bolt-hot); }
-.hotTwig { stroke-opacity: .6; stroke-width: .4px; }
-.hotThin { stroke-opacity: .7; stroke-width: .6px; }
-.hotThick { stroke-width: 1.3px; }
+.hotTwig { stroke-width: .25px; }
+.hotThin { stroke-width: .35px; }
+.hotThick { stroke-width: .5px; }
 
-/* ---------- entrance ----------
-   Each line is drawn from where it enters towards the text (paths have pathLength 1, so one dash
-   covers any of them), with its own --delay and --draw; its two halves meet near the name. A brief,
-   brighter head rides with the drawing edge. The lit layer draws in step, so the hover can only light
-   what is already there. */
+/* ---------- entrance (A03 → A04) ----------
+   Paths have pathLength 1, so one dash covers any of them. A line is drawn from its end (where it
+   meets the name) back out to the edge: the dash comes in from the far end (offset −1 → 0). Twigs grow
+   the other way, from the fork outwards. A brief, brighter head rides with the drawing edge. The lit
+   layer draws in step, so the light can only reveal what is already there. */
 .backdrop[data-intro] path {
   stroke-dasharray: 1 2;
-  animation: draw var(--draw) var(--mf-ease-inout) var(--delay) backwards;
+  animation: spread var(--draw) var(--mf-ease-inout) var(--delay) backwards;
 }
+.backdrop[data-intro] g[data-twig] path { animation-name: grow; }
 .backdrop[data-intro] .tip {
-  stroke: var(--bolt-lit);
+  stroke: var(--bolt-hot);
   stroke-dasharray: .035 2;
   animation: travel var(--draw) var(--mf-ease-inout) var(--delay) both;
 }
-.tipTwig { stroke-width: 1px; }
-.tipThin { stroke-width: 1.5px; }
-.tipThick { stroke-width: 2.8px; }
+.backdrop[data-intro] g[data-twig] .tip { animation-name: travel-out; }
+.tipTwig { stroke-width: .6px; }
+.tipThin { stroke-width: .9px; }
+.tipThick { stroke-width: 1.4px; }
 
-@keyframes draw {
+@keyframes spread {
+  from { stroke-dashoffset: -1; }
+}
+@keyframes grow {
   from { stroke-dashoffset: 1; }
 }
-/* The head stays at the end of what is drawn: dash end = 1 − offset of the draw. */
+/* The head stays at the drawing edge: from the far end (offset −1) back to the start (0). */
 @keyframes travel {
+  from { stroke-dashoffset: -1; opacity: 0; }
+  15% { opacity: .7; }
+  80% { opacity: .7; }
+  to { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes travel-out {
   from { stroke-dashoffset: .035; opacity: 0; }
-  15% { opacity: .55; }
-  80% { opacity: .55; }
+  15% { opacity: .7; }
+  80% { opacity: .7; }
   to { stroke-dashoffset: -.965; opacity: 0; }
 }
 
-/* Circuit closed: the lines brighten for a beat and settle. */
-.backdrop[data-pulse] .off { animation: pulse 360ms var(--mf-ease-inout); }
-@keyframes pulse {
-  45% { filter: brightness(1.15) saturate(1.1); }
-}
-
-/* The lit copy shows only through a small radial mask around the cursor: a fully lit core, then
-   alpha falling off on a bell-like curve, so there is no edge to spot. Its own compositing layer,
-   so moving the mask does not repaint the glow. Fades in quickly, out more slowly, where it is. */
+/* The lit copy shows only through a small radial mask around the cursor (or a touch pulse): a fully
+   lit core, then alpha falling off on a bell-like curve, so there is no edge to spot. Its own
+   compositing layer, so moving the mask does not repaint the lines. Fades in quickly, out more slowly,
+   where it is. */
 .lit {
-  --glow-r: clamp(140px, 12vw, 200px);
+  --glow-r: clamp(120px, 10vw, 180px);
   --glow: radial-gradient(
     circle var(--glow-r) at var(--mx, 50%) var(--my, 50%),
     #000 0%,

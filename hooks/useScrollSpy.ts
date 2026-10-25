@@ -2,12 +2,22 @@
 
 import { useCallback, useSyncExternalStore } from "react";
 
+/** Scroll and resize, at most once per frame: reading the sections' boxes on every raw event is wasted work. */
 function subscribe(onChange: () => void) {
-  window.addEventListener("scroll", onChange, { passive: true });
-  window.addEventListener("resize", onChange);
+  let frame = 0;
+  const schedule = () => {
+    if (!frame)
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        onChange();
+      });
+  };
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule);
   return () => {
-    window.removeEventListener("scroll", onChange);
-    window.removeEventListener("resize", onChange);
+    cancelAnimationFrame(frame);
+    window.removeEventListener("scroll", schedule);
+    window.removeEventListener("resize", schedule);
   };
 }
 

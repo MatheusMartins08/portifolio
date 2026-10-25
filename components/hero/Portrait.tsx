@@ -4,24 +4,22 @@ import { cx } from "@/lib/cx";
 import styles from "./Portrait.module.css";
 
 interface PortraitProps {
-  /** Shown in a square frame by default (the page can set a taller one); `image.focus` decides what the crop keeps. */
+  /** Fills the figure (the page sizes it); `image.focus` decides what the crop keeps. */
   image: ImageAsset;
   alt: string;
-  /** A second photo that cross-fades in on hover (fine pointers only). */
+  /** A second photo that comes in on hover (fine pointers only). */
   hover?: { image: ImageAsset; alt: string };
   /** next/image `sizes` for the rendered width. */
   sizes: string;
-  /** The above-the-fold LCP image: loads eagerly with high fetch priority. */
+  /** The above-the-fold image: loads eagerly with high fetch priority. */
   priority?: boolean;
-  /** Entrance: the frame opens like a curtain while the photo settles. */
-  intro?: boolean;
   className?: string;
 }
 
-/** Editorial photo: two unequal diagonal cuts (top-right, bottom-left), slight warm tone. */
-export function Portrait({ image, alt, hover, sizes, priority = false, intro = false, className }: PortraitProps) {
+/** Black-and-white photo with no frame: its top and left edges dissolve into the page's black. */
+export function Portrait({ image, alt, hover, sizes, priority = false, className }: PortraitProps) {
   return (
-    <figure className={cx(styles.portrait, hover && styles.swap, intro && styles.intro, className)}>
+    <figure className={cx(styles.portrait, hover && styles.swap, className)}>
       <div className={styles.frame}>
         <Image
           src={image.src}
@@ -36,7 +34,7 @@ export function Portrait({ image, alt, hover, sizes, priority = false, intro = f
         />
         {hover ? (
           // Loaded up front (not lazily) so it is already there when the pointer arrives; at low priority,
-          // so it never competes with the main photo (the LCP).
+          // so it never competes with the main photo.
           <Image
             src={hover.image.src}
             width={hover.image.width}
