@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { INTRO_KEY } from "@/lib/intro";
+import { ON_HERO_KEY } from "@/lib/intro";
 import { drawStrike, type Strike } from "./strike";
 import styles from "./HeroIntro.module.css";
 
@@ -17,8 +17,9 @@ const TIMELINE = { hold: 180, assemble: 220, end: 1750 };
 const SKIP_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
 
 /**
- * Plays the opening once per session, when the gate in <head> (lib/intro.ts) has marked
- * `<html data-intro="play">`. It only measures, places and switches states: `data-intro` goes
+ * Plays the opening whenever the gate in <head> (lib/intro.ts) has marked `<html data-intro="play">`:
+ * the site opened, or reloaded on the Hero. Keeps the gate informed of where the visitor is (Hero on
+ * screen or not), so a reload elsewhere on the page skips it. It only measures, places and switches states: `data-intro` goes
  * play → draw → strike → assemble → (removed), and every piece of the page styles itself from that
  * attribute. It also tells the backdrop (`hero:assemble` on the stage) when to spread its lines, or,
  * when skipped, to show them at once. Renders the strike and the flash, in a fixed layer.
@@ -27,13 +28,26 @@ export function HeroIntro() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [strike, setStrike] = useState<Strike | null>(null);
 
+  // ---- where the visitor is: the Hero counts as on screen while at least 40% of it shows ----
+  useEffect(() => {
+    const stage = rootRef.current?.parentElement;
+    if (!stage) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        try {
+          sessionStorage.setItem(ON_HERO_KEY, entry.intersectionRatio >= 0.4 ? "1" : "0");
+        } catch {}
+      },
+      { threshold: [0, 0.4] },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const html = document.documentElement;
     const stage = rootRef.current?.parentElement;
     if (!stage || html.dataset.intro !== "play") return;
-    try {
-      sessionStorage.setItem(INTRO_KEY, "1");
-    } catch {}
 
     let alive = true;
     let over = false;
@@ -46,6 +60,8 @@ export function HeroIntro() {
       over = true;
       SKIP_EVENTS.forEach((type) => window.removeEventListener(type, skip));
       delete html.dataset.intro;
+      // The gate held the page at the top for the intro; reloads restore the scroll again.
+      history.scrollRestoration = "auto";
       setStrike(null);
     };
     function skip() {
@@ -56,8 +72,7 @@ export function HeroIntro() {
     }
 
     const name = stage.querySelector<HTMLElement>("[data-intro-name]");
-    // Opened mid-page (scroll restored): there is nothing to watch, show the page.
-    if (!name || window.scrollY > 0) {
+    if (!name) {
       skip();
       return;
     }

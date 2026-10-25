@@ -84,23 +84,44 @@
 :global(html[data-intro="assemble"]) .links { transition: opacity var(--mf-dur-3) var(--mf-ease-out) 640ms, transform var(--mf-dur-3) var(--mf-ease-out) 640ms; }
 :global(html[data-intro="assemble"]) .cue { transition: opacity var(--mf-dur-4) var(--mf-ease-out) 860ms, transform var(--mf-dur-4) var(--mf-ease-out) 860ms; }
 
-/* ---------- phones and tablets: one centred column — greeting, name, phrase, the links in a row,
-   then the photo. ---------- */
+/* ---------- phones and tablets: the whole Hero in one screen, never more. One centred column —
+   greeting, name, phrase, the photo, the links in a row — sized by the height as much as the width:
+   the photo takes whatever height is left (keeping its 3:4), so nothing spills below the fold. ---------- */
+@media (max-width: 820px) {
+  .hero {
+    height: 100svh;
+    min-height: 0;
+    padding-top: calc(var(--header-offset) - var(--space-6));
+    padding-bottom: var(--space-2);
+  }
+}
 @container (max-width: 820px) {
   .grid {
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-8);
+    gap: clamp(var(--space-3), 2.4svh, var(--space-8));
+    padding: var(--space-2) 0 0;
     text-align: center;
   }
-  .text { display: flex; flex-direction: column; align-items: center; }
-  .name { font-size: min(25cqi, 120px); }
-  .sub { justify-content: center; gap: var(--space-3); }
+  .text { display: flex; flex-direction: column; align-items: center; flex: none; }
+  .greet { margin-bottom: clamp(var(--space-1), 1svh, var(--space-4)); font-size: 15px; }
+  .name { font-size: min(25cqi, 120px, 11svh); }
+  .sub { justify-content: center; gap: var(--space-3); margin-top: clamp(var(--space-2), 1.6svh, var(--space-6)); }
   .rule { width: var(--space-6); }
-  .text .morph { font-size: clamp(20px, 5.6cqi, 28px); }
-  .links { flex-direction: row; }
+  .text .morph { font-size: clamp(18px, min(5.6cqi, 3svh), 28px); }
+  /* Height from what is left of the screen; width from the 3:4 (the hairline frame sits 8px outside). */
+  .portrait {
+    flex: 1 1 0;
+    min-height: 0;
+    width: auto;
+    max-width: min(70cqi, 340px);
+    max-height: 460px;
+    margin: var(--space-2) 0;
+  }
+  .links { flex-direction: row; flex: none; }
   .links::before, .links::after { width: var(--space-6); height: 1px; }
-  .portrait { width: min(70cqi, 340px); }
+  .cue { flex: none; }
 }
