@@ -102,7 +102,7 @@
 }
 .card:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring), var(--shadow-depth); }
 
-/* The mark: GitHub on ink, tilting a little on hover (terracota, as on the solid button). */
+/* The mark: GitHub on ink, tilting a little on hover (its colour stays). */
 .mark {
   grid-area: mark;
   display: grid;
@@ -117,7 +117,7 @@
     scale var(--mf-dur-3) var(--mf-ease-spring),
     color var(--mf-dur-2) var(--mf-ease-out);
 }
-.card:is(:hover, :focus-visible) .mark { rotate: -6deg; scale: 1.04; color: var(--accent); }
+.card:is(:hover, :focus-visible) .mark { rotate: -6deg; scale: 1.04; }
 
 .name { grid-area: name; display: flex; flex-direction: column; min-width: 0; }
 .title { font: 500 18px/24px var(--font-sans); letter-spacing: -0.01em; }

@@ -27,7 +27,7 @@ Portfólio pessoal de Matheus Freitas Martins, desenvolvedor Full Stack. Site de
 - Nunca escrever texto direto em componente: todo texto vem de `i18n.json` pelo idioma da rota. Texto novo entra nos três idiomas, traduzido pelo sentido, não literalmente.
 - Nunca usar cor, tamanho, raio, sombra ou espaçamento solto: sempre `var(--token)`. Se faltar um token, pergunte antes de inventar.
 - Componentes novos seguem o padrão dos existentes: TSX idiomático, mesmo cuidado com animação, teclado e ARIA.
-- Identidade "editorial elétrico": só preto, branco e cinzas — nenhuma cor de matiz. O branco é assinatura e ação (`--mark`, `--accent`), nunca fundo de seção; texto sobre `--accent` usa `--on-accent`. O destaque de uma palavra em título é itálico, não cor.
+- Identidade "editorial elétrico": só preto, branco e cinzas — nenhuma cor de matiz (exceção: as fotos da Hero e as imagens dos projetos ficam em cores). O branco é assinatura e ação (`--mark`, `--accent`), nunca fundo de seção; texto sobre `--accent` usa `--on-accent`. O destaque de uma palavra em título é itálico, não cor.
 - Sem estética de terminal, arquivos ou sistema operacional (prompts, extensões, pastas, janelas). O site diz que sou dev pelo conteúdo, não por clichês.
 - O raio é a linguagem do site, não ruído: um efeito por momento, curto, sem loop constante. Hierarquia de impacto: abertura/Hero e a dobra dos serviços são fortes; Sobre, Skills e Projetos médios; Experiência, menu, botões e Footer suaves.
 - Calibrado para notebook 14" com zoom 100% (≈1440×900 e 1512×982). Títulos editoriais grandes, com bastante espaço negativo; a Hero cabe na primeira dobra.

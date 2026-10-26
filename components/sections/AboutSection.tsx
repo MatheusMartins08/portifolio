@@ -75,14 +75,12 @@ export async function AboutSection() {
           <dl className={styles.margin} data-trace="rail">
             {notes.map((item) => (
               <div key={item.label} className={styles.note} data-trace="note">
-                <span className={styles.node} aria-hidden="true" />
                 <dt className={styles.label}>{item.label}</dt>
                 <dd className={styles.value}>{item.value}</dd>
                 <dd className={styles.small}>{item.note}</dd>
               </div>
             ))}
             <div className={styles.note} data-trace="note">
-              <span className={styles.node} aria-hidden="true" />
               <dt className={styles.label}>{cards.labels.status}</dt>
               <dd className={styles.status}>
                 <StatusDot tone={site.status}>{cards.status}</StatusDot>

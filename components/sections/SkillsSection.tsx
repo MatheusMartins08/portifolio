@@ -26,6 +26,7 @@ export async function SkillsSection() {
         <HeroBackdrop variant="section" holes="h2" unit={110} />
 
         <Statement
+          align="center"
           label={t.skills.label}
           index={sectionIndex("skills")}
           highlight={t.skills.statementHighlight}

@@ -1,10 +1,10 @@
 .cue {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  min-height: 44px;
+  gap: var(--space-2);
+  min-width: 44px;
   padding: var(--space-2);
-  margin-left: calc(-1 * var(--space-2));
   background: none;
   border: 0;
   border-radius: var(--radius-sm);
@@ -17,19 +17,32 @@
 
 .label { font: 500 11px/1 var(--font-sans); letter-spacing: .16em; text-transform: uppercase; }
 
-.track { position: relative; width: 1px; height: var(--space-12); background: var(--line-strong); overflow: hidden; }
-.drop {
-  position: absolute;
-  left: 0;
-  top: calc(-1 * var(--space-3));
-  width: 1px;
-  height: var(--space-3);
-  background: var(--bolt-hot);
-  animation: drip 2.4s var(--mf-ease-inout) infinite;
+/* The bolt: dark at rest; a short beam of light runs down it. */
+.bolt { display: block; width: var(--space-4); height: 44px; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.rest { stroke: var(--fg-faint); stroke-width: 1.5px; }
+.beam {
+  stroke: var(--bolt-hot);
+  stroke-width: 1.8px;
+  stroke-dasharray: .3 2;
+  stroke-dashoffset: .3;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px var(--bolt-glow));
 }
-.still .drop { animation: none; opacity: 0; }
+.cue:hover .rest { stroke: var(--fg-muted); }
 
-@keyframes drip {
-  0% { transform: translateY(0); }
-  70%, 100% { transform: translateY(calc(var(--space-12) + var(--space-3))); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Floating, gently, up and down. */
+  .cue { animation: float 3.2s var(--mf-ease-inout) infinite; }
+  .beam { animation: beam 2.4s var(--mf-ease-inout) infinite; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+/* From the top of the bolt to past its tip, then a pause before the next one. */
+@keyframes beam {
+  0% { stroke-dashoffset: .3; opacity: 0; }
+  10% { opacity: 1; }
+  60% { opacity: 1; }
+  75%, 100% { stroke-dashoffset: -1; opacity: 0; }
 }

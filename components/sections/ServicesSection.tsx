@@ -9,6 +9,7 @@ export async function ServicesSection() {
   return (
     <Section id="servicos" labelledBy="servicos-title">
       <Statement
+        align="center"
         label={t.services.label}
         index={sectionIndex("servicos")}
         highlight={t.services.statementHighlight}

@@ -17,21 +17,21 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: var(--photo-filter);
 }
 
-/* Hover photo: stacked over the first, hidden until the pointer arrives; it comes in as light — over-
-   exposed first, then settling to the same tone. */
+/* The Hero's photos stay in colour (the one exception to the black and white). Hover photo: stacked
+   over the first, hidden until the pointer arrives; it comes in as light — overexposed first, then
+   settling to its own tones. */
 .alt {
   position: absolute;
   inset: 0;
   opacity: 0;
-  filter: var(--photo-filter) brightness(1.8);
+  filter: brightness(1.8);
   transition:
     opacity 700ms var(--mf-ease-out),
     filter 900ms var(--mf-ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .swap:hover .alt { opacity: 1; filter: var(--photo-filter); }
+  .swap:hover .alt { opacity: 1; filter: brightness(1); }
 }

@@ -22,6 +22,7 @@ export async function ProjectsSection() {
   return (
     <Section id="projetos" labelledBy="projetos-title">
       <Statement
+        align="center"
         label={t.projects.label}
         index={sectionIndex("projetos")}
         highlight={t.projects.statementHighlight}
