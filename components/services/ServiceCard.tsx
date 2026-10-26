@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ComponentType, type PointerEvent } from "react";
+import { useEffect, useRef, type ComponentType } from "react";
 import { Tag } from "@/components/ui/Tag";
 import type { ServiceKey } from "@/lib/content/site";
 import { cssVars, cx } from "@/lib/cx";
@@ -39,18 +39,47 @@ export function ServiceCard({ index, label, motif, title, description, highlight
   const ref = useRef<HTMLElement>(null);
   const Motif = MOTIFS[motif];
 
-  function onPointerMove(event: PointerEvent<HTMLElement>) {
+  // ---- the light: under the mouse, in the card's own coordinates, also while the page scrolls ----
+  useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-    el.style.setProperty("--my", `${event.clientY - rect.top}px`);
-  }
+    /** The mouse's last position on the page (client px); null until it moves, or off a mouse. */
+    let pointer: { x: number; y: number } | null = null;
+    let frame = 0;
+
+    // The stack scales cards down (--s): screen px are divided by that scale. And a scroll moves the
+    // cards under a still mouse — even slides the next one in under it — so on every scroll the card
+    // the mouse is over places its light again.
+    const place = () => {
+      frame = 0;
+      if (!pointer) return;
+      const rect = el.getBoundingClientRect();
+      if (pointer.x < rect.left || pointer.x > rect.right || pointer.y < rect.top || pointer.y > rect.bottom) return;
+      const sx = rect.width ? el.offsetWidth / rect.width : 1;
+      const sy = rect.height ? el.offsetHeight / rect.height : 1;
+      el.style.setProperty("--mx", `${((pointer.x - rect.left) * sx).toFixed(1)}px`);
+      el.style.setProperty("--my", `${((pointer.y - rect.top) * sy).toFixed(1)}px`);
+    };
+    const request = () => {
+      if (!frame) frame = requestAnimationFrame(place);
+    };
+    const onMove = (event: PointerEvent) => {
+      pointer = event.pointerType === "mouse" ? { x: event.clientX, y: event.clientY } : null;
+      request();
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("scroll", request, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", request);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <article
       ref={ref}
-      onPointerMove={onPointerMove}
       data-active={active || undefined}
       className={cx(styles.svc, className)}
     >
