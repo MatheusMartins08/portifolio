@@ -18,7 +18,7 @@
 .label { font: 500 11px/1 var(--font-sans); letter-spacing: .16em; text-transform: uppercase; }
 
 /* The bolt: dark at rest; a short beam of light runs down it. */
-.bolt { display: block; width: var(--space-4); height: 44px; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.bolt { display: block; width: var(--space-4); height: calc(var(--space-6) + var(--space-1)); overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .rest { stroke: var(--fg-faint); stroke-width: 1.5px; }
 .beam {
   stroke: var(--bolt-hot);

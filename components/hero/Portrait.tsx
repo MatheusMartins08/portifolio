@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ImageAsset } from "@/lib/content/assets";
 import { cx } from "@/lib/cx";
+import { PortraitArcs } from "./PortraitArcs";
 import styles from "./Portrait.module.css";
 
 interface PortraitProps {
@@ -16,7 +17,7 @@ interface PortraitProps {
   className?: string;
 }
 
-/** Black-and-white photo with no frame: its top and left edges dissolve into the page's black. */
+/** The photo in a hairline frame, with small electric arcs jumping across the gap between them. */
 export function Portrait({ image, alt, hover, sizes, priority = false, className }: PortraitProps) {
   return (
     <figure className={cx(styles.portrait, hover && styles.swap, className)}>
@@ -48,6 +49,7 @@ export function Portrait({ image, alt, hover, sizes, priority = false, className
           />
         ) : null}
       </div>
+      <PortraitArcs />
     </figure>
   );
 }

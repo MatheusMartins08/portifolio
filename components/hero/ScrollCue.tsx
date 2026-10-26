@@ -14,8 +14,8 @@ interface ScrollCueProps {
   className?: string;
 }
 
-/** A small broken bolt, pointing down: a few sharp zigzags in a 16 × 44 box. */
-const BOLT = "M9 1L6 12l4 2-5 13 4 2-4 14";
+/** A small bolt, pointing down: one sharp zigzag in a 16 × 28 box. */
+const BOLT = "M9 1L6 12l4 2-5 13";
 
 /**
  * Cue to the next section: the label over a small, dark bolt, the whole thing floating gently up and
@@ -31,7 +31,7 @@ export function ScrollCue({ target, label, ariaLabel, className }: ScrollCueProp
     <button type="button" className={cx(styles.cue, className)} onClick={go}>
       <span className={styles.label}>{label}</span>
       <span className="sr-only"> — {ariaLabel}</span>
-      <svg className={styles.bolt} viewBox="0 0 16 44" aria-hidden="true">
+      <svg className={styles.bolt} viewBox="0 0 16 28" aria-hidden="true">
         <path className={styles.rest} d={BOLT} />
         <path className={styles.beam} d={BOLT} pathLength={1} />
       </svg>

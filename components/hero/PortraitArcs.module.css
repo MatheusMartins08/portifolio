@@ -1,0 +1,22 @@
+/* Over the photo's frame, on the box of its hairline (--outset outside it); the glow may spill past
+   it. Wider than its parent, so the global svg max-width must not shrink it. Never catches the pointer. */
+.arcs {
+  position: absolute;
+  left: calc(var(--outset, 0px) * -1);
+  top: calc(var(--outset, 0px) * -1);
+  max-width: none;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* Each arc: a soft glow under a white body. Its opacity flickers from PortraitArcs while it lives. */
+.arc { opacity: 0; }
+.glow { stroke: var(--bolt-lit); stroke-width: 5px; stroke-opacity: .22; }
+.body { stroke: var(--mark); stroke-width: 1.4px; filter: drop-shadow(0 0 2px var(--bolt-glow)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .arcs { display: none; }
+}

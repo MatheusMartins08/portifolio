@@ -1,5 +1,5 @@
-/* The page gives the figure its size; the photo fills it. */
-.portrait { margin: 0; }
+/* The page gives the figure its size; the photo fills it. The arcs (PortraitArcs) jump between the photo and its hairline. */
+.portrait { position: relative; margin: 0; }
 
 /* The whole photo, almost square-cornered, with a hairline frame standing a little off its edge. */
 .frame {
