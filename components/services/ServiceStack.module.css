@@ -2,6 +2,8 @@
    the cards behind show as steps; the margin under each is the scroll it takes the next to slide over. */
 .stack {
   --stack-step: var(--space-4);
+  /* Room the last stuck card needs under it, or the stack falls back to a list (read by ServiceStack). */
+  --stack-room: var(--space-6);
   max-width: 960px;
   margin: var(--space-12) auto 0;
   padding: 0 0 var(--space-12);
@@ -20,10 +22,13 @@
   .item:last-child { margin-bottom: 0; }
 }
 
-/* Reduced motion, or a screen too short to hold a stuck card (a phone on its side): a plain list.
-   ServiceStack mirrors this query to leave the cards unscaled. */
-@media (prefers-reduced-motion: reduce), (max-height: 640px) {
+/* Reduced motion, or a screen too short to hold the last card at its step (data-short, measured by
+   ServiceStack; a phone on its side): a plain list. ServiceStack leaves the cards unscaled then. */
+@media (prefers-reduced-motion: reduce) {
   .stack { padding-bottom: 0; }
   .item { position: static; margin-bottom: var(--space-6); }
   .item:last-child { margin-bottom: 0; }
 }
+.stack[data-short] { padding-bottom: 0; }
+.stack[data-short] .item { position: static; margin-bottom: var(--space-6); }
+.stack[data-short] .item:last-child { margin-bottom: 0; }

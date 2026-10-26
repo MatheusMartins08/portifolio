@@ -63,24 +63,25 @@ export function ServiceCard({ index, label, motif, title, description, highlight
     const request = () => {
       if (!frame) frame = requestAnimationFrame(place);
     };
+    let watching = false;
+    // The mouse is always followed (just two numbers), so a card that scrolls in under a still mouse
+    // knows where it is; the light itself is only placed while the card is around the screen.
     const onMove = (event: PointerEvent) => {
       pointer = event.pointerType === "mouse" ? { x: event.clientX, y: event.clientY } : null;
-      request();
+      if (watching) request();
     };
+    window.addEventListener("pointermove", onMove, { passive: true });
 
-    // Only while the card is around the screen: elsewhere on the page it has nothing to light.
     const listen = (on: boolean) => {
       if (on) {
-        window.addEventListener("pointermove", onMove, { passive: true });
         window.addEventListener("scroll", request, { passive: true });
+        request();
       } else {
-        window.removeEventListener("pointermove", onMove);
         window.removeEventListener("scroll", request);
         cancelAnimationFrame(frame);
         frame = 0;
       }
     };
-    let watching = false;
     const near = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting === watching) return;
@@ -93,6 +94,7 @@ export function ServiceCard({ index, label, motif, title, description, highlight
     return () => {
       near.disconnect();
       listen(false);
+      window.removeEventListener("pointermove", onMove);
     };
   }, []);
 

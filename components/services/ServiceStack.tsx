@@ -20,8 +20,8 @@ export interface ServiceStackItem {
 const SHRINK = 0.04;
 /** A card becomes the active one once its top passes this share of the viewport height. */
 const ACTIVE_LINE = 0.55;
-/** Where the stack is off and the cards are a plain list (see the CSS): mirror its media queries. */
-const FLAT = "(prefers-reduced-motion: reduce), (max-height: 640px)";
+/** Where the stack is off and the cards are a plain list (see the CSS); a short screen is measured. */
+const REDUCED = "(prefers-reduced-motion: reduce)";
 
 /**
  * The services as a stack of cards on scroll, after Skiper UI's StickyCard_001, rebuilt without
@@ -58,13 +58,26 @@ export function ServiceStack({ items }: { items: ServiceStackItem[] }) {
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
-    const flat = window.matchMedia(FLAT);
+    const reduced = window.matchMedia(REDUCED);
     let frame = 0;
     let watching = false;
 
     const tick = () => {
       frame = 0;
       const rows = Array.from(list.children) as HTMLElement[];
+
+      // Short screen: the last card, stuck at its step, has to fit with some room under it. Measured
+      // against the small viewport (clientHeight), which a phone's collapsing address bar leaves alone.
+      const last = rows[rows.length - 1];
+      const room = parseFloat(getComputedStyle(list).getPropertyValue("--stack-room")) || 0;
+      const short = document.documentElement.clientHeight < parseFloat(getComputedStyle(last).top) + last.offsetHeight + room;
+      if (short !== list.hasAttribute("data-short")) {
+        list.toggleAttribute("data-short", short);
+        request();
+        return;
+      }
+      const flat = reduced.matches || short;
+
       const tops = rows.map((li) => li.getBoundingClientRect().top);
       const line = window.innerHeight * ACTIVE_LINE;
 
@@ -76,7 +89,7 @@ export function ServiceStack({ items }: { items: ServiceStackItem[] }) {
 
       // How far each card has slid into its stuck place over the previous one (0 → 1).
       const placed = rows.map((li, i) => {
-        if (i === 0 || flat.matches) return 0;
+        if (i === 0 || flat) return 0;
         const prev = rows[i - 1];
         const stuck = parseFloat(getComputedStyle(li).top);
         const travel = prev.offsetHeight + parseFloat(getComputedStyle(prev).marginBottom) - (stuck - parseFloat(getComputedStyle(prev).top));
@@ -110,13 +123,13 @@ export function ServiceStack({ items }: { items: ServiceStackItem[] }) {
       { rootMargin: "25% 0px" },
     );
     observer.observe(list);
-    flat.addEventListener("change", request);
+    reduced.addEventListener("change", request);
     request();
 
     return () => {
       observer.disconnect();
       listen(false);
-      flat.removeEventListener("change", request);
+      reduced.removeEventListener("change", request);
       cancelAnimationFrame(frame);
     };
   }, []);
