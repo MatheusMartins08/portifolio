@@ -17,13 +17,7 @@ const ICONS = {
   chat: "M4 5h16v11H9.5L5 19.5V16H4z",
   code: "M9 7l-5 5 5 5M15 7l5 5-5 5",
   pin: "M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5",
-  folder: "M3.5 6.5h6l2 2h9v10h-17z",
-  terminal: "M3.5 5h17v14h-17zM7 10l3 2.5L7 15M12.5 15H17",
-  file: "M6.5 3.5h7l4 4v13h-11zM13.5 3.5v4h4",
   alert: "M12 7.5v5.5M12 16.2v.3M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0",
-  menu: "M4 8h16M4 16h16",
-  link: "M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1",
-  user: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4.5 20.5c1.2-3.6 4.1-5.5 7.5-5.5s6.3 1.9 7.5 5.5",
   server: "M4 4.5h16v6H4zM4 13.5h16v6H4zM7.5 7.5v.01M7.5 16.5v.01M11 7.5h5.5M11 16.5h5.5",
   devices: "M2.5 4.5h13v9h-13zM9 13.5v3.5M6 17.5h6M17.5 8.5h4v11h-4zM19.5 17v.01",
   sliders: "M4 7h9M17 7h3M15 4.5v5M4 17h3M11 17h9M9 14.5v5",
@@ -35,8 +29,6 @@ const ICONS = {
 } as const;
 
 export type IconName = keyof typeof ICONS;
-
-export const iconNames = Object.keys(ICONS) as IconName[];
 
 interface IconProps {
   name: IconName;

@@ -68,12 +68,31 @@ export function ServiceCard({ index, label, motif, title, description, highlight
       request();
     };
 
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("scroll", request, { passive: true });
+    // Only while the card is around the screen: elsewhere on the page it has nothing to light.
+    const listen = (on: boolean) => {
+      if (on) {
+        window.addEventListener("pointermove", onMove, { passive: true });
+        window.addEventListener("scroll", request, { passive: true });
+      } else {
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("scroll", request);
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    };
+    let watching = false;
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting === watching) return;
+        watching = entry.isIntersecting;
+        listen(watching);
+      },
+      { rootMargin: "25% 0px" },
+    );
+    near.observe(el);
     return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("scroll", request);
-      cancelAnimationFrame(frame);
+      near.disconnect();
+      listen(false);
     };
   }, []);
 

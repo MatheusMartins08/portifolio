@@ -123,8 +123,27 @@ export function Timeline({ items, moreLabel, lessLabel, trigger = 0.62, classNam
     lay();
     measure();
     const target = parent ?? window;
-    target.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    // Only follow the scroll around the timeline; entering and leaving, one reading settles it.
+    let watching = false;
+    const listen = (on: boolean) => {
+      if (on) {
+        target.addEventListener("scroll", schedule, { passive: true });
+        window.addEventListener("resize", schedule);
+      } else {
+        target.removeEventListener("scroll", schedule);
+        window.removeEventListener("resize", schedule);
+      }
+    };
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting === watching) return;
+        watching = entry.isIntersecting;
+        listen(watching);
+        schedule();
+      },
+      { root: parent, rootMargin: "25% 0px" },
+    );
+    near.observe(root);
     // Opening "Ver atividades" changes the height: the bolt's course, and the progress.
     const observer = new ResizeObserver(() => {
       lay();
@@ -132,8 +151,8 @@ export function Timeline({ items, moreLabel, lessLabel, trigger = 0.62, classNam
     });
     observer.observe(root);
     return () => {
-      target.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
+      listen(false);
+      near.disconnect();
       observer.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };

@@ -20,8 +20,8 @@ interface Drawing {
 
 /**
  * The arcs linking projects that sit side by side (geometry in ./arc), behind the cards, filling the
- * projects grid. Each is drawn by the scroll, first project to second (`--t` per arc, as in
- * ScrollLightning), and with a card hovered or focused a charge runs along it, away from that card.
+ * projects grid. Each is drawn by the scroll, first project to second (`--t` per arc), and with a
+ * card hovered or focused a charge runs along it, away from that card.
  * In a single column there is no pair side by side, so nothing is drawn. With reduced motion the arcs
  * are simply there, whole, and still.
  */
