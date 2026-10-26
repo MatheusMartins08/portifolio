@@ -14,7 +14,14 @@
 
 /* Each arc: a soft glow under a white body. Its opacity flickers from PortraitArcs while it lives. */
 .arc { opacity: 0; }
-.glow { stroke: var(--bolt-lit); stroke-width: 5px; stroke-opacity: .22; }
+.glow {
+  stroke: var(--bolt-lit);
+  stroke-width: 5px;
+  stroke-opacity: .22;
+  transition: stroke-width var(--mf-dur-3) var(--mf-ease-out), stroke-opacity var(--mf-dur-3) var(--mf-ease-out);
+}
+/* The flash as the six charged arcs come on (data-flash, set by PortraitArcs for an instant). */
+.arcs[data-flash] .glow { stroke-width: 9px; stroke-opacity: .5; transition: none; }
 .body { stroke: var(--mark); stroke-width: 1.4px; filter: drop-shadow(0 0 2px var(--bolt-glow)); }
 
 @media (prefers-reduced-motion: reduce) {

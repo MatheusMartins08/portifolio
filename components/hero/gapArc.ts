@@ -2,8 +2,9 @@
  * Geometry of the arcs that jump across the gap between the Hero photo and its hairline frame
  * (PortraitArcs): a short bolt from the photo's edge to the hairline, slanting along the side so it is
  * more than the gap's width, sometimes with a small fork. In the hairline's box: the photo sits `outset`
- * px inside it, the 1px line runs on its edge. Pure function, seeded: `spot` picks where it strikes,
- * `take` how it breaks there (a new take, same spot: the arc crackles).
+ * px inside it, the 1px line runs on its edge. Pure function, seeded: `spot` picks where it strikes
+ * (unless `place` says) and how it slants, `take` how it breaks there (a new take, same spot: the arc
+ * crackles).
  */
 
 import { hash, jag, toPath, type Point } from "@/lib/geometry/lightning";
@@ -15,6 +16,9 @@ interface GapInput {
   outset: number;
   spot: number;
   take: number;
+  /** Where it strikes, instead of where `spot` picks: a side (0 top, 1 right, 2 bottom, 3 left) and
+     how far along it, 0–1, between the corners' margins. */
+  place?: { side: 0 | 1 | 2 | 3; at: number };
 }
 
 /** Arcs keep this far from the corners, px, where the gap turns. */
@@ -25,17 +29,22 @@ const DRIFT_SPREAD = 10;
 /** The hairline is 1px: its centre line. */
 const INSET = 0.5;
 
-export function drawGapArc({ width, height, outset, spot, take }: GapInput): string {
+export function drawGapArc({ width, height, outset, spot, take, place }: GapInput): string {
   const w = width - 2 * outset;
   const h = height - 2 * outset;
   const spans = [w, h, w, h].map((len) => Math.max(0, len - 2 * MARGIN));
   const total = spans.reduce((sum, len) => sum + len, 0);
   if (!total) return "";
 
-  // A side, weighted by its length, and a point along it: top, right, bottom, left.
+  // A side, weighted by its length, and a point along it: top, right, bottom, left (or the given place).
   let at = hash(spot, 1) * total;
   let s = 0;
-  while (s < 3 && at > spans[s]) at -= spans[s++];
+  if (place) {
+    s = place.side;
+    at = place.at * spans[s];
+  } else {
+    while (s < 3 && at > spans[s]) at -= spans[s++];
+  }
   const len = s % 2 ? h : w;
   /** A point `u` px along side s from the photo's corner, `d` px in from the box's edge. */
   const point = (u: number, d: number): Point =>
