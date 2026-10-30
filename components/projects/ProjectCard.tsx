@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, type PointerEvent } from "react";
+import { useId, useRef, type PointerEvent } from "react";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { EdgeLight } from "@/components/ui/EdgeLight";
 import { Icon } from "@/components/ui/Icon";
@@ -31,6 +31,8 @@ interface ProjectCardProps {
   tech: string[];
   /** Up to two screenshots: the first at rest, the second cross-fades in on hover. */
   images: ImageAsset[];
+  /** What each screenshot shows, in order (i18n). For image search: the media link itself is aria-hidden. */
+  imageAlts?: string[];
   /** next/image `sizes` for the media width. */
   sizes: string;
   /** Case study page — only when it exists. Without it, image and title open the live site. */
@@ -62,6 +64,7 @@ export function ProjectCard({
   description,
   tech,
   images,
+  imageAlts = [],
   sizes,
   href,
   live,
@@ -71,6 +74,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const media = useRef<HTMLAnchorElement>(null);
   const bubble = useRef<HTMLSpanElement>(null);
+  const newTabId = useId();
 
   function onPointerMove(event: PointerEvent<HTMLAnchorElement>) {
     if (event.pointerType === "touch" || !media.current || !bubble.current) return;
@@ -100,10 +104,10 @@ export function ProjectCard({
       >
         {shots.length ? (
           <>
-            <Image src={shots[0].src} alt="" fill sizes={sizes} className={styles.img} />
+            <Image src={shots[0].src} alt={imageAlts[0] ?? ""} fill sizes={sizes} className={styles.img} />
             {shots[1] ? (
               <>
-                <Image src={shots[1].src} alt="" fill sizes={sizes} className={cx(styles.img, styles.alt)} />
+                <Image src={shots[1].src} alt={imageAlts[1] ?? ""} fill sizes={sizes} className={cx(styles.img, styles.alt)} />
                 {/* The crack's lit edge, riding the clip from one side to the other. */}
                 <svg className={styles.spark} viewBox="0 0 100 100" preserveAspectRatio="none">
                   <path d={crack.d} />
@@ -131,12 +135,17 @@ export function ProjectCard({
         <span>{category}</span>
       </div>
       <h3 className={styles.title}>
-        <a href={target} {...linkProps}>
+        <a href={target} {...linkProps} aria-describedby={external ? newTabId : undefined}>
           <span>{title}</span>
           <Icon name="arrow-up-right" size={20} className={styles.arrow} />
-          {external ? <span className="sr-only"> {labels.newTab}</span> : null}
         </a>
       </h3>
+      {/* "Opens in a new tab" as the link's description, so the heading's text stays the project's name. */}
+      {external ? (
+        <span id={newTabId} hidden>
+          {labels.newTab}
+        </span>
+      ) : null}
       <p className={styles.desc}>{description}</p>
       {tech.length ? (
         <Tags className={styles.tags}>

@@ -1064,6 +1064,11 @@
           "pt": "Plataforma web completa para barbearias, com agendamento online, gestão de serviços e profissionais, sistema de assinaturas e painel administrativo. Desenvolvida com foco em experiência do usuário, responsividade e automação da gestão do estabelecimento.",
           "en": "A complete web platform for barbershops, with online booking, service and staff management, a subscription system and an admin dashboard. Built with a focus on user experience, responsiveness and automating the day-to-day management of the shop.",
           "es": "Plataforma web completa para barberías, con reservas en línea, gestión de servicios y profesionales, sistema de suscripciones y panel administrativo. Desarrollada con foco en la experiencia de usuario, la responsividad y la automatización de la gestión del local."
+        },
+        "imageAlts": {
+          "pt": ["Página inicial do site da barbearia Black Crown Barber", "Agendamento online do Black Crown Barber em seis etapas, com o resumo do atendimento"],
+          "en": ["Home page of the Black Crown Barber barbershop website", "Black Crown Barber's six-step online booking, with the appointment summary"],
+          "es": ["Página de inicio del sitio de la barbería Black Crown Barber", "Reserva en línea de Black Crown Barber en seis pasos, con el resumen de la cita"]
         }
       },
       "metrica": {
@@ -1081,6 +1086,11 @@
           "pt": "Landing page premium para uma clínica odontológica contemporânea, com foco em identidade visual, experiência do usuário e conversão. O projeto conta com animações, tratamentos interativos, comparador antes e depois, avaliações em carrossel e design totalmente responsivo.",
           "en": "A premium landing page for a contemporary dental clinic, focused on visual identity, user experience and conversion. It features animations, interactive treatment sections, a before-and-after comparison, a review carousel and a fully responsive design.",
           "es": "Landing page premium para una clínica odontológica contemporánea, con foco en identidad visual, experiencia de usuario y conversión. Incluye animaciones, tratamientos interactivos, comparador de antes y después, reseñas en carrusel y un diseño totalmente responsivo."
+        },
+        "imageAlts": {
+          "pt": ["Página inicial da landing page da clínica odontológica Métrica", "Seção de diferenciais da Métrica, com diagnóstico digital e planejamento 3D"],
+          "en": ["Home page of the Métrica dental clinic landing page", "Métrica's highlights section, with digital diagnosis and 3D planning"],
+          "es": ["Página de inicio de la landing page de la clínica dental Métrica", "Sección de diferenciales de Métrica, con diagnóstico digital y planificación 3D"]
         }
       }
     }

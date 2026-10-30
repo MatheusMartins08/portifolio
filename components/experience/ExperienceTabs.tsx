@@ -19,13 +19,17 @@ interface ExperienceTabsProps {
   lessLabel: string;
 }
 
-const PANEL_ID = "experiencia-panel";
+const PANEL_PREFIX = "experiencia-panel-";
 const TAB_PREFIX = "experiencia-tab-";
 
-/** FilterTabs + the Timeline of the chosen group, inside a tabpanel; switching tabs re-mounts with .mf-swap. */
+/**
+ * FilterTabs + one tabpanel per group. Every group is in the HTML (search engines and no-JS readers get
+ * the education and courses too); the others are `hidden`. The chosen one re-mounts with .mf-swap, so its
+ * timeline enters again; a hidden timeline has no size, so it draws nothing and does not follow the scroll.
+ */
 export function ExperienceTabs({ groups, labelledBy, moreLabel, lessLabel }: ExperienceTabsProps) {
   const [value, setValue] = useState(groups[0]?.id ?? "");
-  const current = groups.find((group) => group.id === value) ?? groups[0];
+  const selected = groups.some((group) => group.id === value) ? value : groups[0]?.id;
 
   return (
     <div className={styles.stack}>
@@ -36,18 +40,31 @@ export function ExperienceTabs({ groups, labelledBy, moreLabel, lessLabel }: Exp
           // Chapters not started yet do not count.
           count: group.items.filter((item) => !item.future).length,
         }))}
-        value={value}
+        value={selected ?? ""}
         onChange={setValue}
         labelledBy={labelledBy}
-        panelId={PANEL_ID}
+        panelPrefix={PANEL_PREFIX}
         idPrefix={TAB_PREFIX}
         className={styles.tabs}
       />
-      <div id={PANEL_ID} role="tabpanel" aria-labelledby={`${TAB_PREFIX}${value}`} tabIndex={0} className={styles.panel}>
-        <div key={value} className={styles.swap}>
-          <Timeline items={current?.items ?? []} moreLabel={moreLabel} lessLabel={lessLabel} />
-        </div>
-      </div>
+      {groups.map((group) => {
+        const on = group.id === selected;
+        return (
+          <div
+            key={group.id}
+            id={`${PANEL_PREFIX}${group.id}`}
+            role="tabpanel"
+            aria-labelledby={`${TAB_PREFIX}${group.id}`}
+            tabIndex={0}
+            hidden={!on}
+            className={styles.panel}
+          >
+            <div key={on ? "on" : "off"} className={styles.swap}>
+              <Timeline items={group.items} moreLabel={moreLabel} lessLabel={lessLabel} />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

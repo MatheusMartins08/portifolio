@@ -16,15 +16,15 @@ interface FilterTabsProps {
   onChange: (id: string) => void;
   /** Id of the element that names the tablist (the section heading). */
   labelledBy: string;
-  /** Id of the tabpanel the tabs control. */
-  panelId: string;
+  /** Prefix of the tabpanel ids: each tab controls `${panelPrefix}${id}`. */
+  panelPrefix: string;
   /** Prefix for tab ids, so the panel can point back at the active tab. */
   idPrefix: string;
   className?: string;
 }
 
 /** Typographic tabs with a white underline that slides; count in mono superscript. Arrows, Home/End. */
-export function FilterTabs({ options, value, onChange, labelledBy, panelId, idPrefix, className }: FilterTabsProps) {
+export function FilterTabs({ options, value, onChange, labelledBy, panelPrefix, idPrefix, className }: FilterTabsProps) {
   const root = useRef<HTMLDivElement>(null);
   const indicator = useRef<HTMLSpanElement>(null);
   const tabs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -72,7 +72,7 @@ export function FilterTabs({ options, value, onChange, labelledBy, panelId, idPr
             role="tab"
             id={`${idPrefix}${option.id}`}
             aria-selected={selected}
-            aria-controls={panelId}
+            aria-controls={`${panelPrefix}${option.id}`}
             tabIndex={selected ? 0 : -1}
             className={cx(styles.tab, selected && styles.on)}
             onClick={() => onChange(option.id)}

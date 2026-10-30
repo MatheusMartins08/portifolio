@@ -52,6 +52,7 @@ export async function ProjectsSection() {
                 description={copy.description}
                 tech={project.tech}
                 images={project.images.map(asset)}
+                imageAlts={copy.imageAlts}
                 sizes={SIZES[project.size]}
                 // Cards only link to a case study that exists.
                 href={project.caseStudy ? `/${locale}/projects/${project.slug}` : undefined}
