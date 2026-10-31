@@ -63,6 +63,8 @@ export interface Project {
 }
 
 export interface Site {
+  /** Day the site's content last changed (YYYY-MM-DD): the sitemap's lastmod. Update it with the text. */
+  updated: string;
   person: {
     name: string;
     fullName: string;

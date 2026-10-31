@@ -1,5 +1,6 @@
 {
   "_note": "Dados que não são tradução: links, contatos, imagens, ordem dos itens, skills. Textos traduzíveis ficam em i18n.json — as chaves (ex.: projects.items.blackCrown) apontam para lá.",
+  "updated": "2026-10-30",
   "person": {
     "name": "Matheus Freitas",
     "fullName": "Matheus Freitas Martins",
