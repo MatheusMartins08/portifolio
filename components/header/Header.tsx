@@ -31,17 +31,18 @@ interface HeaderProps {
   cvHref: string;
   /** Page the section anchors live on: "" on the home page, "/pt" on inner pages (case studies). */
   homeHref?: string;
+  /** What follows the locale in this page's URL ("" on the home, "/projects/x" on a case study): the language links' target. */
+  path?: string;
 }
-
-const languages = locales.map((code) => ({ code, label: localeNames[code] }));
 
 /**
  * Fixed header in three loose pieces: language switch (left), navigation pill (centre), CV (right).
  * Active item follows the section in view; the pill gains a shadow on scroll; below 720px the pill
  * becomes a Menu button with a drop-down sheet.
  */
-export function Header({ items, locale, labels, cvHref, homeHref = "" }: HeaderProps) {
+export function Header({ items, locale, labels, cvHref, homeHref = "", path = "" }: HeaderProps) {
   const ids = useMemo(() => items.map((item) => item.id), [items]);
+  const languages = locales.map((code) => ({ code, label: localeNames[code], href: `/${code}${path}` }));
   const active = useScrollSpy(ids);
   const scrolled = useScrolled(16);
   const [menu, setMenu] = useState(false);

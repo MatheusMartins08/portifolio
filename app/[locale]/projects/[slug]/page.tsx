@@ -183,7 +183,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/pro
 
   return (
     <>
-      <SiteHeader onHome={false} />
+      <SiteHeader onHome={false} path={`/projects/${project.slug}`} />
       <main className={styles.page}>
         <CaseHero
           back={{ label: t.nav.projetos, href: `/${locale}#projetos` }}

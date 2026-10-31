@@ -46,9 +46,21 @@
     transform var(--mf-dur-2) var(--mf-ease-out),
     visibility 0s linear var(--mf-dur-2);
 }
-.open .menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
-.menu:focus,
-.menu:focus-visible { outline: none; box-shadow: var(--shadow-float); }
+/*
+ * Opening: visibility switches at once, on the list and on its links (which inherit it), so the current
+ * language can take focus in the same frame. With reduced motion, globals.css gives every element a .01ms
+ * transition of all properties, which would keep them hidden — unfocusable — for that frame.
+ */
+.menu li,
+.opt { transition: none; }
+.open .menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity var(--mf-dur-2) var(--mf-ease-out),
+    transform var(--mf-dur-2) var(--mf-ease-out);
+}
 
 .opt {
   display: grid;
@@ -61,12 +73,13 @@
   cursor: pointer;
   color: var(--fg-2);
   font: 400 14px/1 var(--font-sans);
+  text-decoration: none;
 }
 .code { font: 500 11px/1 var(--font-mono); letter-spacing: 0.1em; color: var(--fg-muted); }
 .active { background: var(--bg); color: var(--fg); }
 .selected { color: var(--fg); }
 .selected .code { color: var(--mark-text); }
-.menu:focus-visible .active { box-shadow: inset 0 0 0 1.5px var(--mark); }
+.opt:focus-visible { outline: 2px solid transparent; box-shadow: inset 0 0 0 1.5px var(--mark); }
 
 .mark { width: 6px; height: 6px; border-radius: 50%; }
 .selected .mark { background: var(--mark); }

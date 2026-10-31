@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import styles from "./LanguageSwitch.module.css";
@@ -8,31 +8,40 @@ import styles from "./LanguageSwitch.module.css";
 export interface LanguageOption {
   code: string;
   label: string;
+  /** The same page in this language: a real link, so search engines find every version. */
+  href: string;
 }
 
 interface LanguageSwitchProps {
   value: string;
   options: LanguageOption[];
+  /** A plain click: the header decides how to get there (it keeps the section in view). */
   onChange: (code: string) => void;
   /** Accessible name of the control (i18n `nav.language`). */
   label: string;
   className?: string;
 }
 
-/** PT/EN/ES pill with its own listbox dropdown. Keyboard: arrows, Home/End, Enter/Space, Esc. */
+/**
+ * PT/EN/ES pill opening a list of links to the page in each language (disclosure pattern).
+ * Keyboard: arrows, Home/End move between languages, Enter/Space follow, Esc closes.
+ * Modified clicks (new tab, new window) are left to the browser.
+ */
 export function LanguageSwitch({ value, options, onChange, label, className }: LanguageSwitchProps) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const root = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
-  const list = useRef<HTMLUListElement>(null);
+  const links = useRef<Array<HTMLAnchorElement | null>>([]);
+  /** Language focused when the list opens (the current one); the list is visible, so focusable, only after that render. */
+  const first = useRef(0);
   const id = useId();
   const listId = `${id}-list`;
   const display = value.toUpperCase();
 
   useEffect(() => {
     if (!open) return;
-    list.current?.focus({ preventScroll: true });
+    links.current[first.current]?.focus({ preventScroll: true });
     function onPointerDown(event: PointerEvent) {
       if (root.current && !root.current.contains(event.target as Node)) setOpen(false);
     }
@@ -42,13 +51,25 @@ export function LanguageSwitch({ value, options, onChange, label, className }: L
 
   function openMenu() {
     const current = options.findIndex((option) => option.code === value);
-    setActive(current < 0 ? 0 : current);
+    first.current = current < 0 ? 0 : current;
+    setActive(first.current);
     setOpen(true);
   }
 
-  function choose(code: string) {
+  function close() {
     setOpen(false);
     button.current?.focus();
+  }
+
+  function move(index: number) {
+    setActive(index);
+    links.current[index]?.focus();
+  }
+
+  function onLinkClick(event: MouseEvent<HTMLAnchorElement>, code: string) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    close();
     if (code !== value) onChange(code);
   }
 
@@ -57,29 +78,28 @@ export function LanguageSwitch({ value, options, onChange, label, className }: L
     switch (event.key) {
       case "ArrowDown":
         event.preventDefault();
-        setActive((active + 1) % n);
+        move((active + 1) % n);
         break;
       case "ArrowUp":
         event.preventDefault();
-        setActive((active - 1 + n) % n);
+        move((active - 1 + n) % n);
         break;
       case "Home":
         event.preventDefault();
-        setActive(0);
+        move(0);
         break;
       case "End":
         event.preventDefault();
-        setActive(n - 1);
+        move(n - 1);
         break;
-      case "Enter":
       case " ":
+        // Space follows the link too, as Enter does natively.
         event.preventDefault();
-        choose(options[active].code);
+        links.current[active]?.click();
         break;
       case "Escape":
         event.preventDefault();
-        setOpen(false);
-        button.current?.focus();
+        close();
         break;
       case "Tab":
         setOpen(false);
@@ -93,7 +113,6 @@ export function LanguageSwitch({ value, options, onChange, label, className }: L
         ref={button}
         type="button"
         className={styles.btn}
-        aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
         aria-label={`${label}: ${display}`}
@@ -109,32 +128,28 @@ export function LanguageSwitch({ value, options, onChange, label, className }: L
         <span>{display}</span>
         <Icon name="chevron-down" size={12} className={styles.chev} />
       </button>
-      <ul
-        ref={list}
-        id={listId}
-        role="listbox"
-        tabIndex={-1}
-        className={styles.menu}
-        aria-label={label}
-        aria-activedescendant={open ? `${id}-opt-${active}` : undefined}
-        onKeyDown={onListKeyDown}
-      >
+      <ul id={listId} className={styles.menu} aria-label={label} onKeyDown={onListKeyDown}>
         {options.map((option, i) => {
           const selected = option.code === value;
           return (
-            <li
-              key={option.code}
-              id={`${id}-opt-${i}`}
-              role="option"
-              aria-selected={selected}
-              lang={option.code}
-              className={cx(styles.opt, i === active && styles.active, selected && styles.selected)}
-              onClick={() => choose(option.code)}
-              onPointerEnter={() => setActive(i)}
-            >
-              <span className={styles.code}>{option.code.toUpperCase()}</span>
-              <span>{option.label}</span>
-              <span className={styles.mark} aria-hidden="true" />
+            <li key={option.code}>
+              <a
+                ref={(el) => {
+                  links.current[i] = el;
+                }}
+                href={option.href}
+                hrefLang={option.code}
+                lang={option.code}
+                aria-current={selected ? "page" : undefined}
+                className={cx(styles.opt, i === active && styles.active, selected && styles.selected)}
+                onClick={(event) => onLinkClick(event, option.code)}
+                onFocus={() => setActive(i)}
+                onPointerEnter={() => setActive(i)}
+              >
+                <span className={styles.code}>{option.code.toUpperCase()}</span>
+                <span>{option.label}</span>
+                <span className={styles.mark} aria-hidden="true" />
+              </a>
             </li>
           );
         })}

@@ -2,14 +2,18 @@ import { navSections, site } from "@/lib/content/site";
 import { getDictionary, getLocale } from "@/lib/i18n/dictionary";
 import { Header } from "./Header";
 
-/** Header wired to the dictionary and site data. On inner pages, pass `onHome={false}` so anchors point home. */
-export async function SiteHeader({ onHome = true }: { onHome?: boolean }) {
+/**
+ * Header wired to the dictionary and site data. On inner pages, pass `onHome={false}` so anchors point home,
+ * and the page's `path` after the locale ("/projects/x") so the language links lead to the same page.
+ */
+export async function SiteHeader({ onHome = true, path = "" }: { onHome?: boolean; path?: string }) {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   return (
     <Header
       items={navSections.map((section) => ({ id: section.id, label: t.nav[section.id] }))}
       locale={locale}
       homeHref={onHome ? "" : `/${locale}`}
+      path={path}
       labels={{
         nav: t.a11y.nav,
         menu: t.nav.menu,
