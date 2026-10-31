@@ -32,6 +32,8 @@ export interface ExperienceEntry {
   current?: boolean;
   currentLabel?: keyof Dictionary["experience"]["ui"];
   future?: boolean;
+  /** Work on his own (freelance): its `org` is not an employer, so it is not a worksFor in the structured data. */
+  independent?: boolean;
 }
 
 export interface SkillItem {

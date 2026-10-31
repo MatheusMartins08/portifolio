@@ -41,7 +41,7 @@
   "experience": {
     "pro": [
       { "key": "asp", "current": true },
-      { "key": "freelance", "current": true }
+      { "key": "freelance", "current": true, "independent": true }
     ],
     "acad": [
       { "key": "cotemig", "current": true, "currentLabel": "studying" },

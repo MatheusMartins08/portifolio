@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { asset } from "@/lib/content/assets";
-import { site } from "@/lib/content/site";
+import { site, type ExperienceEntry } from "@/lib/content/site";
 import { defaultLocale, htmlLang, locales, ogLocale, type Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/i18n/dictionary";
 
@@ -44,16 +44,30 @@ export function openGraphFor(locale: Locale, t: Dictionary) {
   };
 }
 
+/** The organizations named by experience entries (i18n `org`), as schema.org nodes of `type`. */
+function organizations(entries: ExperienceEntry[], t: Dictionary, type: string) {
+  return entries.flatMap((entry) => {
+    const name = (t.experience.items[entry.key] as { org?: string }).org;
+    return name ? [{ "@type": type, name }] : [];
+  });
+}
+
 /**
  * Structured data for the home, one graph: the person (stable @id across languages), the website, the
  * profile page about him and the portfolio's projects. Built only from what the site itself shows:
- * name, photo, role, the About text, city, the profiles it links to, services, skills and projects.
+ * name, photo, role, a short bio of facts on the page, city, the profiles it links to, where he works and
+ * studies (from the Experience section, so it follows it), services, skills and projects.
  */
 export function homeJsonLd(locale: Locale, t: Dictionary) {
   const root = absoluteUrl("/");
   const home = absoluteUrl(`/${locale}`);
   const person = { "@id": `${root}#person` };
   const website = { "@id": `${root}#website` };
+  const projectId = (slug: string) => `${root}#project-${slug}`;
+  // A current job that is not freelance; a school already started (alumniOf is schema.org's property for
+  // a person's school, current or past).
+  const employers = organizations(site.experience.pro.filter((entry) => entry.current && !entry.independent), t, "Organization");
+  const schools = organizations(site.experience.acad.filter((entry) => !entry.future), t, "EducationalOrganization");
   const photo = asset(site.person.photo);
   const image = { "@type": "ImageObject", url: absoluteUrl(photo.src), width: photo.width, height: photo.height };
   const knowsAbout = [
@@ -72,18 +86,22 @@ export function homeJsonLd(locale: Locale, t: Dictionary) {
         ...person,
         name: site.person.fullName,
         alternateName: site.person.name,
-        url: home,
+        // One home for the person on every language's page: the x-default one.
+        url: absoluteUrl(`/${defaultLocale}`),
         image,
         jobTitle: t.footer.role,
-        description: t.about.paragraphs[0],
+        description: t.seo.bio,
         address: {
           "@type": "PostalAddress",
           addressLocality: site.person.address.locality,
           addressRegion: site.person.address.region,
           addressCountry: site.person.address.country,
         },
+        worksFor: employers.length ? employers : undefined,
+        alumniOf: schools.length ? schools : undefined,
         sameAs: [site.social.github, site.social.linkedin],
         knowsAbout,
+        workExample: site.projects.map((project) => ({ "@id": projectId(project.slug) })),
       },
       {
         "@type": "WebSite",
@@ -105,13 +123,16 @@ export function homeJsonLd(locale: Locale, t: Dictionary) {
         about: person,
         mainEntity: person,
         primaryImageOfPage: image,
+        dateModified: site.updated,
       },
       ...site.projects.map((project) => ({
         "@type": "CreativeWork",
+        "@id": projectId(project.slug),
         name: t.projects.items[project.key].title,
         description: t.projects.items[project.key].description,
         url: project.live ?? undefined,
         image: project.images[0] ? absoluteUrl(project.images[0]) : undefined,
+        keywords: project.tech.join(", "),
         creator: person,
       })),
     ],
