@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { drawGapArc } from "./gapArc";
+import { drawCornerArc, drawGapArc } from "./gapArc";
 import styles from "./PortraitArcs.module.css";
 
 /** Paths in the pool: one per charged arc. */
-const SLOTS = 6;
+const SLOTS = 4;
 /** At rest, arcs alive at once, at most. */
 const IDLE_MAX = 2;
 /** At rest, wait before trying the next arc, ms: random in the range. */
@@ -14,15 +14,8 @@ const GAP_MS: [number, number] = [250, 1100];
 const LIFE_MS: [number, number] = [200, 400];
 /** While alive, an arc redraws itself this often, ms: it crackles. */
 const CRACKLE_MS = 60;
-/** Charged (the mouse on the photo): an arc on each of these, held. Two a side, one on top, one below. */
-const PLACES = [
-  { side: 3, at: 1 / 3 },
-  { side: 3, at: 2 / 3 },
-  { side: 1, at: 1 / 3 },
-  { side: 1, at: 2 / 3 },
-  { side: 0, at: 0.5 },
-  { side: 2, at: 0.5 },
-] as const;
+/** Charged (the mouse on the photo): an arc on each corner, held. */
+const CORNERS = [0, 1, 2, 3] as const;
 /** The flash as the charged arcs come on, ms. */
 const FLASH_MS = 120;
 /** Once the mouse leaves, the charge drains for this long, ms, its flickers spreading out over the range. */
@@ -35,9 +28,9 @@ const newSpot = () => Math.floor(Math.random() * 1e9);
 /**
  * Small electric arcs across the gap between the Hero photo and its hairline frame (geometry in
  * ./gapArc). At rest, like static: one or two at a time, each alive a few hundred ms, crackling, then the
- * next somewhere else. With the mouse on the photo it is charged: six arcs come on at once with a flash
- * and hold, trembling, as if the line powered the photo; when the mouse leaves they drain over a second,
- * weaker and rarer, and the static comes back. Laid over the element just before it, the photo's frame,
+ * next somewhere else. With the mouse on the photo it is charged: four arcs come on at once with a flash,
+ * one cutting across each corner, and hold, trembling, as if the line powered the photo; when the mouse
+ * leaves they drain over a second, weaker and rarer, and the static comes back. Laid over the element just before it, the photo's frame,
  * on the box of its outline. Drawn straight into a fixed pool of paths, never through React state. Runs
  * only while the photo is on screen and the tab is visible. Decorative: hidden from assistive tech, and
  * not drawn at all with reduced motion.
@@ -51,8 +44,9 @@ export function PortraitArcs() {
     const figure = svg?.parentElement;
     if (!svg || !photo || !figure || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // ---- the hairline's box: the photo's border box (unrounded, unscaled) plus its outline ----
+    // ---- the hairline's box: the photo's border box (unrounded, unscaled) plus its outline; its corner radius ----
     let box = { width: 0, height: 0, outset: 0 };
+    let round = 0;
     const resize = new ResizeObserver(([entry]) => {
       const border = entry.borderBoxSize?.[0];
       const style = getComputedStyle(photo);
@@ -60,6 +54,7 @@ export function PortraitArcs() {
       const width = (border ? border.inlineSize : photo.offsetWidth) + 2 * outset;
       const height = (border ? border.blockSize : photo.offsetHeight) + 2 * outset;
       box = { width, height, outset };
+      round = parseFloat(style.borderTopLeftRadius) || 0;
       svg.setAttribute("width", `${width}`);
       svg.setAttribute("height", `${height}`);
       svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
@@ -116,29 +111,29 @@ export function PortraitArcs() {
       idle();
     };
 
-    // ---- charged: the six arcs at once, with a flash, held and trembling ----
+    // ---- charged: the four corner arcs at once, with a flash, held and trembling ----
     let spots: number[] = [];
     const charge = () => {
       clear();
-      spots = PLACES.map(newSpot);
+      spots = CORNERS.map(newSpot);
       svg.setAttribute("data-flash", "");
       later(FLASH_MS, () => svg.removeAttribute("data-flash"));
       const hum = () => {
-        PLACES.forEach((place, i) => show(slots[i], drawGapArc({ ...box, spot: spots[i], take: take++, place }), 0.75 + 0.25 * Math.random()));
+        CORNERS.forEach((corner, i) => show(slots[i], drawCornerArc({ ...box, round, spot: spots[i], take: take++, corner }), 0.75 + 0.25 * Math.random()));
         later(CRACKLE_MS, hum);
       };
       hum();
     };
 
-    // ---- discharge: the same six, weaker and rarer, then the static again ----
+    // ---- discharge: the same four, weaker and rarer, then the static again ----
     const discharge = () => {
       clear();
       const start = performance.now();
       const drain = () => {
         const level = 1 - (performance.now() - start) / DISCHARGE_MS;
         if (level <= 0) return rest();
-        PLACES.forEach((place, i) => {
-          if (Math.random() < level) show(slots[i], drawGapArc({ ...box, spot: spots[i], take: take++, place }), level * (0.6 + 0.4 * Math.random()));
+        CORNERS.forEach((corner, i) => {
+          if (Math.random() < level) show(slots[i], drawCornerArc({ ...box, round, spot: spots[i], take: take++, corner }), level * (0.6 + 0.4 * Math.random()));
           else slots[i].g.style.opacity = "0";
         });
         later(DISCHARGE_STEP[0] + (DISCHARGE_STEP[1] - DISCHARGE_STEP[0]) * (1 - level), drain);
