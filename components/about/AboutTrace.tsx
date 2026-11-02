@@ -6,8 +6,8 @@ import { cssVars, cx } from "@/lib/cx";
 import { hash, jag, lengths, toPath, type Point } from "@/lib/geometry/lightning";
 import styles from "./AboutTrace.module.css";
 
-/** Where the bolt runs, px: on the margin's edge (or `narrow` px left of the text when the notes sit above it), out past the section's foot. */
-const RAIL = { narrow: 20, after: 96 };
+/** How far past the section's foot the bolt runs out, px. */
+const RAIL = { after: 96 };
 /**
  * The bolt's shape, after a photograph of real lightning.
  * - Trunk: almost straight on the whole, with a slow drift (`wander`) and a constant fine tremor —
@@ -17,9 +17,9 @@ const RAIL = { narrow: 20, after: 96 };
  *   all along. Long near the bolt's start, shorter towards its end (`decay`); near the end one runs
  *   almost alongside the trunk, as if it split (`split`).
  * - Branches branch again, up to `levels` deep, finer and dimmer each time.
- * - Every branch is grown in the free space only: it stops just short (`clearance`) of the title, the
- *   notes, the text and the quote, and of the viewport's edges. Where there is room (beside the title,
- *   below the quote, past the page's edge) branches run long, as in the photograph.
+ * - Every branch is grown in the free space only: it stops just short (`clearance`) of the title and
+ *   of every module's content, and of the viewport's edges. Inside the sheet that leaves the modules'
+ *   padding and empty stretches, so branches stay short there; past the sheet's edge they run longer.
  */
 const SHAPE = {
   seed: 31,
@@ -29,9 +29,9 @@ const SHAPE = {
   fine: { cap: 2.6, rough: 0.25, minSeg: 5 },
   branch: {
     first: 50,
-    gap: [64, 104],
+    gap: [72, 120],
     angle: [0.6, 1.05],
-    length: [90, 220],
+    length: [50, 140],
     decay: 0.55,
     bend: 0.3,
     step: 9,
@@ -77,12 +77,14 @@ function textBoxIn(el: HTMLElement, stage: HTMLElement): Box {
 
 /** The pieces of the page the bolt runs past (marked `data-trace` in the stage). */
 interface Parts {
-  /** The section title: the bolt starts clear of its first letters, and no branch crosses it. */
+  /** The section title: no branch crosses it. */
   title: HTMLElement | null;
-  rail: HTMLElement | null;
-  text: HTMLElement;
-  notes: HTMLElement[];
-  quote: HTMLElement;
+  /** The frame the modules sit in: the bolt starts at its top edge and leaves down its far edge. */
+  sheet: HTMLElement;
+  /** Every module, in reading order: each takes a pulse as the head reaches it. */
+  modules: HTMLElement[];
+  /** The closing module: the bolt turns along its top. */
+  end: HTMLElement;
 }
 
 /** Stroke weight of a branch piece: thicker at a branch's fork than at its tip; deeper branches thinner still. */
@@ -104,8 +106,8 @@ interface Trace {
   /** Per point of the trunk: the depth of the reading line (px below the stage top) at which the head reaches it, and its length along the trunk. */
   at: number[];
   run: number[];
-  /** Depths at which the head reaches the text, each note, and the quote. */
-  marks: { text: number; notes: number[]; quote: number };
+  /** Depths at which the head reaches each module, and lights the closing one. */
+  marks: { modules: number[]; end: number };
 }
 
 const between = ([lo, hi]: number[], t: number) => lo + (hi - lo) * t;
@@ -179,56 +181,51 @@ function grow(from: Point, dir: Point, side: number, angle: number, length: numb
 }
 
 /**
- * The bolt's course, from the measured page. From the top of the section down the margin's edge (left
- * of the text when the notes sit above it) to the pull quote; along the quote's top (the head takes the
- * scroll of the quote's height to cross it); then down out of the section at its far end. Branches grow
- * as it goes, in the free space only.
+ * The bolt's course, from the measured page. From the sheet's top-left corner down its left edge to the
+ * closing module; along that module's top (the head takes the scroll of its height to cross it); then
+ * down the sheet's far edge and out of the section. Branches grow as it goes, in the free space only —
+ * mostly outside the sheet, in the page's margin.
  */
-function plan(stage: HTMLElement, { title, rail, text, notes, quote }: Parts): Trace | null {
+function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace | null {
   const width = stage.offsetWidth;
   const height = stage.offsetHeight;
-  if (!width || !height) return null;
-  const t = boxIn(text, stage);
-  const q = boxIn(quote, stage);
-  const r = rail ? boxIn(rail, stage) : null;
-  const n = notes.map((el) => boxIn(el, stage));
+  if (!width || !height || !modules.length) return null;
+  const s = boxIn(sheet, stage);
+  const e = boxIn(end, stage);
+  const m = modules.map((el) => boxIn(el, stage));
   const section = stage.closest("section");
   const origin = stage.getBoundingClientRect();
-  // From the very top of the section (the stage sits below its top padding).
+  // Branches may reach up to the very top of the section (the stage sits below its top padding).
   const top = section ? section.getBoundingClientRect().top - origin.top + 2 : -64;
-  // Beside the text: the margin's edge. Above it: run left of the text.
-  const beside = r !== null && r.x + r.w <= t.x;
-  const x0 = beside ? r.x + r.w : Math.max(4, t.x - RAIL.narrow);
+  // On the sheet's left edge (its 1px border).
+  const x0 = s.x + 0.5;
+  const y0 = s.y + 0.5;
+  const turn = e.y - 0.5;
+  const far = s.x + s.w - 0.5;
   const bottom = height + RAIL.after;
-  const end = q.x + q.w;
-  const titleBox = title ? textBoxIn(title, stage) : null;
-  // The title is centred: where its text starts, the bolt keeps clear.
-  const start = titleBox && titleBox.x < x0 + 28 ? Math.max(4, titleBox.x - 28) : x0;
 
   // ---- free space: off every piece of content (with clearance), inside the viewport and the section ----
-  const quoteText = quote.querySelector<HTMLElement>("p");
-  const blocks: Box[] = [
-    ...(titleBox ? [titleBox] : []),
-    ...n,
-    t,
-    quoteText ? textBoxIn(quoteText, stage) : q,
-  ].map((b) => ({ x: b.x - SHAPE.clearance, y: b.y - SHAPE.clearance, w: b.w + SHAPE.clearance * 2, h: b.h + SHAPE.clearance * 2 }));
+  const content = modules.flatMap((el) => Array.from(el.querySelectorAll<HTMLElement>('[data-trace="inner"] > *')));
+  const blocks: Box[] = [...(title ? [textBoxIn(title, stage)] : []), ...content.map((el) => boxIn(el, stage))].map((b) => ({
+    x: b.x - SHAPE.clearance,
+    y: b.y - SHAPE.clearance,
+    w: b.w + SHAPE.clearance * 2,
+    h: b.h + SHAPE.clearance * 2,
+  }));
   const left = -origin.left + 6;
   const right = document.documentElement.clientWidth - origin.left - 6;
   const free = ([x, y]: Point) =>
     x > left && x < right && y > top && y < bottom && !blocks.some((b) => x > b.x && x < b.x + b.w && y > b.y && y < b.y + b.h);
 
   // Each stretch knows how the reading-line depth maps onto it: on the way down, a point is reached
-  // when the line is at its height; across the quote, the quote's height of scroll is spread over its
-  // length; below it, everything is shifted by that height.
-  const span = q.h;
-  const across = (x: number) => q.y + ((x - x0) / (end - x0)) * span;
-  const joinY = Math.min(t.y, r?.y ?? t.y) - 20;
+  // when the line is at its height; across the closing module, its height of scroll is spread over the
+  // crossing; below it, everything is shifted by that height.
+  const span = e.h;
+  const across = (x: number) => turn + ((x - x0) / (far - x0)) * span;
   const stretches: Array<{ from: Point; to: Point; depth: (p: Point) => number }> = [
-    ...(start !== x0 ? [{ from: [start, top] as Point, to: [x0, joinY] as Point, depth: ([, y]: Point) => Math.min(y, q.y) }] : []),
-    { from: [x0, start !== x0 ? joinY : top], to: [x0, q.y], depth: ([, y]) => Math.min(y, q.y) },
-    { from: [x0, q.y], to: [end, q.y], depth: ([x]) => across(x) },
-    { from: [end, q.y], to: [end, bottom], depth: ([, y]) => Math.max(y, q.y) + span },
+    { from: [x0, y0], to: [x0, turn], depth: ([, y]) => Math.min(y, turn) },
+    { from: [x0, turn], to: [far, turn], depth: ([x]) => across(x) },
+    { from: [far, turn], to: [far, bottom], depth: ([, y]) => Math.max(y, turn) + span },
   ];
 
   const points: Point[] = [stretches[0].from];
@@ -342,9 +339,8 @@ function plan(stage: HTMLElement, { title, rail, text, notes, quote }: Parts): T
   }
 
   const marks = {
-    text: t.y + 24,
-    notes: n.map((b) => b.y + 8),
-    quote: across(x0 + (end - x0) * 0.45),
+    modules: m.map((b, i) => (modules[i] === end ? turn : Math.max(y0, b.y + 8))),
+    end: across(x0 + (far - x0) * 0.45),
   };
   return { width, height, trunk: toPath(points), branches, at, run, marks };
 }
@@ -362,16 +358,16 @@ function lengthAt({ at, run }: Trace, depth: number): number {
 }
 
 /**
- * A05 — Electric Trace Reveal. A bolt drawn by the scroll from the top of the About section: a stepped,
- * broken trunk with branches growing off it as its head passes. Each margin note takes one short pulse
- * (`data-pulse` on `[data-trace="note"]`), the text gains contrast and the pull quote lights up
- * (`data-lit` on `[data-trace="text"]` / `"quote"`) — once each, so scrolling back never flickers. With
- * reduced motion the bolt is simply there, whole, and the CSS shows everything lit.
+ * A05 — Electric Trace Reveal. A bolt drawn by the scroll down the About sheet's left edge: a
+ * stepped, broken trunk with branches growing off it as its head passes. Each module takes one short
+ * pulse (`data-pulse` on `[data-trace="module"]`) and the closing one lights up (`data-lit` on the
+ * module marked `data-end`) — once each, so scrolling back never flickers. With reduced motion the bolt
+ * is simply there, whole, and the CSS shows everything lit.
  */
 export function AboutTrace() {
   const rootRef = useRef<SVGSVGElement>(null);
   const [trace, setTrace] = useState<Trace | null>(null);
-  const fired = useRef({ text: false, notes: [] as boolean[], quote: false });
+  const fired = useRef({ modules: [] as boolean[], end: false });
 
   // ---- course: from the measured layout, again when the stage resizes or the fonts arrive ----
   useEffect(() => {
@@ -380,18 +376,11 @@ export function AboutTrace() {
     let frame = 0;
     const measure = () => {
       frame = 0;
-      const text = stage.querySelector<HTMLElement>('[data-trace="text"]');
-      const quote = stage.querySelector<HTMLElement>('[data-trace="quote"]');
-      if (!text || !quote) return;
-      setTrace(
-        plan(stage, {
-          title: stage.querySelector<HTMLElement>("h2"),
-          rail: stage.querySelector<HTMLElement>('[data-trace="rail"]'),
-          text,
-          notes: Array.from(stage.querySelectorAll<HTMLElement>('[data-trace="note"]')),
-          quote,
-        }),
-      );
+      const modules = Array.from(stage.querySelectorAll<HTMLElement>('[data-trace="module"]'));
+      const end = modules.find((el) => el.hasAttribute("data-end"));
+      const sheet = modules[0]?.parentElement;
+      if (!end || !sheet) return;
+      setTrace(plan(stage, { title: stage.querySelector<HTMLElement>("h2"), sheet, modules, end }));
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(measure);
@@ -415,20 +404,16 @@ export function AboutTrace() {
       const total = trace.run[trace.run.length - 1] || 1;
       root.style.setProperty("--k", (lengthAt(trace, depth) / total).toFixed(4));
       const done = fired.current;
-      if (!done.text && depth >= trace.marks.text) {
-        done.text = true;
-        stage.querySelector<HTMLElement>('[data-trace="text"]')?.setAttribute("data-lit", "");
-      }
-      const notes = stage.querySelectorAll<HTMLElement>('[data-trace="note"]');
-      trace.marks.notes.forEach((mark, i) => {
-        if (!done.notes[i] && depth >= mark) {
-          done.notes[i] = true;
-          notes[i]?.setAttribute("data-pulse", "");
+      const modules = stage.querySelectorAll<HTMLElement>('[data-trace="module"]');
+      trace.marks.modules.forEach((mark, i) => {
+        if (!done.modules[i] && depth >= mark) {
+          done.modules[i] = true;
+          modules[i]?.setAttribute("data-pulse", "");
         }
       });
-      if (!done.quote && depth >= trace.marks.quote) {
-        done.quote = true;
-        stage.querySelector<HTMLElement>('[data-trace="quote"]')?.setAttribute("data-lit", "");
+      if (!done.end && depth >= trace.marks.end) {
+        done.end = true;
+        stage.querySelector<HTMLElement>('[data-trace="module"][data-end]')?.setAttribute("data-lit", "");
       }
     },
     { enabled: trace !== null },

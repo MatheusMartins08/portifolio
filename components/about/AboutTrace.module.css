@@ -1,10 +1,11 @@
-/* Over the stage's top-left corner, behind its content; reaches above and below it (overflow). Never
+/* Over the stage's top-left corner and over the sheet (its modules are opaque: the bolt runs on their
+   rules, its branches only where there is no content); reaches below the stage (overflow). Never
    catches the pointer. --k (0 → 1, from the script) is how much of the trunk is drawn. */
 .trace {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: -1;
+  z-index: 1;
   overflow: visible;
   pointer-events: none;
   fill: none;

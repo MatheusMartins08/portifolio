@@ -1,0 +1,87 @@
+/* A cell of the sheet: opaque on the sheet's hairline background, so the 1px gaps around it are the
+   rules. The content (not the cell) rises in, so the sheet's lines are there from the start. */
+.cell {
+  position: relative;
+  min-width: 0;
+  background: var(--bg);
+}
+.inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: var(--space-6);
+  transition:
+    opacity var(--mf-dur-4) var(--mf-ease-out) var(--d, 0ms),
+    transform var(--mf-dur-4) var(--mf-ease-out) var(--d, 0ms);
+}
+.cell:not([data-in]) .inner { opacity: 0; transform: translateY(12px); }
+
+/* ---------- head: tick · 01.x · LABEL ········ meta ---------- */
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.tick {
+  flex: none;
+  width: var(--space-3);
+  height: 1.5px;
+  margin-right: var(--space-1);
+  background: var(--line-strong);
+  transition: background-color var(--mf-dur-3) var(--mf-ease-out);
+}
+.index {
+  font: 500 11px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+  transition: color var(--mf-dur-3) var(--mf-ease-out);
+}
+.label {
+  margin: 0;
+  font: 500 11px/16px var(--font-sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition: color var(--mf-dur-3) var(--mf-ease-out);
+}
+.meta {
+  margin-left: auto;
+  padding-left: var(--space-4);
+  font: 400 11px/16px var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+/* Hover: the label steps up (the border light is EdgeLight's). */
+@media (hover: hover) {
+  .cell:hover .label { color: var(--fg-2); }
+}
+
+/* The bolt passed: the tick and the index light, and stay lit. */
+.cell[data-pulse] .tick { background: var(--mark); }
+.cell[data-pulse] .index { color: var(--mark-text); }
+@media (prefers-reduced-motion: no-preference) {
+  .cell[data-pulse] .tick { animation: pulse 900ms var(--mf-ease-out); }
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--bolt-glow); }
+  35% { box-shadow: 0 0 10px 2px var(--bolt-glow); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner { opacity: 1 !important; transform: none !important; }
+  .tick { background: var(--mark); }
+  .index { color: var(--mark-text); }
+}
+
+/* Phones: a strip module is a thin band — its head on one line with what follows it, no meta. */
+@media (max-width: 720px) {
+  .strip .inner { flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); padding-block: var(--space-4); }
+  .strip .head { margin-bottom: 0; }
+  .strip .meta { display: none; }
+}

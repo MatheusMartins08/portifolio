@@ -1,138 +1,243 @@
-/* Holds the trace (AboutTrace, z-index -1) behind the title and the page. */
+/* Holds the trace (AboutTrace) over the title and the sheet. */
 .stage { position: relative; isolation: isolate; }
 
-/* Margin notes · text in two columns; under the text, the pull quote. The bolt (AboutTrace) runs down
-   the margin's edge and along the quote's top: it is the rule there, no other line. */
-.page {
+/* ---------- the sheet: one frame cut by 1px rules (the gaps show the hairline background) ----------
+   Desktop, on twelve columns: profile · status · location; the cycle across; principle · path; the
+   closing line across. */
+.frame { position: relative; margin-top: var(--space-12); }
+.sheet {
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  column-gap: var(--space-12);
-  row-gap: var(--space-16);
-  margin-top: var(--space-16);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas:
+    "profile profile profile profile profile status status status location location location location"
+    "cycle cycle cycle cycle cycle cycle cycle cycle cycle cycle cycle cycle"
+    "principle principle principle principle principle principle path path path path path path"
+    "mindset mindset mindset mindset mindset mindset mindset mindset mindset mindset mindset mindset";
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
+.profile { grid-area: profile; }
+.status { grid-area: status; }
+.location { grid-area: location; }
+.cycle { grid-area: cycle; }
+.principle { grid-area: principle; }
+.path { grid-area: path; }
+.mindset { grid-area: mindset; }
 
-/* ---------- margin notes: never wrapping, each a small block of type ---------- */
-.margin {
+/* Registration marks just off the frame's corners, as on a technical drawing. */
+.marks > span {
+  position: absolute;
+  width: var(--space-3);
+  height: var(--space-3);
+  background:
+    linear-gradient(var(--line-strong), var(--line-strong)) center / 100% 1px no-repeat,
+    linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 100% no-repeat;
+}
+.marks > span:nth-child(1) { top: calc(-1 * var(--space-6)); left: calc(-1 * var(--space-6)); }
+.marks > span:nth-child(2) { top: calc(-1 * var(--space-6)); right: calc(-1 * var(--space-6)); }
+.marks > span:nth-child(3) { bottom: calc(-1 * var(--space-6)); left: calc(-1 * var(--space-6)); }
+.marks > span:nth-child(4) { bottom: calc(-1 * var(--space-6)); right: calc(-1 * var(--space-6)); }
+
+.hl { font-weight: 500; color: var(--fg); }
+.body { margin: var(--space-3) 0 0; max-width: 38em; font: 400 15px/24px var(--font-sans); color: var(--fg-2); text-wrap: pretty; }
+
+/* ---------- 01.1 profile: the name at the foot when the row is taller than it ---------- */
+.profileBody { margin-top: auto; }
+.name { margin: 0; font: 400 40px/1.05 var(--font-display); letter-spacing: -0.01em; color: var(--fg); }
+.role { margin: var(--space-2) 0 0; font: 500 17px/24px var(--font-sans); letter-spacing: -0.01em; color: var(--fg-2); }
+.lead { margin: var(--space-4) 0 0; max-width: 30em; font: 400 18px/28px var(--font-sans); letter-spacing: -0.01em; color: var(--fg-2); text-wrap: pretty; }
+
+/* ---------- 01.2 status: the signal in the free space, the sentence under it ---------- */
+.signalBox { display: flex; flex: 1; align-items: center; justify-content: center; padding-block: var(--space-2); }
+.statusText { margin: 0; font: 500 14px/20px var(--font-sans); color: var(--fg); }
+
+/* ---------- 01.3 location: the facts beside the globe ---------- */
+.locationBody { display: grid; flex: 1; grid-template-columns: minmax(0, 1fr) 128px; align-items: center; column-gap: var(--space-4); }
+.value { margin: 0; font: 400 26px/1.1 var(--font-display); letter-spacing: -0.005em; color: var(--fg); }
+.valueSm { margin: 0; font: 400 20px/1.15 var(--font-display); color: var(--fg); }
+.small { margin: var(--space-1) 0 0; font: 400 13px/20px var(--font-sans); color: var(--fg-muted); }
+.coords { margin: var(--space-2) 0 0; font: 400 12px/18px var(--font-mono); letter-spacing: 0.02em; color: var(--fg-muted); }
+.subLabel { margin: var(--space-4) 0 var(--space-1); font: 500 11px/16px var(--font-sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); }
+.globeBox { width: 100%; }
+
+/* ---------- 01.4 cycle: the intro, then the diagram (BuildFlow) ---------- */
+.cycle .body { margin: 0 0 var(--space-6); }
+
+/* ---------- 01.5 principle: the sentence, then the four qualities as a small ruled spec row ---------- */
+.principleTitle {
+  margin: 0;
+  max-width: 18em;
+  font: 400 30px/1.15 var(--font-display);
+  letter-spacing: -0.005em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.qualities {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+.qualities li { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-3); background: var(--bg); }
+.qualityKey { font: 500 11px/16px var(--font-mono); color: var(--fg-muted); }
+.qualityName { font: 500 14px/20px var(--font-sans); color: var(--fg); }
+
+/* ---------- 01.6 path: a branch merging into the main line, which goes on past today ---------- */
+.stops {
+  --node: 9px;
+  --lh: 16px;
+  --gap: var(--space-4);
+  --node-top: calc((var(--lh) - var(--node)) / 2);
+  --branch: 6px;
+  --main: 22px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--gap);
   margin: 0;
-  padding-right: var(--space-12);
+  padding: 0;
+  list-style: none;
 }
-.note { position: relative; display: flex; flex-direction: column; gap: var(--space-1); white-space: nowrap; }
-.label {
-  margin-bottom: var(--space-2);
-  font: 500 11px/16px var(--font-sans);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-  transition: color var(--mf-dur-4) var(--mf-ease-out);
+.stop { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: var(--space-3); }
+.lane { position: relative; }
+.node {
+  position: absolute;
+  top: var(--node-top);
+  left: calc(var(--main) - var(--node) / 2);
+  box-sizing: border-box;
+  width: var(--node);
+  height: var(--node);
+  border: 1px solid var(--control);
+  border-radius: 50%;
+  background: var(--bg);
+  transition: border-color var(--mf-dur-3) var(--mf-ease-out) calc(150ms + var(--i, 0) * 120ms);
 }
-.value { margin: 0; font: 400 26px/1.1 var(--font-display); letter-spacing: -0.005em; color: var(--fg); }
-.small { margin: 0; font: 400 14px/22px var(--font-sans); color: var(--fg-muted); }
-.status { margin: 0; padding: var(--space-1) 0; }
-
-/* A short dash on each note's left, centred on the whole note; the bolt's pulse lights it (and keeps it lit). */
-.note::before {
+.stop[data-lane="branch"] .node { left: calc(var(--branch) - var(--node) / 2); }
+.stop[data-lane="head"] .node { background: var(--mark); border-color: var(--mark); }
+[data-in] .stop:not([data-lane="head"]) .node { border-color: var(--fg-muted); }
+@media (prefers-reduced-motion: no-preference) {
+  [data-in] .node { animation: flash 700ms var(--mf-ease-out) calc(150ms + var(--i, 0) * 120ms); }
+}
+@keyframes flash {
+  40% { background: var(--mark); border-color: var(--mark); box-shadow: 0 0 8px var(--bolt-glow); }
+}
+/* Under each node, its lane down to the next stop: the branch to the merge curve (in the gap), the
+   main line to the next node, and past today a dotted line fading out. */
+.lane::after {
   content: "";
   position: absolute;
-  left: calc(-1 * var(--space-6));
-  top: 50%;
-  width: var(--space-3);
-  height: 1.5px;
-  margin-top: -0.75px;
+  top: calc(var(--node-top) + var(--node) + 3px);
+  bottom: calc(3px - var(--gap) - var(--node-top));
+  left: calc(var(--main) - 0.5px);
+  width: 1px;
   background: var(--line-strong);
-  transition: background-color var(--mf-dur-3) var(--mf-ease-out);
 }
-.note[data-pulse]::before { background: var(--mark); }
-.note[data-pulse] .label { color: var(--fg-2); }
-@media (prefers-reduced-motion: no-preference) {
-  .note[data-pulse]::before { animation: pulse 900ms var(--mf-ease-out); }
+.stop[data-lane="branch"] .lane::after { left: calc(var(--branch) - 0.5px); bottom: 0; }
+.stop[data-lane="head"] .lane::after {
+  bottom: 0;
+  background: repeating-linear-gradient(to bottom, var(--line-strong) 0 3px, transparent 3px 7px);
+  -webkit-mask: linear-gradient(#000, transparent);
+  mask: linear-gradient(#000, transparent);
 }
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 var(--bolt-glow); }
-  35% { box-shadow: 0 0 10px 2px var(--bolt-glow); }
-  100% { box-shadow: 0 0 0 0 transparent; }
+.merge {
+  position: absolute;
+  top: calc(-1 * var(--gap));
+  left: 0;
+  width: 28px;
+  height: calc(var(--gap) + var(--node-top) - 2px);
+  overflow: visible;
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1;
 }
+.merge path { vector-effect: non-scaling-stroke; }
+.when { margin: 0 0 var(--space-1); font: 500 11px/var(--lh) var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); }
+.stopText { margin: 0; font: 400 14px/22px var(--font-sans); color: var(--fg-2); text-wrap: pretty; }
 
-/* ---------- the text: two columns, a drop cap; a step down in contrast until the trace reaches it ---------- */
-.text {
-  columns: 2;
-  column-gap: var(--space-12);
-  font: 400 16px/1.75 var(--font-sans);
-  color: var(--fg-muted);
+/* ---------- 01.7 mindset: the closing line, its explanation beside it (under the path's column) ---------- */
+.mindset .mindsetInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 1px;
+  align-items: end;
+  padding: 0;
+}
+.mindsetInner > :first-child { grid-column: 1 / -1; margin-bottom: var(--space-4); padding: var(--space-6) var(--space-6) 0; }
+.quote { margin: 0; padding: 0 var(--space-6) var(--space-8); }
+.quote p {
+  margin: 0;
+  font: italic 400 44px/1.08 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--fg-2);
+  text-wrap: balance;
   transition: color 1200ms var(--mf-ease-out);
 }
-.text p { margin: 0 0 var(--space-6); break-inside: avoid; text-wrap: pretty; }
-.text p:last-child { margin-bottom: 0; }
-.text[data-lit] { color: var(--fg-2); }
-
-.drop::first-letter {
-  float: left;
-  margin: 0.32em var(--space-3) 0 0;
-  font: 400 5.6em/0.7 var(--font-display);
-  color: var(--fg);
-}
-
-.hl { font-weight: 500; color: var(--fg-2); transition: color 1200ms var(--mf-ease-out); }
-.text[data-lit] .hl { color: var(--fg); }
-
-/* The current passing lights the key phrases for a moment — once, one after the other. */
+.quote p::before { content: "“"; }
+.quote p::after { content: "”"; }
+.mindset[data-lit] .quote p { color: var(--fg); }
 @media (prefers-reduced-motion: no-preference) {
-  .text[data-lit] .hl { animation: glint 1400ms var(--mf-ease-out) calc(300ms + var(--i, 0) * 140ms) backwards; }
+  .mindset[data-lit] .quote p { animation: glint 1600ms var(--mf-ease-out) 120ms backwards; }
 }
 @keyframes glint {
   0% { text-shadow: 0 0 0 transparent; }
   25% { text-shadow: 0 0 14px var(--bolt-glow); color: var(--bolt-hot); }
   100% { text-shadow: 0 0 0 transparent; }
 }
+.mindsetBody { margin: 0; max-width: 30em; padding: 0 var(--space-6) var(--space-8); font: 400 17px/27px var(--font-sans); color: var(--fg-2); text-wrap: pretty; }
 
-/* ---------- the pull quote: the closing sentence, the bolt above it, a rule below ---------- */
-.quote {
-  grid-column: 2;
-  margin: 0;
-  padding: var(--space-8) var(--space-6);
-  border-bottom: 1px solid var(--line-strong);
-  text-align: center;
-}
-.quote p {
-  margin: 0 auto;
-  max-width: 30em;
-  font: italic 400 34px/1.25 var(--font-display);
-  letter-spacing: -0.005em;
-  color: var(--fg-2);
-  text-wrap: balance;
-  transition: color 1200ms var(--mf-ease-out), text-shadow 1200ms var(--mf-ease-out);
-}
-.quote p::before { content: "“"; }
-.quote p::after { content: "”"; }
-.quote[data-lit] p { color: var(--fg); }
-@media (prefers-reduced-motion: no-preference) {
-  .quote[data-lit] p { animation: glint 1600ms var(--mf-ease-out) 120ms backwards; }
-}
-
-/* Reduced motion: no trace to wait for — everything is shown lit from the start. */
 @media (prefers-reduced-motion: reduce) {
-  .text { color: var(--fg-2); }
-  .text .hl, .quote p { color: var(--fg); }
-  .note::before { background: var(--mark); }
+  .quote p { color: var(--fg); }
+  .stop:not([data-lane="head"]) .node { border-color: var(--fg-muted); }
 }
 
-/* Tablet: the notes go above the text, in a row; the text and the quote take the full width. A
-   little room on the left for the trace. */
+/* ---------- tablet: profile across; status | location; then one module per row ---------- */
 @media (max-width: 960px) {
-  .page { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-12); margin-top: var(--space-12); padding-left: var(--space-8); }
-  .margin { flex-direction: row; flex-wrap: wrap; gap: var(--space-6) var(--space-12); padding: 0 0 var(--space-8); border-bottom: 1px solid var(--line); }
-  /* The bolt runs just left of the notes here: the dash moves in, clear of it. */
-  .note::before { left: calc(-1 * var(--space-3)); width: var(--space-2); }
-  .quote { grid-column: 1; }
+  .sheet {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      "profile profile profile profile profile profile"
+      "status status status location location location"
+      "cycle cycle cycle cycle cycle cycle"
+      "principle principle principle principle principle principle"
+      "path path path path path path"
+      "mindset mindset mindset mindset mindset mindset";
+  }
+  .profileBody { margin-top: 0; }
+  .locationBody { grid-template-columns: minmax(0, 1fr) 112px; }
+
+  .mindset .mindsetInner { display: flex; flex-direction: column; align-items: stretch; padding: var(--space-6); }
+  .mindsetInner > :first-child { margin-bottom: var(--space-4); padding: 0; }
+  .quote { padding: 0; }
+  .mindsetBody { margin-top: var(--space-4); padding: 0; }
 }
 
-/* Phone: one column of text, the notes stacked. */
+/* ---------- phone: one column — the status a thin strip (signal at its end), the globe beside the
+   location's facts, the cycle diagram turned into a column, the qualities two by two. ---------- */
 @media (max-width: 720px) {
-  .margin { flex-direction: column; gap: var(--space-6); }
-  .text { columns: 1; }
-  .value { font-size: 24px; }
-  .quote { padding: var(--space-6) 0; }
-  .quote p { font-size: 26px; }
+  .marks { display: none; }
+  .sheet {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "profile" "status" "location" "cycle" "principle" "path" "mindset";
+  }
+  .name { font-size: 34px; }
+  .role { font-size: 16px; line-height: 24px; }
+  .lead { font-size: 16px; line-height: 26px; }
+
+  .signalBox { flex: none; order: 2; margin-left: auto; padding: 0; }
+  .statusText { order: 3; flex-basis: 100%; }
+
+  .locationBody { grid-template-columns: minmax(0, 1fr) 96px; }
+  .value { font-size: 22px; }
+  .principleTitle { font-size: 26px; }
+  .qualities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quote p { font-size: 34px; }
+  .mindsetBody { font-size: 16px; line-height: 26px; }
 }
