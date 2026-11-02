@@ -6,7 +6,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  min-height: min(100svh, 900px);
+  /* Always the whole first screen, however tall: the grid centres the composition in it. */
+  min-height: 100svh;
   /* Vertical spacing gives way on short laptop screens (the header is fixed, so the top never goes under it). */
   padding:
     clamp(var(--header-offset) - var(--space-4), 11.5svh, var(--header-offset) + var(--space-2))
@@ -36,7 +37,7 @@
 }
 
 /* The name's scale: HeroName sizes its letters in em. "Matheus" is ≈3.5em wide. */
-.name { margin: 0; font-size: min(176px, 14cqi, 21svh); }
+.name { margin: 0; font-size: min(200px, 14cqi, 21svh); }
 
 .sub { display: flex; align-items: center; gap: var(--space-4); margin-top: var(--space-6); }
 .rule { flex: none; width: var(--space-12); height: 1px; background: var(--mark); transform-origin: left; }
@@ -47,7 +48,7 @@
 }
 
 /* The whole photo, 3:4, framed by a hairline a little off its edge. */
-.portrait { width: min(32cqi, 50svh, 460px); aspect-ratio: 3 / 4; }
+.portrait { width: min(32cqi, 50svh, 560px); aspect-ratio: 3 / 4; }
 
 /* Icon links stacked between two short hairlines, so they read as part of the composition. */
 .links {
