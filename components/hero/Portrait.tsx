@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRef, useState } from "react";
 import type { ImageAsset } from "@/lib/content/assets";
 import { cx } from "@/lib/cx";
 import { PortraitArcs } from "./PortraitArcs";
@@ -8,7 +11,7 @@ interface PortraitProps {
   /** Fills the figure (the page sizes it); `image.focus` decides what the crop keeps. */
   image: ImageAsset;
   alt: string;
-  /** A second photo that comes in on hover (fine pointers only). */
+  /** A second photo that comes in on hover (fine pointers) or on a tap (touch: each tap toggles it). */
   hover?: { image: ImageAsset; alt: string };
   /** next/image `sizes` for the rendered width. */
   sizes: string;
@@ -19,8 +22,27 @@ interface PortraitProps {
 
 /** The photo in a hairline frame, with small electric arcs jumping across the gap between them. */
 export function Portrait({ image, alt, hover, sizes, priority = false, className }: PortraitProps) {
+  // Touch has no hover: there, a tap swaps the photos (and a second tap swaps them back), with a short
+  // surge of the arcs. The mouse keeps the hover, so a click with it does nothing here.
+  const [swapped, setSwapped] = useState(false);
+  const [surge, setSurge] = useState(0);
+  const touch = useRef(false);
+
+  const onTap = () => {
+    if (!hover || !touch.current) return;
+    setSwapped((on) => !on);
+    setSurge((n) => n + 1);
+  };
+
   return (
-    <figure className={cx(styles.portrait, hover && styles.swap, className)}>
+    <figure
+      className={cx(styles.portrait, hover && styles.swap, className)}
+      data-swapped={swapped || undefined}
+      onPointerDown={hover ? (event) => {
+        touch.current = event.pointerType !== "mouse";
+      } : undefined}
+      onClick={hover ? onTap : undefined}
+    >
       <div className={styles.frame}>
         <Image
           src={image.src}
@@ -49,7 +71,7 @@ export function Portrait({ image, alt, hover, sizes, priority = false, className
           />
         ) : null}
       </div>
-      <PortraitArcs />
+      <PortraitArcs surge={surge} />
     </figure>
   );
 }

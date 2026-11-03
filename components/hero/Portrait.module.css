@@ -35,3 +35,7 @@
 @media (hover: hover) and (pointer: fine) {
   .swap:hover .alt { opacity: 1; filter: brightness(1); }
 }
+
+/* Touch: a tap toggles the second photo (set only by a touch or pen tap, see Portrait.tsx). */
+.swap { -webkit-tap-highlight-color: transparent; }
+.swap[data-swapped] .alt { opacity: 1; filter: brightness(1); }

@@ -21,6 +21,8 @@ const FLASH_MS = 120;
 /** Once the mouse leaves, the charge drains for this long, ms, its flickers spreading out over the range. */
 const DISCHARGE_MS = 1000;
 const DISCHARGE_STEP: [number, number] = [60, 140];
+/** A tap (touch has no hover): the charge holds this long, ms, then drains as when the mouse leaves. */
+const SURGE_MS = 450;
 
 const between = ([min, max]: [number, number]) => min + Math.random() * (max - min);
 const newSpot = () => Math.floor(Math.random() * 1e9);
@@ -35,8 +37,13 @@ const newSpot = () => Math.floor(Math.random() * 1e9);
  * only while the photo is on screen and the tab is visible. Decorative: hidden from assistive tech, and
  * not drawn at all with reduced motion.
  */
-export function PortraitArcs() {
+export function PortraitArcs({ surge = 0 }: { /** Bumped on each tap that swaps the photo: a short charge, then the drain. */ surge?: number }) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const surgeRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    if (surge) surgeRef.current?.();
+  }, [surge]);
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -157,6 +164,13 @@ export function PortraitArcs() {
     figure.addEventListener("pointerenter", onEnter);
     figure.addEventListener("pointerleave", onLeave);
 
+    // ---- a tap (touch): the charge for a moment, then the drain; never held ----
+    surgeRef.current = () => {
+      if (!running || hovered) return;
+      charge();
+      later(SURGE_MS, discharge);
+    };
+
     // Only while the photo is on screen and the tab is visible.
     const run = (on: boolean) => {
       if (on === running) return;
@@ -179,6 +193,7 @@ export function PortraitArcs() {
       near.disconnect();
       figure.removeEventListener("pointerenter", onEnter);
       figure.removeEventListener("pointerleave", onLeave);
+      surgeRef.current = null;
       document.removeEventListener("visibilitychange", sync);
       run(false);
     };
