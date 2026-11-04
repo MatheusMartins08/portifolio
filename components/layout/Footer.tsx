@@ -70,7 +70,8 @@ export async function Footer({ onHome = true }: { onHome?: boolean }) {
           <nav className={styles.col} aria-labelledby="footer-nav">
             <SectionLabel id="footer-nav">{t.footer.navigation}</SectionLabel>
             <ul className={styles.list}>
-              {navSections.map((section) => (
+              {/* Contato has its own column beside this one (the channels), so the list stops at Projetos. */}
+              {navSections.filter((section) => section.id !== "contato").map((section) => (
                 <li key={section.id}>
                   <a className={styles.link} href={`${home}#${section.id}`}>
                     <span className={styles.index}>{section.index}</span>

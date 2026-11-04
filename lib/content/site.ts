@@ -13,7 +13,6 @@ export interface SiteSection {
   id: SectionId;
   i18n: string;
   index: string;
-  inNav?: boolean;
 }
 
 export type ServiceKey = "web" | "ai" | "backend" | "data" | "deploy";
@@ -97,10 +96,8 @@ export interface Site {
 
 export const site = siteJson as Site;
 
-/** Sections shown in the header navigation, in page order. */
-export const navSections = site.sections.filter(
-  (section): section is SiteSection & { id: Exclude<SectionId, "contato"> } => section.inNav !== false,
-);
+/** Sections shown in the header navigation (pill and mobile menu), in page order: all of them, Contato last. */
+export const navSections = site.sections;
 
 /** Label index of a section: "01"… */
 export function sectionIndex(id: SectionId): string {

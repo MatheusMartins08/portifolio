@@ -29,7 +29,7 @@
     { "id": "experiencia", "i18n": "nav.experiencia", "index": "03" },
     { "id": "skills", "i18n": "nav.skills", "index": "04" },
     { "id": "projetos", "i18n": "nav.projetos", "index": "05" },
-    { "id": "contato", "i18n": "contact.label", "index": "06", "inNav": false }
+    { "id": "contato", "i18n": "nav.contato", "index": "06" }
   ],
   "services": [
     { "key": "web", "index": "01", "motif": "web" },
