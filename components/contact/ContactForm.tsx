@@ -75,6 +75,12 @@ export function ContactForm({ labels, onSubmit }: ContactFormProps) {
     );
   }
 
+  /** Typing in a flagged field clears its error at once; it is checked again only on the next submit. */
+  function clearError(event: FormEvent<HTMLFormElement>) {
+    const name = (event.target as HTMLInputElement).name as keyof Errors;
+    if (errors[name]) setErrors((current) => ({ ...current, [name]: undefined }));
+  }
+
   if (status === "success") {
     return (
       <div className={styles.done} role="status" tabIndex={-1} ref={doneRef}>
@@ -92,7 +98,7 @@ export function ContactForm({ labels, onSubmit }: ContactFormProps) {
 
   const loading = status === "loading";
   return (
-    <form ref={formRef} className={styles.form} noValidate onSubmit={submit}>
+    <form ref={formRef} className={styles.form} noValidate onSubmit={submit} onInput={clearError}>
       <Field label={labels.name} name="name" autoComplete="name" error={errors.name} />
       <Field label={labels.email} name="email" type="email" autoComplete="email" error={errors.email} />
       <Field label={labels.message} name="message" multiline rows={4} error={errors.message} />

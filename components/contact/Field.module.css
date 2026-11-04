@@ -43,11 +43,15 @@ textarea.input { min-height: 104px; }
 .field:focus-within .bar { transform: scaleX(1); }
 .field:focus-within .label { color: var(--mark-text); }
 
-.error .input { border-bottom-color: var(--danger); }
-.error .bar { background: var(--danger); }
-.error .label { color: var(--danger); }
+/*
+ * Error: told by shape, not brightness (--danger is a light grey, so a brighter label and line read as
+ * "focused"). The line turns dashed and the message carries the alert icon; the label stays muted, and
+ * focus still draws the white bar and lights the label as on any field.
+ */
+.error .input,
+.error .input:hover { border-bottom-style: dashed; border-bottom-color: var(--fg-2); }
 
-.msg { display: flex; align-items: center; gap: 6px; margin: 2px 0 0; font: 400 13px/18px var(--font-sans); color: var(--danger); }
+.msg { display: flex; align-items: center; gap: 6px; margin: 2px 0 0; font: 500 13px/18px var(--font-sans); color: var(--fg); }
 .hint { margin: 2px 0 0; font: 400 13px/18px var(--font-sans); color: var(--fg-muted); }
 
 .disabled { opacity: .55; }

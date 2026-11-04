@@ -7,7 +7,7 @@ import styles from "./Field.module.css";
 
 interface FieldOwnProps {
   label: string;
-  /** Error message (i18n): turns the line danger, with an icon. */
+  /** Error message (i18n): turns the line dashed, with an icon. */
   error?: string;
   hint?: string;
   className?: string;
@@ -18,7 +18,7 @@ type TextareaFieldProps = FieldOwnProps & { multiline: true } & Omit<TextareaHTM
 
 /**
  * Editorial form field: mono label above, only the baseline as border. Hover darkens the line; focus
- * draws a white bar and lights the label; errors use danger with an icon and a message.
+ * draws a white bar and lights the label; an error dashes the line and adds an icon and a message.
  */
 export function Field(props: InputFieldProps | TextareaFieldProps) {
   const autoId = useId();
