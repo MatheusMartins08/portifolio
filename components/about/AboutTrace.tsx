@@ -79,12 +79,15 @@ function textBoxIn(el: HTMLElement, stage: HTMLElement): Box {
 interface Parts {
   /** The section title: no branch crosses it. */
   title: HTMLElement | null;
-  /** The frame the modules sit in: the bolt starts at its top edge and leaves down its far edge. */
+  /** What the modules sit in (`data-trace="sheet"`): the bolt starts at its top-left corner, runs down
+      its left edge and leaves down its far edge. */
   sheet: HTMLElement;
   /** Every module, in reading order: each takes a pulse as the head reaches it. */
   modules: HTMLElement[];
   /** The closing module: the bolt turns along its top. */
   end: HTMLElement;
+  /** Other content no branch crosses (`data-trace="block"`: headings outside the modules). */
+  blocks: HTMLElement[];
 }
 
 /** Stroke weight of a branch piece: thicker at a branch's fork than at its tip; deeper branches thinner still. */
@@ -117,32 +120,37 @@ const unit = (a: Point, b: Point): Point => {
   return [(b[0] - a[0]) / l, (b[1] - a[1]) / l];
 };
 
-/** A kink of the trunk: the point's index and the side it was pushed to. */
+/** A kink of the trunk: the point's index and the side it was pushed to (`stretch`, `local`: which stretch, and which kink of it). */
 interface Kink {
   index: number;
   side: number;
+  stretch?: number;
+  local?: number;
 }
 
 /**
  * A trunk stretch from a to b: a slow drift plus short kinked runs, then fine breaks. `salt` keeps
  * every stretch its own. Also says where the kinks are (indexes into the returned points, `a` being 0).
+ * The kinks sit at fixed distances from `a`, so a stretch that grows keeps its shape and only gains
+ * kinks at its end.
  */
 function leader(a: Point, b: Point, salt: number): { points: Point[]; kinks: Kink[] } {
   const dx = b[0] - a[0];
   const dy = b[1] - a[1];
   const len = Math.hypot(dx, dy) || 1;
   const [ux, uy] = [dx / len, dy / len];
-  const steps = Math.max(1, Math.round(len / SHAPE.step));
   const phase = hash(SHAPE.seed, salt, 0, 9) * Math.PI * 2;
   const corners: Array<{ p: Point; side: number }> = [{ p: a, side: 0 }];
   let side = hash(SHAPE.seed, salt, 0) < 0.5 ? -1 : 1;
-  for (let i = 1; i < steps; i++) {
-    const t = (i + (hash(SHAPE.seed, salt, i, 1) - 0.5) * 0.5) / steps;
+  for (let i = 1; i < 1000; i++) {
+    const d = (i + (hash(SHAPE.seed, salt, i, 1) - 0.5) * 0.5) * SHAPE.step;
+    if (d > len - SHAPE.step * 0.5) break;
     if (hash(SHAPE.seed, salt, i, 2) < 0.75) side = -side;
     // The drift fades in and out at the ends, so the stretch still meets its corners.
-    const drift = SHAPE.wander.size * Math.sin((t * len * Math.PI * 2) / SHAPE.wander.every + phase) * Math.sin(Math.PI * t);
+    const fade = Math.min(1, d / 60, (len - d) / 60);
+    const drift = SHAPE.wander.size * Math.sin((d * Math.PI * 2) / SHAPE.wander.every + phase) * fade;
     const off = side * SHAPE.kink * (0.3 + 0.7 * hash(SHAPE.seed, salt, i, 3)) + drift;
-    corners.push({ p: [a[0] + dx * t - uy * off, a[1] + dy * t + ux * off], side });
+    corners.push({ p: [a[0] + ux * d - uy * off, a[1] + uy * d + ux * off], side });
   }
   corners.push({ p: b, side: 0 });
   const points: Point[] = [a];
@@ -185,8 +193,11 @@ function grow(from: Point, dir: Point, side: number, angle: number, length: numb
  * closing module; along that module's top (the head takes the scroll of its height to cross it); then
  * down the sheet's far edge and out of the section. Branches grow as it goes, in the free space only —
  * mostly outside the sheet, in the page's margin.
+ * The way down is planned module by module (a stretch each, with its own randomness and its own
+ * branches), so a module that grows (a commit opened) only stretches the bolt beside it and moves the
+ * rest down, instead of reshaping the whole bolt.
  */
-function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace | null {
+function plan(stage: HTMLElement, { title, sheet, modules, end, blocks: extra }: Parts): Trace | null {
   const width = stage.offsetWidth;
   const height = stage.offsetHeight;
   if (!width || !height || !modules.length) return null;
@@ -205,7 +216,7 @@ function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace 
   const bottom = height + RAIL.after;
 
   // ---- free space: off every piece of content (with clearance), inside the viewport and the section ----
-  const content = modules.flatMap((el) => Array.from(el.querySelectorAll<HTMLElement>('[data-trace="inner"] > *')));
+  const content = [...modules.flatMap((el) => Array.from(el.querySelectorAll<HTMLElement>('[data-trace="inner"] > *'))), ...extra];
   const blocks: Box[] = [...(title ? [textBoxIn(title, stage)] : []), ...content.map((el) => boxIn(el, stage))].map((b) => ({
     x: b.x - SHAPE.clearance,
     y: b.y - SHAPE.clearance,
@@ -222,8 +233,11 @@ function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace 
   // crossing; below it, everything is shifted by that height.
   const span = e.h;
   const across = (x: number) => turn + ((x - x0) / (far - x0)) * span;
+  // The way down, cut at every module's top.
+  const cuts = [...new Set(m.map((b) => b.y))].filter((y) => y > y0 + 12 && y < turn - 12).sort((a, b) => a - b);
+  const downs = [y0, ...cuts, turn];
   const stretches: Array<{ from: Point; to: Point; depth: (p: Point) => number }> = [
-    { from: [x0, y0], to: [x0, turn], depth: ([, y]) => Math.min(y, turn) },
+    ...downs.slice(1).map((y, i) => ({ from: [x0, downs[i]] as Point, to: [x0, y] as Point, depth: ([, py]: Point) => Math.min(py, turn) })),
     { from: [x0, turn], to: [far, turn], depth: ([x]) => across(x) },
     { from: [far, turn], to: [far, bottom], depth: ([, y]) => Math.max(y, turn) + span },
   ];
@@ -241,7 +255,7 @@ function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace 
       at.push(Math.max(s.depth(p), at[at.length - 1]));
       owner.push(i);
     }
-    kinks.push(...own.map((k) => ({ index: base + k.index, side: k.side })));
+    kinks.push(...own.map((k, j) => ({ index: base + k.index, side: k.side, stretch: i, local: j })));
   });
   const run = lengths(points);
   const total = run[run.length - 1] || 1;
@@ -296,10 +310,20 @@ function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace 
     }
   };
 
-  let last = -Infinity;
+  // Branches, stretch by stretch: the first `first` px into the bolt (half that into each later
+  // stretch, so a short one still gets one), then every `gap` px. Their randomness is keyed by the
+  // stretch and the kink's place in it, so a stretch that changes leaves the others' branches alone.
+  const stretchStart = stretches.map((_, i) => run[Math.max(0, owner.indexOf(i) - 1)] ?? 0);
   let due = B.first;
-  kinks.forEach((kink, k) => {
+  let current = -1;
+  kinks.forEach((kink) => {
     const along = run[kink.index];
+    const stretch = kink.stretch ?? 0;
+    const key = stretch * 100 + (kink.local ?? 0);
+    if (stretch !== current) {
+      current = stretch;
+      due = stretchStart[stretch] + (stretch === 0 ? B.first : B.first * 0.5);
+    }
     if (along < due || along > total - 30) return;
     const travel = unit(stretches[owner[kink.index]].from, stretches[owner[kink.index]].to);
     // The kink pushed the trunk to `side`; the outside of the bend is that side. (In screen space, with
@@ -308,15 +332,14 @@ function plan(stage: HTMLElement, { title, sheet, modules, end }: Parts): Trace 
       points[kink.index],
       heading(kink.index),
       kink.side,
-      between(B.angle, hash(SHAPE.seed, 52, k)),
-      between(B.length, hash(SHAPE.seed, 53, k)) * (1 - B.decay * (along / total)),
+      between(B.angle, hash(SHAPE.seed, 52, key)),
+      between(B.length, hash(SHAPE.seed, 53, key)) * (1 - B.decay * (along / total)),
       1,
       along / total,
       travel,
-      300 + k,
+      300 + key,
     );
-    last = along;
-    due = last + between(B.gap, hash(SHAPE.seed, 50, k));
+    due = along + between(B.gap, hash(SHAPE.seed, 50, key));
   });
 
   // Near the end, the trunk splits: one branch runs almost alongside it, long.
@@ -358,7 +381,7 @@ function lengthAt({ at, run }: Trace, depth: number): number {
 }
 
 /**
- * A05 — Electric Trace Reveal. A bolt drawn by the scroll down the About sheet's left edge: a
+ * A05 — Electric Trace Reveal. A bolt drawn by the scroll down the About log's rail: a
  * stepped, broken trunk with branches growing off it as its head passes. Each module takes one short
  * pulse (`data-pulse` on `[data-trace="module"]`) and the closing one lights up (`data-lit` on the
  * module marked `data-end`) — once each, so scrolling back never flickers. With reduced motion the bolt
@@ -378,9 +401,10 @@ export function AboutTrace() {
       frame = 0;
       const modules = Array.from(stage.querySelectorAll<HTMLElement>('[data-trace="module"]'));
       const end = modules.find((el) => el.hasAttribute("data-end"));
-      const sheet = modules[0]?.parentElement;
+      const sheet = stage.querySelector<HTMLElement>('[data-trace="sheet"]');
       if (!end || !sheet) return;
-      setTrace(plan(stage, { title: stage.querySelector<HTMLElement>("h2"), sheet, modules, end }));
+      const blocks = Array.from(stage.querySelectorAll<HTMLElement>('[data-trace="block"]'));
+      setTrace(plan(stage, { title: stage.querySelector<HTMLElement>("h2"), sheet, modules, end, blocks }));
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(measure);

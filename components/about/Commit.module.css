@@ -1,0 +1,150 @@
+/* A row of the log's box: rows are split by hairlines, as on GitHub. */
+.commit { position: relative; }
+.commit + .commit { border-top: 1px solid var(--line); }
+
+/* ---------- the dot on the rail (CommitLog: the timeline's left edge, --gap left of the box) ----------
+   Level with the title's first line; above the bolt (AboutTrace, z-index 1), which runs down the rail. */
+.node {
+  --size: 9px;
+  position: absolute;
+  top: calc(var(--space-4) + 11px - var(--size) / 2);
+  left: calc(-1 * var(--gap) - 1px - var(--size) / 2 + 0.5px);
+  z-index: 2;
+  box-sizing: border-box;
+  width: var(--size);
+  height: var(--size);
+  border: 1px solid var(--control);
+  border-radius: 50%;
+  background: var(--bg);
+  transition: background-color var(--mf-dur-3) var(--mf-ease-out), border-color var(--mf-dur-3) var(--mf-ease-out);
+}
+/* The bolt passed: the dot lights, and stays lit. */
+.commit[data-pulse] .node { border-color: var(--mark); background: var(--mark); }
+@media (prefers-reduced-motion: no-preference) {
+  .commit[data-pulse] .node { animation: spark 900ms var(--mf-ease-out); }
+}
+@keyframes spark {
+  35% { box-shadow: 0 0 10px 2px var(--bolt-glow); }
+}
+
+/* ---------- content: rises in once on entering the screen ---------- */
+.inner {
+  transition:
+    opacity var(--mf-dur-4) var(--mf-ease-out) calc(var(--i, 0) * 70ms),
+    transform var(--mf-dur-4) var(--mf-ease-out) calc(var(--i, 0) * 70ms),
+    background-color var(--mf-dur-2) var(--mf-ease-out);
+}
+.commit:not([data-in]) .inner { opacity: 0; transform: translateY(var(--space-2)); }
+.commit:first-child .inner { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+.commit:last-child .inner { border-radius: 0 0 var(--radius-md) var(--radius-md); }
+.commit:only-child .inner { border-radius: var(--radius-md); }
+@media (hover: hover) {
+  .commit:hover .inner { background: var(--bg-2); }
+}
+
+/* ---------- message · author and when · hash ---------- */
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
+  padding: var(--space-4) var(--space-6);
+}
+.title { grid-column: 1; margin: 0; font: 500 15px/22px var(--font-sans); letter-spacing: -0.005em; color: var(--fg); }
+.toggle {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+/* The whole row opens and closes it. */
+.toggle::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-sm); }
+.toggle:focus-visible { outline: none; }
+.toggle:focus-visible::after { box-shadow: var(--focus-ring); }
+.type { color: var(--fg-2); }
+.more {
+  display: inline-flex;
+  align-items: center;
+  margin-left: var(--space-2);
+  padding: 0 var(--space-1);
+  vertical-align: 1px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-3);
+  color: var(--fg-2);
+  transition: background-color var(--mf-dur-2) var(--mf-ease-out), color var(--mf-dur-2) var(--mf-ease-out);
+}
+.open .more { background: var(--line-strong); color: var(--fg); }
+@media (hover: hover) {
+  .commit:hover .more { color: var(--fg); }
+}
+
+.meta { grid-column: 1; display: flex; align-items: center; gap: var(--space-2); margin: 0; font: 400 12px/18px var(--font-sans); color: var(--fg-muted); }
+/* Black and white, like everything but the Hero's and the projects' photos. */
+.avatar { flex: none; width: 18px; height: 18px; border-radius: 50%; filter: grayscale(1); }
+.author { font-weight: 500; color: var(--fg-2); }
+.hash {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  background: var(--bg-2);
+  font: 500 12px/18px var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--fg-2);
+}
+
+/* ---------- the description, opening under the message ---------- */
+.body {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows var(--mf-dur-3) var(--mf-ease-out), visibility 0s linear var(--mf-dur-3);
+}
+.open .body {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows var(--mf-dur-3) var(--mf-ease-out), visibility 0s;
+}
+.body > div { min-height: 0; overflow: hidden; }
+.body p {
+  margin: 0;
+  max-width: 62ch;
+  padding: 0 var(--space-6) var(--space-4);
+  font: 400 15px/24px var(--font-sans);
+  color: var(--fg-2);
+  text-wrap: pretty;
+}
+
+/* ---------- the oldest commit, at the foot: the bolt turns along its top and lights it ---------- */
+.commit[data-lit] .node { box-shadow: 0 0 8px var(--bolt-glow); }
+@media (prefers-reduced-motion: no-preference) {
+  .commit[data-lit] .title { animation: glint 1600ms var(--mf-ease-out) 120ms backwards; }
+}
+@keyframes glint {
+  0% { text-shadow: 0 0 0 transparent; }
+  25% { text-shadow: 0 0 14px var(--bolt-glow); color: var(--bolt-hot); }
+  100% { text-shadow: 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner { opacity: 1 !important; transform: none !important; }
+  .node { border-color: var(--mark); background: var(--mark); }
+  .body, .open .body { transition: none; }
+}
+
+/* ---------- phones: the message across, the hash at the end of the author line ---------- */
+@media (max-width: 720px) {
+  .row { padding: var(--space-4); }
+  .title { grid-column: 1 / -1; }
+  .meta { grid-column: 1; }
+  .hash { grid-column: 2; grid-row: 2; }
+  .body p { padding: 0 var(--space-4) var(--space-4); }
+}

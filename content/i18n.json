@@ -145,258 +145,163 @@
         "antes"
       ]
     },
-    "highlight": {
-      "pt": [
-        "2024",
-        "COTEMIG",
-        "úteis no mundo real"
-      ],
-      "en": [
-        "2024",
-        "COTEMIG",
-        "useful in the real world"
-      ],
-      "es": [
-        "2024",
-        "COTEMIG",
-        "útiles en el mundo real"
-      ]
-    },
-    "modules": {
-      "profile": {
-        "label": {
-          "pt": "Perfil",
-          "en": "Profile",
-          "es": "Perfil"
-        },
-        "meta": {
-          "pt": "desde 2024",
-          "en": "since 2024",
-          "es": "desde 2024"
-        }
+    "log": {
+      "heading": {
+        "pt": "commits na",
+        "en": "commits on",
+        "es": "commits en"
       },
-      "status": {
-        "label": {
-          "pt": "Status",
-          "en": "Status",
-          "es": "Estado"
-        },
-        "meta": {
-          "pt": "agora",
-          "en": "now",
-          "es": "ahora"
-        }
+      "branch": {
+        "pt": "main",
+        "en": "main",
+        "es": "main"
       },
-      "location": {
-        "label": {
-          "pt": "Localização",
-          "en": "Location",
-          "es": "Ubicación"
-        }
+      "unit": {
+        "pt": "commits",
+        "en": "commits",
+        "es": "commits"
       },
-      "availability": {
-        "label": {
-          "pt": "Disponível para",
-          "en": "Available for",
-          "es": "Disponible para"
-        }
-      },
-      "principle": {
-        "label": {
-          "pt": "Princípio",
-          "en": "Principle",
-          "es": "Principio"
-        }
-      },
-      "cycle": {
-        "label": {
-          "pt": "Ciclo",
-          "en": "Cycle",
-          "es": "Ciclo"
-        },
-        "unit": {
-          "pt": "etapas",
-          "en": "stages",
-          "es": "etapas"
-        }
-      },
-      "path": {
-        "label": {
-          "pt": "Trajetória",
-          "en": "Path",
-          "es": "Trayectoria"
-        },
-        "meta": {
-          "pt": "2024 → hoje",
-          "en": "2024 → today",
-          "es": "2024 → hoy"
-        }
-      },
-      "mindset": {
-        "label": {
-          "pt": "Visão",
-          "en": "Mindset",
-          "es": "Visión"
-        }
+      "committed": {
+        "pt": "commitou",
+        "en": "committed",
+        "es": "hizo commit"
       }
     },
-    "profile": {
-      "role": {
-        "pt": "Desenvolvedor Full Stack",
-        "en": "Full Stack Developer",
-        "es": "Desarrollador Full Stack"
+    "groups": {
+      "now": {
+        "pt": "Commits de hoje",
+        "en": "Commits today",
+        "es": "Commits de hoy"
       },
-      "lead": {
-        "pt": "Atuo na criação de produtos digitais completos, participando de todo o ciclo de desenvolvimento.",
-        "en": "I build complete digital products, taking part in the entire development cycle.",
-        "es": "Me dedico a crear productos digitales completos, participando en todo el ciclo de desarrollo."
+      "y2024": {
+        "pt": "Commits em 2024",
+        "en": "Commits in 2024",
+        "es": "Commits en 2024"
+      },
+      "before": {
+        "pt": "Antes de 2024",
+        "en": "Before 2024",
+        "es": "Antes de 2024"
       }
     },
-    "principle": {
-      "title": {
-        "pt": "Procuro entender o problema antes de escolher a tecnologia.",
-        "en": "I try to understand the problem before choosing the technology.",
-        "es": "Busco entender el problema antes de elegir la tecnología."
+    "when": {
+      "now": {
+        "pt": "hoje",
+        "en": "today",
+        "es": "hoy"
       },
-      "titleHighlight": {
-        "pt": [
-          "problema"
-        ],
-        "en": [
-          "problem"
-        ],
-        "es": [
-          "problema"
-        ]
+      "y2024": {
+        "pt": "em 2024",
+        "en": "in 2024",
+        "es": "en 2024"
       },
-      "body": {
-        "pt": "Para mim, uma boa solução não precisa ser desnecessariamente complexa — precisa ser:",
-        "en": "To me, a good solution doesn't need to be needlessly complex — it needs to be:",
-        "es": "Para mí, una buena solución no tiene por qué ser innecesariamente compleja. Tiene que ser:"
-      },
-      "qualities": {
-        "pt": [
-          "clara",
-          "confiável",
-          "bem construída",
-          "preparada para evoluir"
-        ],
-        "en": [
-          "clear",
-          "reliable",
-          "well built",
-          "ready to evolve"
-        ],
-        "es": [
-          "clara",
-          "confiable",
-          "bien construida",
-          "preparada para evolucionar"
-        ]
+      "before": {
+        "pt": "antes de 2024",
+        "en": "before 2024",
+        "es": "antes de 2024"
       }
     },
-    "cycle": {
-      "intro": {
-        "pt": "Da compreensão do problema e definição da arquitetura ao deploy.",
-        "en": "From understanding the problem and defining the architecture to deployment.",
-        "es": "Desde la comprensión del problema y la definición de la arquitectura hasta el despliegue."
-      },
-      "steps": {
-        "pt": [
-          "Problema",
-          "Arquitetura",
-          "Frontend",
-          "Backend",
-          "Banco de dados",
-          "Integrações",
-          "Infraestrutura",
-          "Deploy"
-        ],
-        "en": [
-          "Problem",
-          "Architecture",
-          "Frontend",
-          "Backend",
-          "Databases",
-          "Integrations",
-          "Infrastructure",
-          "Deployment"
-        ],
-        "es": [
-          "Problema",
-          "Arquitectura",
-          "Frontend",
-          "Backend",
-          "Bases de datos",
-          "Integraciones",
-          "Infraestructura",
-          "Despliegue"
-        ]
-      }
-    },
-    "path": {
-      "stops": [
-        {
-          "when": {
-            "pt": "Antes",
-            "en": "Before",
-            "es": "Antes"
-          },
-          "text": {
-            "pt": "Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por entender o que existe por trás de uma interface: como cada parte de um sistema se conecta e como uma ideia pode se transformar em um produto funcional.",
-            "en": "Even before working in the field, I was always curious about what lies behind an interface: how each part of a system connects and how an idea can become a working product.",
-            "es": "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional."
-          }
+    "commits": [
+      {
+        "group": "now",
+        "type": "feat",
+        "title": {
+          "pt": "quem eu sou",
+          "en": "who I am",
+          "es": "quién soy"
         },
-        {
-          "when": {
-            "pt": "2024",
-            "en": "2024",
-            "es": "2024"
-          },
-          "text": {
-            "pt": "Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática.",
-            "en": "My path in tech began in 2024, and since then I've been turning study into practice.",
-            "es": "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica."
-          }
-        },
-        {
-          "when": {
-            "pt": "Hoje",
-            "en": "Today",
-            "es": "Hoy"
-          },
-          "text": {
-            "pt": "Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, enquanto desenvolvo soluções e projetos voltados a problemas reais.",
-            "en": "I'm currently studying Web and Mobile Development at COTEMIG, while building solutions and projects aimed at real problems.",
-            "es": "Actualmente curso Desarrollo Web y Móvil en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales."
-          }
+        "body": {
+          "pt": "Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos.",
+          "en": "My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products.",
+          "es": "Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos."
         }
-      ]
-    },
-    "mindset": {
-      "quote": {
-        "pt": "Tecnologia, para mim, é meio.",
-        "en": "To me, technology is a means.",
-        "es": "Para mí, la tecnología es un medio."
       },
-      "body": {
-        "pt": "O objetivo é transformar necessidades em produtos sólidos e, principalmente, úteis no mundo real.",
-        "en": "The goal is to turn needs into solid products that are, above all, useful in the real world.",
-        "es": "El objetivo es transformar necesidades en productos sólidos y, sobre todo, útiles en el mundo real."
+      {
+        "group": "now",
+        "type": "build",
+        "title": {
+          "pt": "do problema ao deploy",
+          "en": "from problem to deployment",
+          "es": "del problema al despliegue"
+        },
+        "body": {
+          "pt": "Participo de todo o ciclo de desenvolvimento — da compreensão do problema e definição da arquitetura ao frontend, backend, banco de dados, integrações, infraestrutura e deploy.",
+          "en": "I take part in the entire development cycle — from understanding the problem and defining the architecture to frontend, backend, databases, integrations, infrastructure and deployment.",
+          "es": "Participo en todo el ciclo de desarrollo: desde la comprensión del problema y la definición de la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue."
+        }
+      },
+      {
+        "group": "now",
+        "type": "refactor",
+        "title": {
+          "pt": "como eu penso",
+          "en": "how I think",
+          "es": "cómo pienso"
+        },
+        "body": {
+          "pt": "Procuro entender o problema antes de escolher a tecnologia. Para mim, uma boa solução não precisa ser desnecessariamente complexa — precisa ser clara, confiável, bem construída e preparada para evoluir.",
+          "en": "I try to understand the problem before choosing the technology. To me, a good solution doesn't need to be needlessly complex — it needs to be clear, reliable, well built and ready to evolve.",
+          "es": "Busco entender el problema antes de elegir la tecnología. Para mí, una buena solución no tiene por qué ser innecesariamente compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar."
+        }
+      },
+      {
+        "group": "now",
+        "type": "fix",
+        "title": {
+          "pt": "o que me move",
+          "en": "what drives me",
+          "es": "lo que me mueve"
+        },
+        "body": {
+          "pt": "Tecnologia, para mim, é meio. O objetivo é transformar necessidades em produtos sólidos e, principalmente, úteis no mundo real.",
+          "en": "To me, technology is a means. The goal is to turn needs into solid products that are, above all, useful in the real world.",
+          "es": "Para mí, la tecnología es un medio. El objetivo es transformar necesidades en productos sólidos y, sobre todo, útiles en el mundo real."
+        }
+      },
+      {
+        "group": "now",
+        "type": "chore",
+        "title": {
+          "pt": "o que eu estudo",
+          "en": "what I'm studying",
+          "es": "lo que estudio"
+        },
+        "body": {
+          "pt": "Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, enquanto desenvolvo soluções e projetos voltados a problemas reais.",
+          "en": "I'm currently studying Web and Mobile Development at COTEMIG, while building solutions and projects aimed at real problems.",
+          "es": "Actualmente curso Desarrollo Web y Móvil en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales."
+        }
+      },
+      {
+        "group": "y2024",
+        "type": "feat",
+        "title": {
+          "pt": "minha trajetória",
+          "en": "my path",
+          "es": "mi trayectoria"
+        },
+        "body": {
+          "pt": "Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática.",
+          "en": "My path in tech began in 2024, and since then I've been turning study into practice.",
+          "es": "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica."
+        }
+      },
+      {
+        "group": "before",
+        "type": "init",
+        "title": {
+          "pt": "a curiosidade",
+          "en": "curiosity",
+          "es": "la curiosidad"
+        },
+        "body": {
+          "pt": "Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por entender o que existe por trás de uma interface: como cada parte de um sistema se conecta e como uma ideia pode se transformar em um produto funcional.",
+          "en": "Even before working in the field, I was always curious about what lies behind an interface: how each part of a system connects and how an idea can become a working product.",
+          "es": "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional."
+        }
       }
-    },
+    ],
     "cards": {
-      "coordinates": {
-        "pt": "19,92° S · 43,93° O",
-        "en": "19.92° S · 43.93° W",
-        "es": "19,92° S · 43,93° O"
-      },
-      "utcOffset": {
-        "pt": "UTC−3",
-        "en": "UTC−3",
-        "es": "UTC−3"
-      },
       "status": {
         "pt": "Aberto a novos projetos",
         "en": "Open to new projects",
@@ -406,21 +311,6 @@
         "pt": "Belo Horizonte",
         "en": "Belo Horizonte",
         "es": "Belo Horizonte"
-      },
-      "locationRegion": {
-        "pt": "Minas Gerais, Brasil",
-        "en": "Minas Gerais, Brazil",
-        "es": "Minas Gerais, Brasil"
-      },
-      "availableFor": {
-        "pt": "Presencial + Remoto",
-        "en": "On-site + Remote",
-        "es": "Presencial + Remoto"
-      },
-      "availableWhere": {
-        "pt": "em todo o mundo",
-        "en": "worldwide",
-        "es": "en todo el mundo"
       }
     }
   },

@@ -1,0 +1,77 @@
+/* The log, in a reading column under the section title. */
+.log { max-width: var(--container-narrow); margin: var(--space-12) auto 0; }
+
+/* ---------- head: GitHub mark · commits on [main] ········ 7 commits ---------- */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+  font: 500 14px/20px var(--font-sans);
+  color: var(--fg);
+}
+.branch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-2);
+  font: 500 12px/18px var(--font-mono);
+  color: var(--fg);
+}
+.count { margin-left: auto; font: 400 13px/20px var(--font-sans); color: var(--fg-muted); }
+
+/* ---------- the history on its rail: a hairline down the left edge (where the About bolt runs),
+   --gap to the boxes. Commit.module.css places each commit's dot on it. ---------- */
+.timeline {
+  --gap: var(--space-8);
+  position: relative;
+  padding-left: var(--gap);
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--line-strong);
+}
+.group + .group { margin-top: var(--space-8); }
+
+/* A group's date, beside a ring the rail runs through (GitHub's commit mark), over the bolt. */
+.date { position: relative; margin: 0 0 var(--space-3); font: 500 13px/20px var(--font-sans); color: var(--fg-2); }
+.date::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  left: calc(-1 * var(--gap) - 6.5px);
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--control);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+/* The group's commits: one box, rows split by hairlines. */
+.box {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+}
+
+/* ---------- phones: a narrower step from the rail ---------- */
+@media (max-width: 720px) {
+  .timeline { --gap: var(--space-6); }
+  .head { margin-bottom: var(--space-6); }
+}
