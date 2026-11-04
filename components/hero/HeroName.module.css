@@ -5,16 +5,23 @@
 .line + .line { margin: -0.16em 0 0 0.62em; }
 .svg { display: block; width: var(--w); height: var(--h); overflow: visible; }
 
-.glyph {
-  fill: currentColor;
+.glyph { fill: currentColor; }
+
+/* The pen: round strokes along the middle of each letter, drawn into the letter's mask (alpha: only
+   where the pen has passed does the ink show). Used only while the intro writes. */
+.mask { mask-type: alpha; }
+.pen {
+  fill: none;
   stroke: currentColor;
-  stroke-width: 0;
-  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ---------- intro (components/hero/HeroIntro) ----------
-   play: dark. draw: the pen traces each outline (pathLength 1: one dash covers any letter), the ink
-   fills in behind it, a soft glow on the drawing. Then the plain filled letters. */
+   play: dark. draw: each letter is masked by its pen strokes, and the pen writes them (pathLength 1:
+   one dash covers any stroke), each at its own pace (--ease, a linear() curve; a browser without
+   linear() falls back to `ease` and still writes), with a soft glow on the writing. After it, the
+   masks are gone and the letters are simply filled. */
 :global(html[data-intro="play"]) .art { opacity: 0; }
 /* Written centred on the viewport (HeroIntro measures the offset), then slides home as the Hero
    assembles, with the impact's bloom fading off it. */
@@ -28,18 +35,14 @@
   to { filter: drop-shadow(0 0 0 transparent); }
 }
 :global(html[data-intro="draw"]) .svg { filter: drop-shadow(0 0 6px var(--bolt-glow)); }
-:global(html[data-intro="draw"]) .glyph {
-  stroke-width: 1.3px;
+:global(html[data-intro="draw"]) .glyph { mask: var(--m); }
+:global(html[data-intro="draw"]) .pen {
   stroke-dasharray: 1 2;
-  animation:
-    pen var(--t) var(--mf-ease-inout) var(--d) backwards,
-    ink var(--mf-dur-3) var(--mf-ease-out) var(--f) backwards;
+  animation: pen var(--t) linear var(--d) backwards;
+  animation-timing-function: var(--ease);
 }
 @keyframes pen {
-  from { stroke-dashoffset: 1; }
+  /* Just past the start: a dash ending exactly on it would leave a round cap there before the pen arrives. */
+  from { stroke-dashoffset: 1.002; }
   to { stroke-dashoffset: 0; }
-}
-@keyframes ink {
-  from { fill-opacity: 0; }
-  to { fill-opacity: 1; }
 }
