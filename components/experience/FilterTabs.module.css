@@ -9,6 +9,17 @@
 }
 .tabs::-webkit-scrollbar { display: none; }
 
+/*
+ * When the tabs overflow (narrow screens), the edge that hides more of them fades out, so a cut label
+ * reads as "scroll for more" (data-more-* set by FilterTabs). The mask uses only alpha: any opaque token works.
+ */
+.tabs { --tabs-fade: var(--space-12); }
+.tabs[data-more-end] { mask-image: linear-gradient(to right, var(--fg) calc(100% - var(--tabs-fade)), transparent); }
+.tabs[data-more-start] { mask-image: linear-gradient(to left, var(--fg) calc(100% - var(--tabs-fade)), transparent); }
+.tabs[data-more-start][data-more-end] {
+  mask-image: linear-gradient(to right, transparent, var(--fg) var(--tabs-fade), var(--fg) calc(100% - var(--tabs-fade)), transparent);
+}
+
 .tab {
   position: relative;
   display: inline-flex;

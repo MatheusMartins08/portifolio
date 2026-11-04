@@ -24,7 +24,7 @@ interface CaseHeroProps {
 export function CaseHero({ back, index, category, title, summary, meta, links, image, imageAlt = "" }: CaseHeroProps) {
   return (
     <header className={styles.hero}>
-      <ArrowLink href={back.href} icon="arrow-left" size="sm" external={false} className={styles.back}>
+      <ArrowLink href={back.href} icon="arrow-left" iconPosition="start" size="sm" external={false} className={styles.back}>
         {back.label}
       </ArrowLink>
       <div className={styles.head}>

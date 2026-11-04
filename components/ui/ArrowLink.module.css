@@ -32,4 +32,9 @@
 .link:hover .text { transform: translateX(2px); }
 .link:hover .text::after { transform: scaleX(1); transform-origin: left; }
 
+/* Arrow before the text (a link back): the text leans the way the arrow points and the underline draws from the right. */
+.start:hover .text { transform: translateX(-2px); }
+.start .text::after { transform-origin: left; }
+.start:hover .text::after { transform-origin: right; }
+
 .icon { color: var(--mark); }

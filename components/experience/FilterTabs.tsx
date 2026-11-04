@@ -1,6 +1,7 @@
 "use client";
 
-import { useLayoutEffect, useRef, type KeyboardEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, type KeyboardEvent } from "react";
+import { prefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cx, pad2 } from "@/lib/cx";
 import styles from "./FilterTabs.module.css";
 
@@ -30,6 +31,7 @@ export function FilterTabs({ options, value, onChange, labelledBy, panelPrefix, 
   const tabs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   useLayoutEffect(() => {
+    const el = root.current;
     function place() {
       const tab = tabs.current[value];
       const bar = indicator.current;
@@ -37,12 +39,39 @@ export function FilterTabs({ options, value, onChange, labelledBy, panelPrefix, 
       bar.style.width = `${tab.offsetWidth}px`;
       bar.style.transform = `translateX(${tab.offsetLeft}px)`;
     }
-    place();
-    const observer = new ResizeObserver(place);
-    if (root.current) observer.observe(root.current);
-    document.fonts?.ready.then(place);
-    return () => observer.disconnect();
+    /** Marks which edges hide tabs (narrow screens), so the CSS fades only those. */
+    function edges() {
+      if (!el) return;
+      el.toggleAttribute("data-more-start", el.scrollLeft > 1);
+      el.toggleAttribute("data-more-end", el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+    }
+    function update() {
+      place();
+      edges();
+    }
+    update();
+    const observer = new ResizeObserver(update);
+    if (el) observer.observe(el);
+    el?.addEventListener("scroll", edges, { passive: true });
+    document.fonts?.ready.then(update);
+    return () => {
+      observer.disconnect();
+      el?.removeEventListener("scroll", edges);
+    };
   }, [value, options.length]);
+
+  // A newly chosen tab cut off at an edge scrolls fully into view, clear of the fade.
+  useEffect(() => {
+    const el = root.current;
+    const tab = tabs.current[value];
+    if (!el || !tab || el.scrollWidth <= el.clientWidth) return;
+    const fade = parseFloat(getComputedStyle(el).getPropertyValue("--tabs-fade")) || 0;
+    const left = tab.offsetLeft - fade;
+    const right = tab.offsetLeft + tab.offsetWidth + fade - el.clientWidth;
+    const target = left < el.scrollLeft ? left : right > el.scrollLeft ? right : null;
+    if (target === null) return;
+    el.scrollTo({ left: target, behavior: prefersReducedMotion() ? "auto" : "smooth" });
+  }, [value]);
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const ids = options.map((option) => option.id);

@@ -60,8 +60,11 @@
 .desc { grid-area: desc; margin: 0 0 var(--space-6); max-width: 54ch; font: 400 15px/24px var(--font-sans); color: var(--fg-2); }
 
 .list { grid-area: list; align-self: end; margin: 0; padding: var(--space-4) 0 0; list-style: none; border-top: 1px solid var(--line); display: grid; gap: 10px; }
-.list li { display: flex; align-items: center; gap: var(--space-3); font: 500 14px/20px var(--font-sans); color: var(--fg); }
+/* Items that wrap keep the tick on their first line: top-aligned, the tick set at half a line. */
+.list li { display: flex; align-items: flex-start; gap: var(--space-3); font: 500 14px/20px var(--font-sans); color: var(--fg); }
 .tick {
+  flex: none;
+  margin-top: calc(0.5lh - 0.5px);
   width: 14px;
   height: 1px;
   background: var(--fg-faint);
