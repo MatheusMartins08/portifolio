@@ -1,13 +1,16 @@
-/* Fixed over the whole viewport (above the header), never catches the pointer. Everything in it is
-   invisible unless <html data-intro> says otherwise, so a skipped or finished intro leaves nothing. */
+/* Fixed over the whole viewport, never catches the pointer: over the backdrop but under the Hero's
+   content, so the bolt passes behind the name. Everything in it is invisible unless <html data-intro>
+   says otherwise, so a skipped or finished intro leaves nothing. */
 .intro {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 0;
   pointer-events: none;
 }
 
-/* ---------- A02: the strike ---------- */
+/* ---------- A02: the strike ----------
+   Crisp lines like a photographed bolt: the channel brightest, each level of branches finer and
+   fainter, and every branch finer again towards its tip; a soft glow along the channel and the first branches. */
 .strike {
   position: absolute;
   left: 0;
@@ -15,36 +18,55 @@
   overflow: visible;
   fill: none;
   stroke-linecap: round;
-  stroke-linejoin: miter;
-  stroke-miterlimit: 4;
+  stroke-linejoin: round;
   opacity: 0;
 }
-.glow { stroke: var(--bolt-glow); stroke-width: 7px; }
-.core { stroke: var(--bolt-hot); stroke-width: 1.8px; }
-.twig .glow { stroke-width: 4px; }
-.twig .core { stroke-width: 1px; }
+.glow path { stroke: var(--bolt-glow); }
+.glow .trunk { stroke-width: 10px; }
+.glow .branch { stroke-width: 4.5px; }
+.core path { stroke: var(--bolt-hot); }
+.core .trunk { stroke-width: 3.6px; }
+.core .l1 { stroke-width: 2px; stroke-opacity: .95; }
+.core .l1.tip { stroke-width: 1.3px; stroke-opacity: .8; }
+.core .l2 { stroke-width: 1.25px; stroke-opacity: .8; }
+.core .l2.tip { stroke-width: .9px; stroke-opacity: .6; }
+.core .l3 { stroke-width: .9px; stroke-opacity: .6; }
+.core .l3.tip { stroke-width: .65px; stroke-opacity: .45; }
 
-/* Falls in ~140ms (the branches a beat after the trunk), then fades as the Hero assembles. Same
-   animation in both states, so it runs on across the switch instead of restarting. */
-:global(html:is([data-intro="strike"], [data-intro="assemble"])) .strike { opacity: 1; }
+/* The head falls in 110ms (HeroIntro TIMELINE.lead), speeding up; each branch grows out behind it,
+   from when the head passes its fork (--at). Then it blazes, flickers once and dies away. Same
+   animations in both states, so they run on across the switch. */
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .strike { animation: blaze 600ms linear forwards; }
 :global(html:is([data-intro="strike"], [data-intro="assemble"])) .strike path {
   stroke-dasharray: 1 2;
-  animation: fall 140ms cubic-bezier(.5, 0, .9, .4) backwards;
+  animation: fall 110ms cubic-bezier(.5, 0, .9, .4) backwards;
 }
-:global(html:is([data-intro="strike"], [data-intro="assemble"])) .twig path { animation-duration: 120ms; animation-delay: 70ms; }
-:global(html[data-intro="assemble"]) .strike { opacity: 0; transition: opacity 420ms var(--mf-ease-out) 80ms; }
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .strike .branch {
+  animation-duration: 60ms;
+  animation-delay: calc(var(--at) * 110ms);
+  animation-timing-function: linear;
+}
 @keyframes fall {
   from { stroke-dashoffset: 1; }
 }
+@keyframes blaze {
+  0% { opacity: .7; }
+  18% { opacity: .75; }
+  18.4% { opacity: 1; }
+  30% { opacity: .45; }
+  38% { opacity: 1; }
+  60% { opacity: .55; }
+  100% { opacity: 0; }
+}
 
-/* ---------- impact: a short, low flash ---------- */
+/* ---------- impact: a short, low blink of the screen ---------- */
 .flash {
   position: absolute;
   inset: 0;
   background: var(--flash);
   opacity: 0;
 }
-:global(html:is([data-intro="strike"], [data-intro="assemble"])) .flash { animation: flash 300ms var(--mf-ease-out) 130ms; }
+:global(html:is([data-intro="strike"], [data-intro="assemble"])) .flash { animation: flash 300ms var(--mf-ease-out) 110ms; }
 @keyframes flash {
   0% { opacity: 0; }
   18% { opacity: .13; }

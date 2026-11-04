@@ -6,6 +6,8 @@
 .svg { display: block; width: var(--w); height: var(--h); overflow: visible; }
 
 .glyph { fill: currentColor; }
+/* Where the lightning passes (HeroIntro measures it): geometry only, never painted. */
+.target { fill: none; }
 
 /* The pen: round strokes along the middle of each letter, drawn into the letter's mask (alpha: only
    where the pen has passed does the ink show). Used only while the intro writes. */

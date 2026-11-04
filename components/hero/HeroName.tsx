@@ -6,6 +6,9 @@ import styles from "./HeroName.module.css";
 /** How far a letter's mask reaches past the line's box, units: room for the pen's round ends. */
 const BLEED = 120;
 
+/** Where the intro's lightning touches the name on its way down: its highest point, the top of the h's loop (first line, units). */
+const STRIKE_AT = { line: 0, x: 2266, y: 188 };
+
 interface HeroNameProps {
   /** The name as text, for screen readers ("Matheus Freitas"). */
   name: string;
@@ -18,7 +21,8 @@ interface HeroNameProps {
  * intro (`<html data-intro="draw">`) a pen writes them: each letter is masked by the strokes a hand
  * would make to write it (components/hero/namePen.ts) — along the middle of its ink, in writing order,
  * each at its own pace — so the ink appears where the pen passes. Each t is crossed and the i dotted
- * (`data-pen-dot`) as soon as the letter is written; HeroIntro reads when the pen lifts from `data-written`.
+ * (`data-pen-dot`) as soon as the letter is written; HeroIntro reads when the pen lifts from `data-written`
+ * and sends the lightning down by `data-strike-target`.
  */
 export function HeroName({ name, className }: HeroNameProps) {
   return (
@@ -64,6 +68,9 @@ export function HeroName({ name, className }: HeroNameProps) {
                 {line.glyphs.map((glyph, g) => (
                   <path key={g} className={styles.glyph} d={glyph.d} style={cssVars({ "--m": `url(#${maskId(g)})` })} />
                 ))}
+                {l === STRIKE_AT.line ? (
+                  <circle className={styles.target} cx={STRIKE_AT.x} cy={STRIKE_AT.y} r={1} data-strike-target="" />
+                ) : null}
               </svg>
             </span>
           );

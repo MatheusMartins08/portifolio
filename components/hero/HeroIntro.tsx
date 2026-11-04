@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { cssVars, cx } from "@/lib/cx";
 import { ON_HERO_KEY } from "@/lib/intro";
 import { drawStrike, type Strike } from "./strike";
 import styles from "./HeroIntro.module.css";
 
 /**
  * Intro timeline, ms. `draw`: a pen writes the name, centred (A01; HeroName paces it and says how
- * long it takes in `data-written`). After a short `hold`, `strike`: the bolt falls onto it (A02), the
- * flash lands with it. `assemble`: the name slides to its place and the Hero builds up around it (A03),
- * the backdrop lines spread out from the name. `end`: the page is left calm.
+ * long it takes in `data-written`). `strike` (A02): the bolt's head falls for `lead` ms, by the name,
+ * and hits the ground `hold` ms after the pen lifts — the bolt blazes and the screen blinks on that
+ * instant (the CSS counts the same `lead`: 110ms). `assemble`, `assemble` ms after the impact: the name slides to its
+ * place and the Hero builds up around it (A03), the backdrop lines spreading out from the name. `end`:
+ * the page is left calm.
  */
-const TIMELINE = { hold: 180, assemble: 220, end: 1750 };
+const TIMELINE = { hold: 140, lead: 110, assemble: 300, end: 1750 };
 
 /** Any of these during the intro skips straight to the finished Hero. */
 const SKIP_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
@@ -99,30 +102,27 @@ export function HeroIntro() {
 
     Promise.all([document.fonts.ready, shown]).then(() => {
       if (!alive || over) return;
-      // The name's final box (no transform yet): centre it on the viewport for the first beats.
+      // The name's final box, and the point of it the bolt passes (both before any transform): centre
+      // the name on the viewport for the first beats.
       const box = name.getBoundingClientRect();
+      const target = name.querySelector("[data-strike-target]")?.getBoundingClientRect();
       const dx = window.innerWidth / 2 - (box.left + box.width / 2);
       const dy = window.innerHeight / 2 - (box.top + box.height / 2);
       name.style.setProperty("--intro-x", `${dx.toFixed(1)}px`);
       name.style.setProperty("--intro-y", `${dy.toFixed(1)}px`);
-      // Lands just over the name, a little left of its middle.
-      const top = window.innerHeight / 2 - box.height / 2;
-      setStrike(
-        drawStrike({
-          width: window.innerWidth,
-          height: window.innerHeight,
-          x: window.innerWidth / 2 - box.width * 0.06,
-          y: top + box.height * 0.12,
-        }),
-      );
+      // Falls by the name's highest point (HeroName marks it), where it will be once centred, on to the
+      // ground; without the mark, by the top of the name, a little left of its middle.
+      const x = target ? target.left + target.width / 2 + dx : window.innerWidth / 2 - box.width * 0.06;
+      const y = target ? target.top + target.height / 2 + dy : window.innerHeight / 2 - box.height * 0.38;
+      setStrike(drawStrike({ width: window.innerWidth, height: window.innerHeight, x, y }));
       html.dataset.intro = "draw";
-      const strikeAt = Number(name.dataset.written ?? 1500) + TIMELINE.hold;
-      at(strikeAt, () => (html.dataset.intro = "strike"));
-      at(strikeAt + TIMELINE.assemble, () => {
+      const impact = Number(name.dataset.written ?? 1500) + TIMELINE.hold;
+      at(impact - TIMELINE.lead, () => (html.dataset.intro = "strike"));
+      at(impact + TIMELINE.assemble, () => {
         html.dataset.intro = "assemble";
         assemble(false);
       });
-      at(strikeAt + TIMELINE.end, end);
+      at(impact + TIMELINE.end, end);
     });
 
     return () => {
@@ -135,17 +135,38 @@ export function HeroIntro() {
 
   return (
     <div ref={rootRef} className={styles.intro} aria-hidden="true">
+      {/* The blink first, the bolt over it, so the light never washes the bolt out. */}
+      <div className={styles.flash} />
       {strike ? (
         <svg className={styles.strike} width={strike.width} height={strike.height} viewBox={`0 0 ${strike.width} ${strike.height}`}>
-          {[strike.trunk, ...strike.twigs].map((d, i) => (
-            <g key={i} className={i === 0 ? styles.trunk : styles.twig}>
-              <path className={styles.glow} d={d} pathLength={1} />
-              <path className={styles.core} d={d} pathLength={1} />
-            </g>
-          ))}
+          <defs>
+            <filter id="hero-strike-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" />
+            </filter>
+          </defs>
+          {/* A soft glow along the channel and the first branches' bases, under the crisp lines. */}
+          <g className={styles.glow} filter="url(#hero-strike-glow)">
+            <path className={styles.trunk} d={strike.trunk} pathLength={1} />
+            {strike.branches.map((branch, i) =>
+              branch.level === 1 && !branch.tip ? (
+                <path key={i} className={styles.branch} d={branch.d} pathLength={1} style={cssVars({ "--at": branch.at.toFixed(3) })} />
+              ) : null,
+            )}
+          </g>
+          <g className={styles.core}>
+            <path className={styles.trunk} d={strike.trunk} pathLength={1} />
+            {strike.branches.map((branch, i) => (
+              <path
+                key={i}
+                className={cx(styles.branch, styles[`l${branch.level}`], branch.tip && styles.tip)}
+                d={branch.d}
+                pathLength={1}
+                style={cssVars({ "--at": branch.at.toFixed(3) })}
+              />
+            ))}
+          </g>
         </svg>
       ) : null}
-      <div className={styles.flash} />
     </div>
   );
 }
