@@ -8,7 +8,7 @@
     "address": { "locality": "Belo Horizonte", "region": "MG", "country": "BR" },
     "photo": "/images/photos/matheus-portrait.webp",
     "photoHover": "/images/photos/matheus-coding.webp",
-    "avatar": "/images/photos/matheus-avatar.webp"
+    "avatar": "/images/photos/matheus-github.webp"
   },
   "social": {
     "github": "https://github.com/MatheusMartins08",

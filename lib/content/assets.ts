@@ -14,7 +14,7 @@ export interface ImageAsset {
 const sizes: Record<string, { width: number; height: number; focus?: string }> = {
   "/images/photos/matheus-portrait.webp": { width: 1018, height: 1386, focus: "50% 80%" },
   "/images/photos/matheus-coding.webp": { width: 928, height: 1600, focus: "50% 55%" },
-  "/images/photos/matheus-avatar.webp": { width: 96, height: 96 },
+  "/images/photos/matheus-github.webp": { width: 96, height: 96 },
   "/images/projects/black-crown-home.webp": { width: 1600, height: 900 },
   "/images/projects/black-crown-agendamento.webp": { width: 1390, height: 1054 },
   "/images/projects/metrica-home.webp": { width: 1600, height: 901 },

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { Icon } from "@/components/ui/Icon";
 import type { ImageAsset } from "@/lib/content/assets";
+import { AboutTrace } from "./AboutTrace";
 import { Commit } from "./Commit";
 import styles from "./CommitLog.module.css";
 
@@ -23,6 +24,9 @@ interface CommitLogProps {
   unit: string;
   /** The verb before when ("commitou"). */
   committed: string;
+  /** The copy button's name, and what it announces once done. */
+  copy: string;
+  copied: string;
   /** Heading of each group ("Commits em 2024"), and the word for when in each row ("em 2024"). */
   groups: Record<Group, string>;
   when: Record<Group, string>;
@@ -39,18 +43,18 @@ function shortHash({ type, title, body }: CommitEntry): string {
 
 /**
  * The About text as a GitHub commit history, adapted to black and white: a head (the GitHub mark,
- * "commits on main", the count), then the commits on a rail, grouped by when — each group under a ring
- * on the rail, its commits in a box of hairline rows, newest first. The rail is the timeline's left
- * edge (`data-trace="sheet"`): the About bolt (AboutTrace) runs down it, lighting each commit's dot,
- * and turns along the top of the oldest one.
+ * "commits on main", the count), then the commits grouped by when — each group's date beside GitHub's
+ * commit mark on the rail, its commits in a box of hairline rows, newest first. Between the marks, down
+ * the rail, runs the About bolt (AboutTrace): a dim broken line that the scroll lights, mark by mark,
+ * down to the foot of the last box.
  */
-export function CommitLog({ heading, branch, unit, committed, groups, when, commits, author, avatar }: CommitLogProps) {
+export function CommitLog({ heading, branch, unit, committed, copy, copied, groups, when, commits, author, avatar }: CommitLogProps) {
   const last = commits.length - 1;
   const rows = commits.map((commit, i) => ({ ...commit, i, hash: shortHash(commit) }));
 
   return (
     <div className={styles.log}>
-      <p className={styles.head} data-trace="block">
+      <p className={styles.head}>
         <Icon name="github" size={18} />
         <span>{heading}</span>
         <span className={styles.branch}>
@@ -62,13 +66,17 @@ export function CommitLog({ heading, branch, unit, committed, groups, when, comm
         </span>
       </p>
 
-      <div className={styles.timeline} data-trace="sheet">
+      <div className={styles.timeline}>
+        <AboutTrace />
         {GROUPS.map((group) => {
           const items = rows.filter((row) => row.group === group);
           if (!items.length) return null;
           return (
             <section key={group} className={styles.group} aria-labelledby={`about-log-${group}`}>
-              <h3 className={styles.date} id={`about-log-${group}`} data-trace="block">
+              <h3 className={styles.date} id={`about-log-${group}`}>
+                <span className={styles.mark} data-trace="node" aria-hidden="true">
+                  <Icon name="commit" size={16} strokeWidth={2} />
+                </span>
                 {groups[group]}
               </h3>
               <ol className={styles.box}>
@@ -82,6 +90,8 @@ export function CommitLog({ heading, branch, unit, committed, groups, when, comm
                     author={author}
                     avatar={avatar}
                     committed={`${committed} ${when[group]}`}
+                    copy={copy}
+                    copied={copied}
                     index={row.i}
                     end={row.i === last}
                     open={row.i === 0}

@@ -2,31 +2,6 @@
 .commit { position: relative; }
 .commit + .commit { border-top: 1px solid var(--line); }
 
-/* ---------- the dot on the rail (CommitLog: the timeline's left edge, --gap left of the box) ----------
-   Level with the title's first line; above the bolt (AboutTrace, z-index 1), which runs down the rail. */
-.node {
-  --size: 9px;
-  position: absolute;
-  top: calc(var(--space-4) + 11px - var(--size) / 2);
-  left: calc(-1 * var(--gap) - 1px - var(--size) / 2 + 0.5px);
-  z-index: 2;
-  box-sizing: border-box;
-  width: var(--size);
-  height: var(--size);
-  border: 1px solid var(--control);
-  border-radius: 50%;
-  background: var(--bg);
-  transition: background-color var(--mf-dur-3) var(--mf-ease-out), border-color var(--mf-dur-3) var(--mf-ease-out);
-}
-/* The bolt passed: the dot lights, and stays lit. */
-.commit[data-pulse] .node { border-color: var(--mark); background: var(--mark); }
-@media (prefers-reduced-motion: no-preference) {
-  .commit[data-pulse] .node { animation: spark 900ms var(--mf-ease-out); }
-}
-@keyframes spark {
-  35% { box-shadow: 0 0 10px 2px var(--bolt-glow); }
-}
-
 /* ---------- content: rises in once on entering the screen ---------- */
 .inner {
   transition:
@@ -42,7 +17,7 @@
   .commit:hover .inner { background: var(--bg-2); }
 }
 
-/* ---------- message · author and when · hash ---------- */
+/* ---------- message · author and when · hash, copy, browse ---------- */
 .row {
   position: relative;
   display: grid;
@@ -64,7 +39,7 @@
   text-align: left;
   cursor: pointer;
 }
-/* The whole row opens and closes it. */
+/* The whole row opens and closes it (all but the copy button, which sits above). */
 .toggle::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-sm); }
 .toggle:focus-visible { outline: none; }
 .toggle:focus-visible::after { box-shadow: var(--focus-ring); }
@@ -86,20 +61,46 @@
 }
 
 .meta { grid-column: 1; display: flex; align-items: center; gap: var(--space-2); margin: 0; font: 400 12px/18px var(--font-sans); color: var(--fg-muted); }
-/* Black and white, like everything but the Hero's and the projects' photos. */
-.avatar { flex: none; width: 18px; height: 18px; border-radius: 50%; filter: grayscale(1); }
+/* In colour: the real GitHub avatar (with the Hero's and the projects' photos, the only colour on the site). */
+.avatar { flex: none; width: 18px; height: 18px; border-radius: 50%; }
 .author { font-weight: 500; color: var(--fg-2); }
-.hash {
+
+/* The short hash, then GitHub's two small icon buttons: copy (works) and browse (`<>`, only shown). */
+.actions {
+  --btn: calc(var(--space-6) + var(--space-1));
   grid-column: 2;
   grid-row: 1 / span 2;
-  padding: 2px var(--space-2);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xs);
-  background: var(--bg-2);
-  font: 500 12px/18px var(--font-mono);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.hash {
+  margin-right: var(--space-2);
+  font: 500 12px/20px var(--font-mono);
   letter-spacing: 0.02em;
   color: var(--fg-2);
 }
+.action {
+  display: inline-grid;
+  place-items: center;
+  width: var(--btn);
+  height: var(--btn);
+  border-radius: var(--radius-sm);
+  color: var(--fg-muted);
+}
+/* Above the row's toggle layer, so a click copies instead of opening the row. */
+.copy {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: background-color var(--mf-dur-2) var(--mf-ease-out), color var(--mf-dur-2) var(--mf-ease-out);
+}
+.copy:hover { background: var(--bg-3); color: var(--fg); }
+.copy:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
 /* ---------- the description, opening under the message ---------- */
 .body {
@@ -123,8 +124,7 @@
   text-wrap: pretty;
 }
 
-/* ---------- the oldest commit, at the foot: the bolt turns along its top and lights it ---------- */
-.commit[data-lit] .node { box-shadow: 0 0 8px var(--bolt-glow); }
+/* ---------- the oldest commit, at the foot of the rail: lit once when the bolt gets there ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .commit[data-lit] .title { animation: glint 1600ms var(--mf-ease-out) 120ms backwards; }
 }
@@ -136,15 +136,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .inner { opacity: 1 !important; transform: none !important; }
-  .node { border-color: var(--mark); background: var(--mark); }
   .body, .open .body { transition: none; }
 }
 
-/* ---------- phones: the message across, the hash at the end of the author line ---------- */
+/* ---------- phones: the message across, the hash and its buttons at the end of the author line ---------- */
 @media (max-width: 720px) {
   .row { padding: var(--space-4); }
   .title { grid-column: 1 / -1; }
   .meta { grid-column: 1; }
-  .hash { grid-column: 2; grid-row: 2; }
+  .actions { grid-column: 2; grid-row: 2; gap: 0; }
+  .hash { margin-right: var(--space-1); }
   .body p { padding: 0 var(--space-4) var(--space-4); }
 }

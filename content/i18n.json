@@ -165,6 +165,16 @@
         "pt": "commitou",
         "en": "committed",
         "es": "hizo commit"
+      },
+      "copy": {
+        "pt": "Copiar hash",
+        "en": "Copy hash",
+        "es": "Copiar hash"
+      },
+      "copied": {
+        "pt": "Copiado",
+        "en": "Copied",
+        "es": "Copiado"
       }
     },
     "groups": {

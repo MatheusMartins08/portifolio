@@ -26,38 +26,36 @@
 }
 .count { margin-left: auto; font: 400 13px/20px var(--font-sans); color: var(--fg-muted); }
 
-/* ---------- the history on its rail: a hairline down the left edge (where the About bolt runs),
-   --gap to the boxes. Commit.module.css places each commit's dot on it. ---------- */
+/* ---------- the history: the rail is the timeline's left edge, --gap left of the boxes. On it, each
+   group's mark; between the marks, the bolt (AboutTrace, drawn in this box). ---------- */
 .timeline {
   --gap: var(--space-8);
   position: relative;
   padding-left: var(--gap);
 }
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 1px;
-  background: var(--line-strong);
-}
 .group + .group { margin-top: var(--space-8); }
 
-/* A group's date, beside a ring the rail runs through (GitHub's commit mark), over the bolt. */
-.date { position: relative; margin: 0 0 var(--space-3); font: 500 13px/20px var(--font-sans); color: var(--fg-2); }
-.date::before {
-  content: "";
+/* A group's date, beside GitHub's commit mark (a ring with the line on either side), centred on the rail. */
+.date { position: relative; margin: 0 0 var(--space-3); font: 400 14px/20px var(--font-sans); color: var(--fg-muted); }
+.mark {
+  --size: 16px;
   position: absolute;
   z-index: 2;
-  top: 3px;
-  left: calc(-1 * var(--gap) - 6.5px);
-  box-sizing: border-box;
-  width: 14px;
-  height: 14px;
-  border: 1.5px solid var(--control);
-  border-radius: 50%;
-  background: var(--bg);
+  top: calc((20px - var(--size)) / 2);
+  left: calc(-1 * var(--gap) - var(--size) / 2);
+  color: var(--control);
+  transition: color var(--mf-dur-3) var(--mf-ease-out);
+}
+/* The bolt reached it: the mark lights, and stays lit. */
+.mark[data-pulse] { color: var(--mark); }
+@media (prefers-reduced-motion: no-preference) {
+  .mark[data-pulse] { animation: spark 900ms var(--mf-ease-out); }
+}
+@keyframes spark {
+  35% { filter: drop-shadow(0 0 5px var(--bolt-glow)) drop-shadow(0 0 2px var(--bolt-hot)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark { color: var(--mark); }
 }
 
 /* The group's commits: one box, rows split by hairlines. */
