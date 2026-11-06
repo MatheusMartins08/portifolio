@@ -1,18 +1,17 @@
-import { CommitLog } from "@/components/about/CommitLog";
+import { AboutBoard } from "@/components/about/AboutBoard";
 import { Section } from "@/components/layout/Section";
 import { Statement } from "@/components/ui/Statement";
-import { asset } from "@/lib/content/assets";
-import { sectionIndex, site } from "@/lib/content/site";
+import { sectionIndex } from "@/lib/content/site";
 import { getDictionary } from "@/lib/i18n/dictionary";
 
 /**
- * About, as a commit history: the section's sentence, then the About text cut into short blocks, each
- * a commit on GitHub's list (CommitLog), newest first — little on screen, each description a click
- * away. Down the log's rail, between its marks, the bolt (AboutTrace) lights as the page scrolls.
+ * About, as a circuit board: the section's sentence in two lines, then the About text in a few short
+ * blocks laid on a faint PCB (AboutBoard). As the page scrolls, a bolt comes down beside the sentence
+ * onto a lightning rod, and its energy runs a trace past every block, lighting each in turn (Circuit).
  */
 export async function AboutSection() {
   const t = await getDictionary();
-  const { log, groups, when, commits } = t.about;
+  const { blocks, board } = t.about;
 
   return (
     <Section id="sobre" labelledBy="sobre-title">
@@ -22,23 +21,12 @@ export async function AboutSection() {
         index={sectionIndex("sobre")}
         highlight={t.about.statementHighlight}
         headingId="sobre-title"
+        breakAfterHighlight
       >
         {t.about.statement}
       </Statement>
 
-      <CommitLog
-        heading={log.heading}
-        branch={log.branch}
-        unit={log.unit}
-        committed={log.committed}
-        copy={log.copy}
-        copied={log.copied}
-        groups={groups}
-        when={when}
-        commits={commits}
-        author={site.social.githubHandle.replace(/^@/, "")}
-        avatar={asset(site.person.avatar)}
-      />
+      <AboutBoard blocks={blocks} sentenceId="sobre-title" rod={board.rod} ground={board.ground} silk={board.silk} />
     </Section>
   );
 }

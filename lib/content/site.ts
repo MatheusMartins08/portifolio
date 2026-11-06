@@ -75,8 +75,6 @@ export interface Site {
     photo: string;
     /** Shown over the portrait on hover. */
     photoHover: string;
-    /** The face alone, small: the author of the About section's commits. */
-    avatar: string;
   };
   social: {
     github: string;

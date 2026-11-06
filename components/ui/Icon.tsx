@@ -21,12 +21,6 @@ const ICONS = {
   server: "M4 4.5h16v6H4zM4 13.5h16v6H4zM7.5 7.5v.01M7.5 16.5v.01M11 7.5h5.5M11 16.5h5.5",
   devices: "M2.5 4.5h13v9h-13zM9 13.5v3.5M6 17.5h6M17.5 8.5h4v11h-4zM19.5 17v.01",
   sliders: "M4 7h9M17 7h3M15 4.5v5M4 17h3M11 17h9M9 14.5v5",
-  dots: "M6 12h.01M12 12h.01M18 12h.01",
-  copy: "M10 9h8.5a1.5 1.5 0 0 1 1.5 1.5V19a1.5 1.5 0 0 1-1.5 1.5H10A1.5 1.5 0 0 1 8.5 19v-8.5A1.5 1.5 0 0 1 10 9zM15.5 9V5a1.5 1.5 0 0 0-1.5-1.5H5.5A1.5 1.5 0 0 0 4 5v8.5A1.5 1.5 0 0 0 5.5 15h3",
-  /** A commit on a history line: a ring with the line going on either side. */
-  commit: "M7 12a5 5 0 1 0 10 0a5 5 0 1 0-10 0M1.5 12H7M17 12h5.5",
-  branch:
-    "M7 7.7v8.6M4.8 5.5a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0M4.8 18.5a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0M14.8 7a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0M17 9.2c0 3.8-3.6 4.8-10 6",
   // Brand marks redrawn as outlines on the same grid and stroke — never the official filled logos.
   linkedin:
     "M5.5 3.5h13a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2zM8 10.5v6M8 7.4v.2M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5",

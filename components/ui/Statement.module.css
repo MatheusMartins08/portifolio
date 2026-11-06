@@ -28,6 +28,16 @@
 }
 .in .word { opacity: 1; transform: none; }
 
+/* breakAfterHighlight: two whole lines at every width. The type is the usual size, unless the longer
+   line (--measure, its width in em) would not fit the column: then it shrinks to fit. */
+.lines { container-type: inline-size; }
+.lines .text {
+  max-width: none;
+  font-size: min(clamp(40px, 5vw, 72px), calc(100cqi / var(--measure)));
+  text-wrap: nowrap;
+}
+.line { display: block; white-space: nowrap; }
+
 /* The key word turns italic — emphasis by type, not by colour. */
 .hl { font-style: italic; }
 
@@ -38,6 +48,7 @@
 @media (max-width: 720px) {
   .stmt .label { margin-bottom: var(--space-6); }
   .text { font-size: clamp(34px, 9vw, 44px); line-height: 1.05; }
+  .lines .text { font-size: min(clamp(34px, 9vw, 44px), calc(100cqi / var(--measure))); }
 }
 
 @media (prefers-reduced-motion: reduce) {

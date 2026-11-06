@@ -1,14 +1,13 @@
 {
   "_note": "Dados que não são tradução: links, contatos, imagens, ordem dos itens, skills. Textos traduzíveis ficam em i18n.json — as chaves (ex.: projects.items.blackCrown) apontam para lá.",
-  "updated": "2026-10-30",
+  "updated": "2026-11-06",
   "person": {
     "name": "Matheus Freitas",
     "fullName": "Matheus Freitas Martins",
     "since": "2024",
     "address": { "locality": "Belo Horizonte", "region": "MG", "country": "BR" },
     "photo": "/images/photos/matheus-portrait.webp",
-    "photoHover": "/images/photos/matheus-coding.webp",
-    "avatar": "/images/photos/matheus-github.webp"
+    "photoHover": "/images/photos/matheus-coding.webp"
   },
   "social": {
     "github": "https://github.com/MatheusMartins08",

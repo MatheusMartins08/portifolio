@@ -145,172 +145,143 @@
         "antes"
       ]
     },
-    "log": {
-      "heading": {
-        "pt": "commits na",
-        "en": "commits on",
-        "es": "commits en"
-      },
-      "branch": {
-        "pt": "main",
-        "en": "main",
-        "es": "main"
-      },
-      "unit": {
-        "pt": "commits",
-        "en": "commits",
-        "es": "commits"
-      },
-      "committed": {
-        "pt": "commitou",
-        "en": "committed",
-        "es": "hizo commit"
-      },
-      "copy": {
-        "pt": "Copiar hash",
-        "en": "Copy hash",
-        "es": "Copiar hash"
-      },
-      "copied": {
-        "pt": "Copiado",
-        "en": "Copied",
-        "es": "Copiado"
-      }
-    },
-    "groups": {
-      "now": {
-        "pt": "Commits de hoje",
-        "en": "Commits today",
-        "es": "Commits de hoy"
-      },
-      "y2024": {
-        "pt": "Commits em 2024",
-        "en": "Commits in 2024",
-        "es": "Commits en 2024"
-      },
-      "before": {
-        "pt": "Antes de 2024",
-        "en": "Before 2024",
-        "es": "Antes de 2024"
-      }
-    },
-    "when": {
-      "now": {
-        "pt": "hoje",
-        "en": "today",
-        "es": "hoy"
-      },
-      "y2024": {
-        "pt": "em 2024",
-        "en": "in 2024",
-        "es": "en 2024"
-      },
-      "before": {
-        "pt": "antes de 2024",
-        "en": "before 2024",
-        "es": "antes de 2024"
-      }
-    },
-    "commits": [
+    "blocks": [
       {
-        "group": "now",
-        "type": "feat",
+        "ref": "U1",
         "title": {
-          "pt": "quem eu sou",
-          "en": "who I am",
-          "es": "quién soy"
+          "pt": "Quem eu sou",
+          "en": "Who I am",
+          "es": "Quién soy"
         },
-        "body": {
-          "pt": "Meu nome é Matheus Freitas Martins, sou desenvolvedor Full Stack e atuo na criação de produtos digitais completos.",
-          "en": "My name is Matheus Freitas Martins. I'm a Full Stack developer who builds complete digital products.",
-          "es": "Me llamo Matheus Freitas Martins, soy desarrollador Full Stack y me dedico a crear productos digitales completos."
+        "lead": {
+          "pt": "Sou Matheus Freitas Martins, desenvolvedor Full Stack.",
+          "en": "I'm Matheus Freitas Martins, a Full Stack developer.",
+          "es": "Soy Matheus Freitas Martins, desarrollador Full Stack."
+        },
+        "rest": {
+          "pt": "Crio produtos digitais completos — do problema e da arquitetura ao frontend, backend, banco de dados, integrações, infraestrutura e deploy.",
+          "en": "I build complete digital products — from the problem and the architecture to frontend, backend, databases, integrations, infrastructure and deployment.",
+          "es": "Creo productos digitales completos: desde el problema y la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue."
+        },
+        "keys": {
+          "pt": [
+            "Full Stack"
+          ],
+          "en": [
+            "Full Stack"
+          ],
+          "es": [
+            "Full Stack"
+          ]
         }
       },
       {
-        "group": "now",
-        "type": "build",
+        "ref": "U2",
         "title": {
-          "pt": "do problema ao deploy",
-          "en": "from problem to deployment",
-          "es": "del problema al despliegue"
+          "pt": "Como eu penso",
+          "en": "How I think",
+          "es": "Cómo pienso"
         },
-        "body": {
-          "pt": "Participo de todo o ciclo de desenvolvimento — da compreensão do problema e definição da arquitetura ao frontend, backend, banco de dados, integrações, infraestrutura e deploy.",
-          "en": "I take part in the entire development cycle — from understanding the problem and defining the architecture to frontend, backend, databases, integrations, infrastructure and deployment.",
-          "es": "Participo en todo el ciclo de desarrollo: desde la comprensión del problema y la definición de la arquitectura hasta el frontend, el backend, las bases de datos, las integraciones, la infraestructura y el despliegue."
+        "lead": {
+          "pt": "Procuro entender o problema antes de escolher a tecnologia.",
+          "en": "I try to understand the problem before choosing the technology.",
+          "es": "Busco entender el problema antes de elegir la tecnología."
+        },
+        "rest": {
+          "pt": "Uma boa solução não precisa ser complexa: precisa ser clara, confiável, bem construída e preparada para evoluir.",
+          "en": "A good solution doesn't need to be complex: it needs to be clear, reliable, well built and ready to evolve.",
+          "es": "Una buena solución no tiene por qué ser compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar."
+        },
+        "keys": {
+          "pt": [
+            "entender o problema"
+          ],
+          "en": [
+            "understand the problem"
+          ],
+          "es": [
+            "entender el problema"
+          ]
         }
       },
       {
-        "group": "now",
-        "type": "refactor",
+        "ref": "U3",
         "title": {
-          "pt": "como eu penso",
-          "en": "how I think",
-          "es": "cómo pienso"
+          "pt": "O que me move",
+          "en": "What drives me",
+          "es": "Lo que me mueve"
         },
-        "body": {
-          "pt": "Procuro entender o problema antes de escolher a tecnologia. Para mim, uma boa solução não precisa ser desnecessariamente complexa — precisa ser clara, confiável, bem construída e preparada para evoluir.",
-          "en": "I try to understand the problem before choosing the technology. To me, a good solution doesn't need to be needlessly complex — it needs to be clear, reliable, well built and ready to evolve.",
-          "es": "Busco entender el problema antes de elegir la tecnología. Para mí, una buena solución no tiene por qué ser innecesariamente compleja: tiene que ser clara, confiable, estar bien construida y preparada para evolucionar."
+        "lead": {
+          "pt": "Tecnologia, para mim, é meio.",
+          "en": "To me, technology is a means.",
+          "es": "Para mí, la tecnología es un medio."
+        },
+        "rest": {
+          "pt": "O objetivo é transformar necessidades em produtos sólidos e, principalmente, úteis no mundo real.",
+          "en": "The goal is to turn needs into solid products that are, above all, useful in the real world.",
+          "es": "El objetivo es transformar necesidades en productos sólidos y, sobre todo, útiles en el mundo real."
+        },
+        "keys": {
+          "pt": [
+            "úteis no mundo real"
+          ],
+          "en": [
+            "useful in the real world"
+          ],
+          "es": [
+            "útiles en el mundo real"
+          ]
         }
       },
       {
-        "group": "now",
-        "type": "fix",
+        "ref": "U4",
         "title": {
-          "pt": "o que me move",
-          "en": "what drives me",
-          "es": "lo que me mueve"
+          "pt": "Minha trajetória",
+          "en": "My path",
+          "es": "Mi trayectoria"
         },
-        "body": {
-          "pt": "Tecnologia, para mim, é meio. O objetivo é transformar necessidades em produtos sólidos e, principalmente, úteis no mundo real.",
-          "en": "To me, technology is a means. The goal is to turn needs into solid products that are, above all, useful in the real world.",
-          "es": "Para mí, la tecnología es un medio. El objetivo es transformar necesidades en productos sólidos y, sobre todo, útiles en el mundo real."
-        }
-      },
-      {
-        "group": "now",
-        "type": "chore",
-        "title": {
-          "pt": "o que eu estudo",
-          "en": "what I'm studying",
-          "es": "lo que estudio"
+        "lead": {
+          "pt": "Sempre tive curiosidade pelo que existe por trás de uma interface.",
+          "en": "I've always been curious about what lies behind an interface.",
+          "es": "Siempre tuve curiosidad por lo que hay detrás de una interfaz."
         },
-        "body": {
-          "pt": "Atualmente curso Desenvolvimento Web e Mobile no COTEMIG, enquanto desenvolvo soluções e projetos voltados a problemas reais.",
-          "en": "I'm currently studying Web and Mobile Development at COTEMIG, while building solutions and projects aimed at real problems.",
-          "es": "Actualmente curso Desarrollo Web y Móvil en COTEMIG, mientras desarrollo soluciones y proyectos orientados a problemas reales."
-        }
-      },
-      {
-        "group": "y2024",
-        "type": "feat",
-        "title": {
-          "pt": "minha trajetória",
-          "en": "my path",
-          "es": "mi trayectoria"
+        "rest": {
+          "pt": "Comecei na tecnologia em 2024 e, desde então, transformo estudo em prática. Hoje curso Desenvolvimento Web e Mobile no COTEMIG.",
+          "en": "My path in tech began in 2024, and since then I've been turning study into practice. Today I study Web and Mobile Development at COTEMIG.",
+          "es": "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, convierto el estudio en práctica. Hoy curso Desarrollo Web y Móvil en COTEMIG."
         },
-        "body": {
-          "pt": "Minha trajetória na tecnologia começou em 2024 e, desde então, venho transformando estudo em prática.",
-          "en": "My path in tech began in 2024, and since then I've been turning study into practice.",
-          "es": "Mi trayectoria en tecnología comenzó en 2024 y, desde entonces, he ido convirtiendo el estudio en práctica."
-        }
-      },
-      {
-        "group": "before",
-        "type": "init",
-        "title": {
-          "pt": "a curiosidade",
-          "en": "curiosity",
-          "es": "la curiosidad"
-        },
-        "body": {
-          "pt": "Antes mesmo de entrar profissionalmente na área, sempre tive curiosidade por entender o que existe por trás de uma interface: como cada parte de um sistema se conecta e como uma ideia pode se transformar em um produto funcional.",
-          "en": "Even before working in the field, I was always curious about what lies behind an interface: how each part of a system connects and how an idea can become a working product.",
-          "es": "Incluso antes de trabajar profesionalmente en el área, siempre tuve curiosidad por entender qué hay detrás de una interfaz: cómo se conecta cada parte de un sistema y cómo una idea puede convertirse en un producto funcional."
+        "keys": {
+          "pt": [
+            "2024",
+            "COTEMIG"
+          ],
+          "en": [
+            "2024",
+            "COTEMIG"
+          ],
+          "es": [
+            "2024",
+            "COTEMIG"
+          ]
         }
       }
     ],
+    "board": {
+      "rod": "J1",
+      "ground": "J2",
+      "silk": [
+        "R4",
+        "C12",
+        "R7",
+        "U9",
+        "C3",
+        "Q2",
+        "R15",
+        "C8",
+        "D1",
+        "R22"
+      ]
+    },
     "cards": {
       "status": {
         "pt": "Aberto a novos projetos",

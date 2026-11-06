@@ -1,0 +1,165 @@
+/* The About's circuit board (Circuit.tsx): two layers over the board, sized to it by the script and
+   never catching the pointer — the faint mesh behind the text, the bolt and the live trace over it.
+   Colours: the trace at rest is --line-strong, the dots at rest --highlight, the mesh --accent-soft
+   and --bolt; lit, everything is --bolt-lit / --bolt-hot with a --bolt-glow halo. */
+.mesh,
+.circuit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- the mesh: fades out towards the board's edges (the mask's colour only lends its alpha) ---------- */
+.mesh {
+  --fade-x: 9%;
+  --fade-y: 10%;
+  z-index: 0;
+  stroke-linecap: square;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, var(--bg) var(--fade-x), var(--bg) calc(100% - var(--fade-x)), transparent),
+    linear-gradient(180deg, transparent, var(--bg) var(--fade-y), var(--bg) calc(100% - var(--fade-y)), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent, var(--bg) var(--fade-x), var(--bg) calc(100% - var(--fade-x)), transparent),
+    linear-gradient(180deg, transparent, var(--bg) var(--fade-y), var(--bg) calc(100% - var(--fade-y)), transparent);
+  mask-composite: intersect;
+}
+.mesh path { stroke: var(--accent-soft); stroke-width: 1.1px; }
+.mesh circle { fill: var(--bg); stroke: var(--bolt); stroke-width: 1.1px; }
+.mesh text { fill: var(--highlight); stroke: none; font: 500 9px var(--font-mono); letter-spacing: .05em; }
+
+.circuit { z-index: 2; }
+
+/* the stretch under the board is cut out of the trace by a luminance mask: light keeps, dark cuts */
+.maskKeep { fill: var(--bolt-hot); }
+.maskCut { fill: none; stroke: var(--bg); stroke-width: 18px; stroke-linecap: butt; }
+
+/* ---------- the bolt: not there until the reading line reaches it; then it falls onto J1 (--fall),
+   flickers as it charges it, and stays as a lit channel with faint branches. Scrolled back above, it
+   fades away. ---------- */
+.bolt {
+  --fall: 480ms;
+  opacity: 0;
+  transition: opacity 380ms ease-out;
+}
+.bolt.struck { opacity: 1; transition: none; }
+.bGlow { stroke: var(--bolt-glow); stroke-width: 12px; opacity: 0; }
+.bCore {
+  stroke: var(--bolt-hot);
+  stroke-width: 2.8px;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  /* taken away: drawn back only once it has faded */
+  transition: stroke-dashoffset 0s linear 400ms;
+}
+.bBranch {
+  stroke: var(--bolt-lit);
+  stroke-width: 1.5px;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition: stroke-dashoffset 0s linear 400ms, opacity 0s linear 400ms;
+}
+.bBranch.tip { stroke-width: .9px; }
+.struck .bCore {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--fall) cubic-bezier(.5, 0, .85, .45);
+  filter: drop-shadow(0 0 4px var(--bolt-hot));
+}
+.struck .bBranch {
+  stroke-dashoffset: 0;
+  opacity: 1;
+  transition:
+    stroke-dashoffset 380ms cubic-bezier(.3, 0, .7, 1) calc(var(--at) * var(--fall)),
+    opacity 0s linear calc(var(--at) * var(--fall));
+  animation: afterglow 1600ms var(--mf-ease-out) calc(var(--fall) + 500ms) both;
+}
+.struck .bGlow { animation: flare 1700ms var(--mf-ease-out) var(--fall) both; }
+.struck .bFlicker { animation: flicker 520ms linear var(--fall) both; }
+@keyframes flare { 0% { opacity: 0; } 8% { opacity: 1; } 22% { opacity: .5; } 30% { opacity: .95; } 100% { opacity: .35; } }
+@keyframes flicker { 0% { opacity: 1; } 15% { opacity: .35; } 30% { opacity: 1; } 48% { opacity: .55; } 65% { opacity: 1; } 100% { opacity: 1; } }
+@keyframes afterglow { from { opacity: 1; } to { opacity: .3; } }
+/* after the strike (or a redraw), the bolt is simply there */
+.struck.settled .bCore,
+.struck.settled .bBranch { transition: none; }
+.struck.settled .bBranch { animation: none; opacity: .3; }
+.struck.settled .bGlow { animation: none; opacity: .35; }
+.struck.settled .bFlicker { animation: none; }
+
+/* ---------- the trace: dim at rest; lit (glow + core) up to the energy, a bright head at its front ---------- */
+.track { stroke: var(--line-strong); stroke-width: 1.6px; }
+.glow { stroke: var(--bolt-glow); stroke-width: 7px; opacity: .45; }
+.core { stroke: var(--bolt-lit); stroke-width: 1.8px; }
+.head { stroke: var(--bolt-hot); stroke-width: 3.4px; filter: drop-shadow(0 0 5px var(--bolt-hot)); transition: opacity var(--mf-dur-1) linear; }
+
+/* spurs (phones): short dead ends off the trace, lit as the energy passes their junction */
+.spur { stroke: var(--line-strong); stroke-width: 1.3px; transition: stroke var(--mf-dur-2) var(--mf-ease-out); }
+.spur.on { stroke: var(--bolt-lit); }
+.tee { fill: var(--highlight); stroke: none; transition: fill var(--mf-dur-2) var(--mf-ease-out); }
+.tee.on { fill: var(--bolt-hot); }
+
+/* the stretch under the board: dashed, lit from the top down as the energy goes through */
+.under { stroke: var(--line-strong); stroke-width: 1.5px; stroke-dasharray: 4 4; stroke-linecap: butt; }
+.underLit { stroke: var(--bolt-lit); stroke-width: 1.8px; stroke-dasharray: 4 4; stroke-linecap: butt; filter: drop-shadow(0 0 3px var(--bolt-hot)); }
+
+/* ---------- the marks: dim until the energy reaches them, then charged and glowing ---------- */
+.pad,
+.via,
+.endPad,
+.ring {
+  fill: var(--bg);
+  stroke: var(--highlight);
+  stroke-width: 1.4px;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: fill var(--mf-dur-2) var(--mf-ease-out), stroke var(--mf-dur-2) var(--mf-ease-out);
+}
+.pad.on,
+.via.on,
+.endPad.on {
+  fill: var(--bolt-hot);
+  stroke: var(--bolt-hot);
+  filter: drop-shadow(0 0 4px var(--bolt-hot));
+  animation: energize 700ms var(--mf-ease-out) 1;
+}
+.via.small.on { filter: drop-shadow(0 0 3px var(--bolt-glow)); }
+.layerVia { stroke-width: 1.6px; }
+.viaHole { fill: var(--bg); stroke: none; }
+/* the ring under the step: only its rim, empty inside */
+.ring { stroke-width: 1.5px; }
+.ring.on { stroke: var(--bolt-hot); filter: drop-shadow(0 0 4px var(--bolt-hot)); animation: energize 700ms var(--mf-ease-out) 1; }
+@keyframes energize { 0% { transform: scale(2.2); } 100% { transform: scale(1); } }
+
+/* J1, the lightning rod: a ring with a core, dim until the bolt hits it; the hit charges it in pulses */
+.rodRing { fill: none; stroke: var(--highlight); stroke-width: 1.4px; transition: stroke var(--mf-dur-2) var(--mf-ease-out); }
+.rodCore { fill: var(--highlight); stroke: none; transform-box: fill-box; transform-origin: center; transition: fill var(--mf-dur-2) var(--mf-ease-out); }
+.rodSpark { fill: none; stroke: var(--bolt-hot); stroke-width: 1.4px; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.rod.on .rodRing { stroke: var(--bolt-hot); filter: drop-shadow(0 0 5px var(--bolt-hot)); }
+.rod.on .rodCore { fill: var(--bolt-hot); filter: drop-shadow(0 0 7px var(--bolt-hot)); animation: charge 1200ms var(--mf-ease-out) 1; }
+.rod.on .rodSpark { animation: spark 1300ms var(--mf-ease-out) 1; }
+.rod.on .rodSpark.late { animation-delay: 260ms; }
+@keyframes spark { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(4); } }
+@keyframes charge { 0% { transform: scale(2.4); } 25% { transform: scale(.9); } 45% { transform: scale(1.6); } 100% { transform: scale(1); } }
+
+/* J1 / J2: silkscreen designators in mono */
+.label { fill: var(--fg-faint); stroke: none; font: 500 10px var(--font-mono); letter-spacing: .06em; transition: fill var(--mf-dur-3) var(--mf-ease-out); }
+.label.on { fill: var(--fg-muted); }
+
+/* ---------- phones: the mesh fades only at the very edges ---------- */
+@media (max-width: 960px) {
+  .mesh { --fade-x: 3%; --fade-y: 5%; }
+}
+
+/* reduced motion: everything is simply there, lit (the script draws it so) — nothing moves */
+@media (prefers-reduced-motion: reduce) {
+  .pad, .via, .endPad, .ring, .label, .spur, .tee, .bolt,
+  .rod *, .bolt * { transition: none !important; animation: none !important; }
+  .struck .bBranch { opacity: .3; }
+  .struck .bGlow { opacity: .35; }
+  .head { display: none; }
+}
